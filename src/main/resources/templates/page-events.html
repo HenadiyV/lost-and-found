@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>mPurpose - Multipurpose Feature Rich Bootstrap Template</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+
+		<div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        
+
+		<!-- Navigation & Logo-->
+		<div class="conteiner" >
+			<div th:insert="~{fragments/heder::heder}"></div>
+		</div>
+
+		<!--End Navigation & Logo-->
+		
+        <!-- Page Title -->
+		<div class="section section-breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1>Events</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+        <div class="section">
+	    	<div class="container">
+	    		<div class="row">
+	    			<div class="col-md-12">
+	    				<table class="events-list">
+	    					<tr>
+	    						<td>
+	    							<div class="event-date">
+	    								<div class="event-day">16</div>
+	    								<div class="event-month">MAR</div>
+	    							</div>
+	    						</td>
+	    						<td>
+	    							Donec hendrerit massa metus, a ultrices elit iaculis eu. Pellentesque ullamcorper augue lacus.
+	    						</td>
+	    						<td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Siemens Arena</td>
+	    						<td class="event-price hidden-xs">$50.00</td>
+	    						<td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
+	    					</tr>
+	    					<tr>
+	    						<td>
+	    							<div class="event-date">
+	    								<div class="event-day">5</div>
+	    								<div class="event-month">APR</div>
+	    							</div>
+	    						</td>
+	    						<td>
+	    							Phasellus et est quis diam iaculis fringilla id nec sapien.
+	    						</td>
+	    						<td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Nike Arena</td>
+	    						<td class="event-price hidden-xs">FREE</td>
+	    						<td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
+	    					</tr>
+	    					<tr>
+	    						<td>
+	    							<div class="event-date">
+	    								<div class="event-day">31</div>
+	    								<div class="event-month">MAY</div>
+	    							</div>
+	    						</td>
+	    						<td>
+	    							Ut consectetur commodo justo, sed sollicitudin massa venenatis ut 2013.
+	    						</td>
+	    						<td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Samsung Arena</td>
+	    						<td class="event-price hidden-xs">$30.00</td>
+	    						<td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
+	    					</tr>
+	    					<tr>
+	    						<td>
+	    							<div class="event-date">
+	    								<div class="event-day">17</div>
+	    								<div class="event-month">SEP</div>
+	    							</div>
+	    						</td>
+	    						<td>
+	    							Pellentesque justo turpis, fringilla sit amet pulvinar ut, tincidunt nec leo.
+	    						</td>
+	    						<td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Samsung Arena</td>
+	    						<td class="event-price hidden-xs">FREE</td>
+	    						<td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
+	    					</tr>
+	    					<tr>
+	    						<td>
+	    							<div class="event-date">
+	    								<div class="event-day">16</div>
+	    								<div class="event-month">MAR</div>
+	    							</div>
+	    						</td>
+	    						<td>
+	    							Donec hendrerit massa metus, a ultrices elit iaculis eu. Pellentesque ullamcorper augue lacus.
+	    						</td>
+	    						<td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Siemens Arena</td>
+	    						<td class="event-price hidden-xs">$50.00</td>
+	    						<td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
+	    					</tr>
+	    					<tr>
+	    						<td>
+	    							<div class="event-date">
+	    								<div class="event-day">5</div>
+	    								<div class="event-month">APR</div>
+	    							</div>
+	    						</td>
+	    						<td>
+	    							Phasellus et est quis diam iaculis fringilla id nec sapien.
+	    						</td>
+	    						<td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Nike Arena</td>
+	    						<td class="event-price hidden-xs">FREE</td>
+	    						<td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
+	    					</tr>
+	    					<tr>
+	    						<td>
+	    							<div class="event-date">
+	    								<div class="event-day">31</div>
+	    								<div class="event-month">MAY</div>
+	    							</div>
+	    						</td>
+	    						<td>
+	    							Ut consectetur commodo justo, sed sollicitudin massa venenatis ut 2013.
+	    						</td>
+	    						<td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Samsung Arena</td>
+	    						<td class="event-price hidden-xs">$30.00</td>
+	    						<td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
+	    					</tr>
+	    					<tr>
+	    						<td>
+	    							<div class="event-date">
+	    								<div class="event-day">17</div>
+	    								<div class="event-month">SEP</div>
+	    							</div>
+	    						</td>
+	    						<td>
+	    							Pellentesque justo turpis, fringilla sit amet pulvinar ut, tincidunt nec leo.
+	    						</td>
+	    						<td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Samsung Arena</td>
+	    						<td class="event-price hidden-xs">FREE</td>
+	    						<td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
+	    					</tr>
+	    				</table>
+	    			</div>
+	    		</div>
+			</div>
+		</div>
+
+	<!-- Footer -->
+		<div th:insert="~{fragments/footer.html :: footer}"></div>
+
+	<!--End Footer -->
+
+        <!-- Javascripts -->
+		<div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
+        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+        <!--<script>window.jQuery || document.write('<script src="js/jquery-1.9.1.min.js"><\/script>')</script>-->
+        <!--<script src="js/bootstrap.min.js"></script>-->
+        <!--<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>-->
+        <!--<script src="js/jquery.fitvids.js"></script>-->
+        <!--<script src="js/jquery.sequence-min.js"></script>-->
+        <!--<script src="js/jquery.bxslider.js"></script>-->
+        <!--<script src="js/main-menu.js"></script>-->
+        <!--<script src="js/template.js"></script>-->
+
+    </body>
+</html>

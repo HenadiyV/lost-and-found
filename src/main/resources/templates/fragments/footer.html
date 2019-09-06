@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div th:fragment="footer">
+
+<!-- Footer -->
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-footer col-md-3 col-xs-6">
+                <h3>Our Latest Work</h3>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <a href="page-portfolio-item.html">
+                            <img src="img/images/portfolio3.jpg" alt="Project Name">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-footer col-md-3 col-xs-6">
+                <h3 th:text="#{lang.futer.navigate}">Navigate</h3>
+                <ul class="no-list-style footer-navigate-section">
+                    <li>
+                        <a href="/" th:text="#{lang.index}">Home</a>
+                    </li>
+                    <li>
+                        <a href="/about" th:text="#{lang.futer.about}">About Us</a>
+                    </li>
+                    <li>
+                        <a href="/contact" th:text="#{lang.futer.contactus}">Contact Us</a>
+                    </li>
+                    <!--<li>-->
+                        <!--<a href="/faq" th:text="#{lang.index}">Frequently Asked Questions</a>-->
+                    <!--</li>-->
+                    <li>
+                        <a href="/faq" th:text="#{lang.futer.faq}">FAQ</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-footer col-md-4 col-xs-6">
+                <h3 th:text="#{lang.futer.contact}">Contacts</h3>
+                <p class="contact-us-details">
+                    <b th:text="#{lang.futer.contact.address}">Address:</b> <span th:text="#{lang.futer.contact.address.address}">Khmelnitsk, Ukraine</span>
+                    <br/>
+                    <b th:text="#{lang.futer.contact.phone}">Phone:</b> +038 067 4992256
+                    <br/>
+                    <b th:text="#{lang.futer.contact.fax}">Fax:</b> +038 067 4992256
+                    <br/>
+                    <b>Email:</b>
+                    <a href="mailto:henadiyv@gmail.com">henadiyv@gmail.com</a>
+                </p>
+            </div>
+            <div class="col-footer col-md-2 col-xs-6">
+                <h3 th:text="#{lang.futer.stayConected}">Stay Connected</h3>
+                <ul class="footer-stay-connected no-list-style">
+                    <li>
+                        <a href="#" class="facebook"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="twitter"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="googleplus"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer-copyright">&copy; 2019 FoundHelp. All rights reserved.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Footer -->
+</div>
+</body>
+</html>

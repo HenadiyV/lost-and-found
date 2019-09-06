@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>mPurpose - Multipurpose Feature Rich Bootstrap Template</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+
+		<div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+ crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+ crossorigin=""></script>
+
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        
+
+		<!-- Navigation & Logo-->
+		<div class="conteiner" >
+<div th:insert="~{fragments/heder::heder}"></div>
+		</div>
+		<!--End Navigation & Logo-->
+
+        <!-- Page Title -->
+		<div class="section section-breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<h1 th:text="#{lang.contactUs}">Contact Us</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+        <div class="section">
+	    	<div class="container">
+	        	<div class="row">
+	        		<div class="col-sm-7">
+						<!-- Map ""-->
+						
+	        			<div id="contact-us-map">
+						<!--<div id="map" style="width: 100%; height: 100%"></div>-->
+	        			</div>
+	        			<!-- End Map -->
+	        			<!-- Contact Info -->
+						<p class="contact-us-details">
+							<b th:text="#{lang.futer.contact.address}">Address:</b> <span th:text="#{lang.futer.contact.address.address}">Khmelnitsk, Ukraine</span>
+							<br/>
+							<b th:text="#{lang.futer.contact.phone}">Phone:</b> +038 067 4992256
+							<br/>
+							<b th:text="#{lang.futer.contact.fax}">Fax:</b> +038 067 4992256
+							<br/>
+							<b>Email:</b>
+							<a href="mailto:henadiyv@gmail.com">henadiyv@gmail.com</a>
+						</p>
+	        			<!-- End Contact Info -->
+	        		</div>
+	        		<div class="col-sm-5">
+	        			<!-- Contact Form -->
+	        			<h3 th:text="#{lang.contactUs.message}">Send Us a Message</h3>
+	        			<div class="contact-form-wrapper">
+		        			<form class="form-horizontal" role="form">
+		        				 <div class="form-group">
+		        				 	<label for="Name" class="col-sm-3 control-label"><b th:text="#{lang.your.name}">Your name</b></label>
+		        				 	<div class="col-sm-9">
+										<input class="form-control" id="Name" type="text" placeholder="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="contact-email" class="col-sm-3 control-label"><b th:text="#{lang.your.email}">Your Email</b></label>
+									<div class="col-sm-9">
+										<input class="form-control" id="contact-email" type="text" placeholder="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="contact-message" class="col-sm-3 control-label" th:text="#{lang.contactUs.selectTopic}"><b >Select Topic</b></label>
+									<div class="col-sm-9">
+										<select class="form-control" id="prependedInput">
+											<option th:text="#{lang.contactUs.selectTopic.please}">Please select topic...</option>
+											<option th:text="#{lang.contactUs.selectTopic.general}">General</option>
+											<option th:text="#{lang.contactUs.selectTopic.services}">Services</option>
+											<option th:text="#{lang.contactUs.selectTopic.orders}">Orders</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="contact-message" class="col-sm-3 control-label" th:text="#{lang.message}"><b>Message</b></label>
+									<div class="col-sm-9">
+										<textarea class="form-control" rows="5" id="contact-message"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-12">
+										<button type="submit" class="btn pull-right" th:text="#{lang.btn.send}">Send</button>
+									</div>
+								</div>
+		        			</form>
+		        		</div>
+		        		<!-- End Contact Info -->
+	        		</div>
+	        	</div>
+	    	</div>
+	    </div>
+
+		<!-- Footer -->
+		<div th:insert="~{fragments/footer.html :: footer}"></div>
+		<!--End Footer -->
+
+		<script>
+			// var map = L.map('map').setView([49.25, 27.0], 9);
+			// L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiaGVuYWRpeSIsImEiOiJjano3NHczcXQwaDVuM2hxcXN3b2QwNmhzIn0.IEzCp7qkb4SYOaOwO1_bxg', {
+			// 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			// 		maxZoom: 18,
+			// 		id: 'mapbox.streets',
+			// 		accessToken: 'your.mapbox.access.token'
+			// 	}).addTo(map);
+            //
+			// var marker=	L.marker([49.4229,27.0089])
+			// 	.addTo(map)
+			// 	.bindPopup('Привет я здесь!')
+			// 	 .openPopup();
+		</script>
+
+        <!-- Javascripts -->
+		<div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
+
+
+    </body>
+</html>

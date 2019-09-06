@@ -1,0 +1,409 @@
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<div th:if="${url}=='index'">-->
+        <!--<link rel="stylesheet" href="/static/css/bootstrap.min.css">-->
+        <!--<link rel="stylesheet" href="/static/css/icomoon-social.css">-->
+        <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>-->
+
+        <!--<link rel="stylesheet" href="/static/css/leaflet.css" />-->
+        <!--&lt;!&ndash;[if lte IE 8]>-->
+        <!--<link rel="stylesheet" href="/static/css/leaflet.ie.css" />-->
+        <!--<![endif]&ndash;&gt;-->
+        <!--<link rel="stylesheet" href="/static/css/main.css">-->
+
+        <!--<script src="/static/css/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
+    <!--</div>-->
+    <!--<div th:if="${url}=='404'">-->
+        <!--<link rel="stylesheet" href="/static/css/bootstrap.min.css">-->
+        <!--<link rel="stylesheet" href="/static/css/icomoon-social.css">-->
+        <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>-->
+
+        <!--<link rel="stylesheet" href="/static/css/leaflet.css" />-->
+        <!--&lt;!&ndash;[if lte IE 8]>-->
+        <!--<link rel="stylesheet" href="/static/css/leaflet.ie.css" />-->
+        <!--<![endif]&ndash;&gt;-->
+        <!--<link rel="stylesheet" href="/static/css/main.css">-->
+
+        <!--<script src="/static/css/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
+    <!--</div>-->
+    <!--<div th:if="${url}=='about'">-->
+
+    <!--<link rel="stylesheet" href="/static/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="/static/css/icomoon-social.css">-->
+    <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>-->
+
+    <!--<link rel="stylesheet" href="/static/css/leaflet.css" />-->
+    <!--&lt;!&ndash;[if lte IE 8]>-->
+    <!--<link rel="stylesheet" href="/static/css/leaflet.ie.css" />-->
+    <!--<![endif]&ndash;&gt;-->
+    <!--<link rel="stylesheet" href="/static/css/main.css">-->
+
+    <!--<script src="/static/css/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
+<!--</div>-->
+    <!--<div th:if="${url}=='coming'">-->
+        <!--<link rel="stylesheet" href="/static/css/bootstrap.min.css">-->
+        <!--<link rel="stylesheet" href="/static/css/icomoon-social.css">-->
+        <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>-->
+
+        <!--<link rel="stylesheet" href="/static/css/leaflet.css" />-->
+        <!--&lt;!&ndash;[if lte IE 8]>-->
+        <!--<link rel="stylesheet" href="/static/css/leaflet.ie.css" />-->
+        <!--<![endif]&ndash;&gt;-->
+        <!--<link rel="stylesheet" href="/static/css/main.css">-->
+
+        <!--<script src="/static/css/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
+    <!--</div>-->
+    <!--<div th:if="${url}=='contact'">-->
+    <!--<link rel="stylesheet" href="/static/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="/static/css/icomoon-social.css">-->
+    <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>-->
+
+    <!--<link rel="stylesheet" href="/static/css/leaflet.css" />-->
+    <!--&lt;!&ndash;[if lte IE 8]>-->
+    <!--<link rel="stylesheet" href="/static/css/leaflet.ie.css" />-->
+    <!--<![endif]&ndash;&gt;-->
+    <!--<link rel="stylesheet" href="/static/css/main.css">-->
+
+    <!--<script src="/static/css/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
+
+
+<!--</div>-->
+    <!--<div th:if="${url}=='events'">-->
+        <!--<link rel="stylesheet" href="/static/css/bootstrap.min.css">-->
+        <!--<link rel="stylesheet" href="/static/css/icomoon-social.css">-->
+        <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>-->
+
+        <!--<link rel="stylesheet" href="/static/css/leaflet.css" />-->
+        <!--&lt;!&ndash;[if lte IE 8]>-->
+        <!--<link rel="stylesheet" href="/static/css/leaflet.ie.css" />-->
+        <!--<![endif]&ndash;&gt;-->
+        <!--<link rel="stylesheet" href="/static/css/main.css">-->
+
+        <!--<script src="/static/css/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
+
+
+    <!--</div>
+
+    404
+    <!-- Navigation & Logo-->
+
+
+    <div class="mainmenu-wrapper">
+    			<div class="container">
+    				<div class="menuextras">
+    					<div class="extras">
+    						<ul>
+    							<li>
+    								<div class="dropdown choose-country">
+    									<a class="#" data-toggle="dropdown" href="#">
+    										<img src="img/flags/ua.png" alt="Украина">UA</a>
+    									<ul class="dropdown-menu" role="menu">
+    										<li role="menuitem">
+    											<a href="#">
+    												<img src="img/flags/us.png" alt="United States"> US</a>
+    										</li>
+
+    										<li role="menuitem">
+    											<a href="#">
+    												<img src="img/flags/ru.png" alt="Россия">RU</a>
+    										</li>
+    									</ul>
+    								</div>
+    							</li>
+    							<li>
+    								<a href="login.html">Login</a>
+    							</li>
+    						</ul>
+    					</div>
+    				</div>
+    				<nav id="mainmenu" class="mainmenu">
+    					<ul>
+    						<li class="logo-wrapper">
+    							<a href="index.html">
+    								<img src="img/mPurpose-logo.png" alt="Multipurpose Twitter Bootstrap Template">
+    							</a>
+    						</li>
+    						<li class="active">
+    							<a href="index.html">Home</a>
+    						</li>
+    						<li>
+    							<a href="page-about-us.html">About Us</a>
+    						</li>
+    						<li>
+    							<a href="page-contact-us.html">Contact Us</a>
+    						</li>
+    						<li>
+    							<a href="page-faq.html">Frequently Asked Questions</a>
+    						</li>
+
+    						<li class="has-submenu">
+    							<a href="#">Pages +</a>
+    							<div class="mainmenu-submenu">
+    								<div class="mainmenu-submenu-inner">
+
+
+    									<div>
+    										<h4>General Pages</h4>
+    										<ul>
+    											<li>
+    												<a href="page-about-us.html">About Us</a>
+    											</li>
+    											<li>
+    												<a href="page-contact-us.html">Contact Us</a>
+    											</li>
+    											<li>
+    												<a href="page-faq.html">Frequently Asked Questions</a>
+    											</li>
+    											<li>
+    												<a href="page-testimonials-clients.html">Testimonials & Clients</a>
+    											</li>
+    											<li>
+    												<a href="page-events.html">Events</a>
+    											</li>
+    											<li>
+    												<a href="page-404.html">404 Page</a>
+    											</li>
+    											<li>
+    												<a href="page-sitemap.html">Sitemap</a>
+    											</li>
+    											<li>
+    												<a href="login.html">Login</a>
+    											</li>
+    											<li>
+    												<a href="page-register.html">Register</a>
+    											</li>
+    											<li>
+    												<a href="page-password-reset.html">Password Reset</a>
+    											</li>
+    											<li>
+    												<a href="page-terms-privacy.html">Terms & Privacy</a>
+    											</li>
+    											<li>
+    												<a href="page-coming-soon.html">Coming Soon</a>
+    											</li>
+    										</ul>
+    									</div>
+
+    								</div>
+    								<!-- /mainmenu-submenu-inner -->
+    							</div>
+    							<!-- /mainmenu-submenu -->
+    						</li>
+
+    					</ul>
+    				</nav>
+    			</div>
+    		</div>
+    		<!--End Navigation & Logo-->
+    		futer
+    		<div class="footer">
+            			<div class="container">
+            				<div class="row">
+            					<div class="col-footer col-md-3 col-xs-6">
+            						<h3>Our Latest Work</h3>
+            						<div class="portfolio-item">
+            							<div class="portfolio-image">
+            								<a href="page-portfolio-item.html">
+            									<img src="img/portfolio3.jpg" alt="Project Name">
+            								</a>
+            							</div>
+            						</div>
+            					</div>
+            					<div class="col-footer col-md-3 col-xs-6">
+            						<h3>Navigate</h3>
+            						<ul class="no-list-style footer-navigate-section">
+            							<li>
+            								<a href="index.html">Home</a>
+            							</li>
+            							<li>
+            								<a href="page-about-us.html">About Us</a>
+            							</li>
+            							<li>
+            								<a href="page-contact-us.html">Contact Us</a>
+            							</li>
+            							<li>
+            								<a href="page-faq.html">Frequently Asked Questions</a>
+            							</li>
+            							<li>
+            								<a href="page-faq.html">FAQ</a>
+            							</li>
+            						</ul>
+            					</div>
+
+            					<div class="col-footer col-md-4 col-xs-6">
+            						<h3>Contacts</h3>
+            						<p class="contact-us-details">
+            							<b>Address:</b> Khmelnitsk, Ukraine
+            							<br/>
+            							<b>Phone:</b> +038 067 4992256
+            							<br/>
+            							<b>Fax:</b> +038 067 4992256
+            							<br/>
+            							<b>Email:</b>
+            							<a href="mailto:henadiyv@gmail.com">henadiyv@gmail.com</a>
+            						</p>
+            					</div>
+            					<div class="col-footer col-md-2 col-xs-6">
+            						<h3>Stay Connected</h3>
+            						<ul class="footer-stay-connected no-list-style">
+            							<li>
+            								<a href="#" class="facebook"></a>
+            							</li>
+            							<li>
+            								<a href="#" class="twitter"></a>
+            							</li>
+            							<li>
+            								<a href="#" class="googleplus"></a>
+            							</li>
+            						</ul>
+            					</div>
+            				</div>
+            				<div class="row">
+            					<div class="col-md-12">
+            						<div class="footer-copyright">&copy; 2019 FoundHelp. All rights reserved.</div>
+            					</div>
+            				</div>
+            			</div>
+            		</div>
+
+            		end futer
+
+            		 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+                            <!--<script>window.jQuery || document.write('<script src="js/jquery-1.9.1.min.js"><\/script>')</script>-->
+                            <!--<script src="js/bootstrap.min.js"></script>-->
+                            <!--<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>-->
+                            <!--<script src="js/jquery.fitvids.js"></script>-->
+                            <!--<script src="js/jquery.sequence-min.js"></script>-->
+                            <!--<script src="js/jquery.bxslider.js"></script>-->
+                            <!--<script src="js/main-menu.js"></script>-->
+                            <!--<script src="js/template.js"></script>-->
+
+                            end 404
+
+                            contact
+                            <!-- <script type="text/javascript">
+
+                            			$(document).ready(function () {
+                            				createMap('map');
+                            			});
+
+                            			function createMap(elementId) {
+                            				var neLat = "36.79923084564507";
+                            				var neLng = "21.265787724405527";
+                            				var swLat = "38.496870584785938";
+                            				var swLng = "24.058144837617874";
+
+                            				var gpx = 'gpx/greece-2018/full.gpx';
+
+                            				var map = new L.Map(elementId);
+
+                            				var service = new L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiaGVuYWRpeSIsImEiOiJjano3NHczcXQwaDVuM2hxcXN3b2QwNmhzIn0.IEzCp7qkb4SYOaOwO1_bxg', {
+                            					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery � <a href="http://mapbox.com">Mapbox</a>',
+                            					maxZoom: 18,
+                            					id: 'mapbox.streets'
+                            				});
+
+                            				var bounds = new L.LatLngBounds(new L.LatLng(neLat, neLng), new L.LatLng(swLat, swLng));
+                            				map.addLayer(service).fitBounds(bounds);
+                            			}
+                            		</script> http://{s}.tile.cloudmade.com/API-key/997/256/{z}/{x}/{y}.png-->
+                            		--------------------------
+                            		// L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                    			// 		maxZoom: 18,
+                                    			// 		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+                                    			// 	}).addTo(map);
+                                    			//var marker = L.marker([51.5, -0.09]).addTo(map);
+                                    	------------------------
+                                    	<!-- <script type="text/javascript">
+                                        	var
+                                        		 osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                        		//osmUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                                        		osmAttribution =
+                                        			'Map data <a target="_blank" href="http://www.openstreetmap.org">OpenStreetMap.org</a> contributors, ' +
+                                        			'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+                                        		osmLayer = new L.TileLayer(osmUrl, {
+                                        			maxZoom: 18,
+                                        			attribution: osmAttribution
+                                        		}),
+                                        		weatherLayer = new OsmJs.Weather.LeafletLayer({ lang: 'ru' }),
+                                        		baseMaps = {
+                                        			"OpenStreetMap": osmLayer
+                                        		},
+                                        		overlayMaps = {
+                                        			"MeteoDannie": weatherLayer
+                                        		},
+                                        		layersControl = new L.Control.Layers(baseMaps, overlayMaps),
+                                        		popup = new L.Popup(),
+                                        		map = new L.Map('map', {
+                                        			center: new L.LatLng(55.8, 37.7),
+                                        			zoom: 7,
+                                        			layers: [osmLayer]
+                                        		});
+                                        	// Массив layers: [] отображает слои на странице по умолчанию
+                                        	map.addControl(layersControl);
+                                        	map.on('click', (e) => {
+                                        		popup.setLatLng(e.latlng);
+                                        		popup.setContent('Koordinat point ' +
+                                        			' (' + e.latlng.lat.toFixed(6) +
+                                        			', ' + e.latlng.lng.toFixed(6) + ')');
+                                        		map.openPopup(popup);
+                                        	})
+                                        </script> -->
+
+                                        <!-- <link rel="stylesheet" href="/leaflet/leaflet.static" />
+                                        <script src="/leaflet/leaflet.js"></script> -->
+
+                                        <!-- <script src="lib/jquery/dist/jquery.min.js"></script>
+                                        <script charset="utf-8" src="lib/d3/d3.min.js"></script>
+                                        <link href="static/gpx.static" rel="stylesheet">
+                                        <link href="lib/leaflet/leaflet.static" rel="stylesheet">
+                                        <link href="lib/leaflet-elevation/dist/Leaflet.Elevation-0.0.2.static" rel="stylesheet">
+                                        <script src="lib/leaflet/leaflet.js" type="text/javascript"></script>
+                                        <script src="lib/leaflet-elevation/dist/Leaflet.Elevation-0.0.2.min.js" type="text/javascript"></script>
+                                        <script src="lib/leaflet-gpx/gpx.js" type="text/javascript"></script>
+
+                                        <script src='lib/togeojson/togeojson.js'></script> -->
+
+                                        		<!-- <link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.css" /> -->
+                                        		<!--[if lte IE 8]><link rel="stylesheet" href="http://leaflet.cloudmade.com/dist/leaflet.ie.css" /><![endif]-->
+                                        		<!-- <script src="http://leaflet.cloudmade.com/dist/leaflet.js"></script>
+                                        		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+                                        		<script src="http://openweathermap.org/js/leaflet-layer.js"></script> -->
+                            end contact
+
+                            <div class="ui floating dropdown labeled search icon button">
+                              <i class="world icon"></i>
+                              <span class="text">Select Language</span>
+                              <div class="menu">
+                                <div class="item">Arabic</div>
+                                <div class="item">Chinese</div>
+                                <div class="item">Danish</div>
+                                <div class="item">Dutch</div>
+                                <div class="item">English</div>
+                                <div class="item">French</div>
+                                <div class="item">German</div>
+                                <div class="item">Greek</div>
+                                <div class="item">Hungarian</div>
+                                <div class="item">Italian</div>
+                                <div class="item">Japanese</div>
+                                <div class="item">Korean</div>
+                                <div class="item">Lithuanian</div>
+                                <div class="item">Persian</div>
+                                <div class="item">Polish</div>
+                                <div class="item">Portuguese</div>
+                                <div class="item">Russian</div>
+                                <div class="item">Spanish</div>
+                                <div class="item">Swedish</div>
+                                <div class="item">Turkish</div>
+                                <div class="item">Vietnamese</div>
+                              </div>
+                            </div>

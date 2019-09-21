@@ -15,10 +15,7 @@ public class Advt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-//    @Column(name="name")
-//    private String name;
+    private Long id;
 
     @Column(name="text")
     private String text;
@@ -35,10 +32,13 @@ public class Advt {
     @Column(name="characters")
     private String characters;
 
+    @Column(name="userId")
+    private Long userId;
+
     @Temporal(TemporalType.DATE)
 
     private Date dat;
-
+ private  boolean found;
     @ManyToOne
     private Category category;
 
@@ -52,22 +52,19 @@ public class Advt {
     /**
      *
      */
-    @ManyToOne
-    private User user;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 //    @ManyToOne
-//    private UserSocial userO;
+//    private User user;
+//
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
-    /**
-     *
-     */
+
+
     @ManyToOne
     private City city;
 
@@ -78,55 +75,95 @@ public class Advt {
     public void setCity(City city) {
         this.city = city;
     }
-    /**
+
+    @ManyToOne
+    private Subcategory subcategory;
+
+    public Subcategory getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(Subcategory subcategory) {
+        this.subcategory = subcategory;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+/**
      *
      */
-    @ManyToOne
-    private Piople piople;
+//    @ManyToOne
+//    private People people;
+//
+//    public People getPeople() {
+//        return people;
+//    }
+//
+//    public void setPeople(People people) {
+//        this.people = people;
+//    }
 
-    public Piople getPiople() {
-        return piople;
-    }
+//    @ManyToOne
+//    private Animal animal;
+//
+//    public Animal getAnimal() {
+//        return animal;
+//    }
+//
+//    public void setAnimal(Animal animal) {
+//        this.animal = animal;
+//    }
 
-    public void setPiople(Piople piople) {
-        this.piople = piople;
-    }
+//    @ManyToOne
+//    private Thing thing;
+//
+//    public Thing getThing() {
+//        return thing;
+//    }
 
-    @ManyToOne
-    private Animal animal;
-
-    public Animal getAnimal() {
-        return animal;
-    }
-
-    public void setAnimal(Animal animal) {
-        this.animal = animal;
-    }
-
-    @ManyToOne
-    private Thing thing;
-
-    public Thing getThing() {
-        return thing;
-    }
-
-    public void setThing(Thing thing) {
-        this.thing = thing;
-    }
+//    public void setThing(Thing thing) {
+//        this.thing = thing;
+//    }
     /**
      * Default constructor
      */
     public Advt() {
     }
 
-    public int getId() {
+    public Advt(String text, boolean activ, String photo, String status, String characters, Long userId, Date dat, boolean found, Category category, City city, Subcategory subcategory) {
+        this.text = text;
+        this.activ = activ;
+        this.photo = photo;
+        this.status = status;
+        this.characters = characters;
+        this.userId = userId;
+        this.dat = dat;
+        this.found = found;
+        this.category = category;
+        this.city = city;
+        this.subcategory = subcategory;
+    }
+
+    public Long getId() {
         return  id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public boolean isFound() {
+        return found;
+    }
+
+    public void setFound(boolean found) {
+        this.found = found;
+    }
 
     public String getCharacter() {
         return characters;
@@ -175,6 +212,29 @@ public class Advt {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+    public boolean isActiv() {
+        return activ;
+    }
+
+    public void setActiv(boolean activ) {
+        this.activ = activ;
+    }
+
+    public String getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(String characters) {
+        this.characters = characters;
+    }
+
+    public Date getDat() {
+        return dat;
+    }
+
+    public void setDat(Date dat) {
+        this.dat = dat;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -182,16 +242,17 @@ public class Advt {
         if (!(o instanceof Advt)) return false;
         Advt advt = (Advt) o;
         return activ == advt.activ &&
-
+                found == advt.found &&
+                Objects.equals(id, advt.id) &&
                 Objects.equals(text, advt.text) &&
                 Objects.equals(photo, advt.photo) &&
                 Objects.equals(status, advt.status) &&
-               Objects.equals(category, advt.category) &&
                 Objects.equals(characters, advt.characters) &&
-                Objects.equals(dat, advt.dat)&&
-               Objects.equals(user, advt.user) &&
-               Objects.equals(city, advt.city) ;
-
+                Objects.equals(userId, advt.userId) &&
+                Objects.equals(dat, advt.dat) &&
+                Objects.equals(category, advt.category) &&
+                Objects.equals(city, advt.city) &&
+                Objects.equals(subcategory, advt.subcategory);
     }
 
     @Override
@@ -205,15 +266,16 @@ public class Advt {
         return "Advt{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", active=" + activ +
+                ", activ=" + activ +
                 ", photo='" + photo + '\'' +
-                ", status=" + status +
-               ", category=" + category +
-                ", character=" + characters +
-                ", data=" + dat +
-                ", user=" + user +
+                ", status='" + status + '\'' +
+                ", characters='" + characters + '\'' +
+                ", userId=" + userId +
+                ", dat=" + dat +
+                ", found=" + found +
+                ", category=" + category +
                 ", city=" + city +
-
+                ", subcategory=" + subcategory +
                 '}';
     }
 }

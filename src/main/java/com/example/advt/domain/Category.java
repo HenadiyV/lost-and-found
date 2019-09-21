@@ -19,22 +19,13 @@ public class Category {
     public Category() {
     }
 
-    /**
-     *
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
 
-    /**
-     *
-     */
     @Column(name = "name")
     public String name;
 
-    /**
-     *
-     */
     @OneToMany(mappedBy="category",targetEntity=Advt.class,cascade = CascadeType.ALL)
     private Set<Advt> advt;
 
@@ -46,39 +37,15 @@ public class Category {
         this.advt = advt;
     }
 
-    @OneToMany(mappedBy="category",targetEntity=Piople.class,cascade = CascadeType.ALL)
-    private Set<Piople> piople;
+    @OneToMany(mappedBy="category",targetEntity=Subcategory.class,cascade = CascadeType.ALL)
+    private Set<Subcategory> subcategory;
 
-    @OneToMany(mappedBy="category",targetEntity=Animal.class,cascade = CascadeType.ALL)
-    private Set<Animal> animal;
-
-    @OneToMany(mappedBy="category",targetEntity=Thing.class,cascade = CascadeType.ALL)
-    private Set<Thing> thing;
-
-
-
-    public Set<Piople> getPiople() {
-        return piople;
+    public Set<Subcategory> getSubcategory() {
+        return subcategory;
     }
 
-    public void setPiople(Set<Piople> piople) {
-        this.piople = piople;
-    }
-
-    public Set<Animal> getAnimal() {
-        return animal;
-    }
-
-    public void setAnimal(Set<Animal> animal) {
-        this.animal = animal;
-    }
-
-    public Set<Thing> getThing() {
-        return thing;
-    }
-
-    public void setThing(Set<Thing> thing) {
-        this.thing = thing;
+    public void setSubcategory(Set<Subcategory> subcategory) {
+        this.subcategory = subcategory;
     }
 
     public int getId() {

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!---->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>mPurpose -  Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
+
+</head>
+<body>
+<!-- Navigation & Logo-->
+<div class="conteiner" >
+    <div th:insert="~{fragments/heder::heder}"></div>
+</div>
+<!--End Navigation & Logo-->
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h1>Thing Listing (4 Columns)</h1>
+            </div>
+            <div class="col-md-4">
+                <!--<div class="col-sm-4 col-md-4  m-3"></div>-->
+                <form action="/advt/add-advt"  method="get">
+                    <input hidden="hidden" type="text" name="status" value="Знайденно">
+                    <input hidden="hidden" type="text" name="url" value="/view/thing">
+                    <input hidden="hidden" type="text" name="category" th:value="${category}">
+                    <button class=" btn-blue " style="width: 100%; text-align: center " type="submit" href="/add-advt" th:text="#{lang.btn.found}">Повідомити про Знайденно </button>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <!--<div class="col-sm-4 col-md-4  m-3"></div>-->
+                <form action="/advt/add-advt"  method="get">
+                    <input hidden="hidden" type="text" name="url" value="/view/thing">
+                    <input hidden="hidden" type="text" name="status" th:value="${lost}">
+                    <input hidden="hidden" type="text" name="category"th:value="${category}">
+                    <button class="btn-red " style="width: 100%; text-align: center" type="submit" href="/add-advt" th:text="#{lang.btn.lost}">Повідомити про втрату </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--modal-->
+<div class="container">
+    <div class="container">
+
+        <div class="modal fade" id="myModalMessage" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal -->
+                <div class="modal-content">
+
+                    <div class="modal-header" >
+                        <h4 th:text="#{lang.message}"><span class="glyphicon glyphicon-lock"></span> Повідомлення </h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    </div>
+
+
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <div>
+                            <span th:text="#{lang.message.limited}">Довжина повідомлення обмежена</span>
+                            <p><span th:text="#{lang.message.remainder}"> Осталось : </span> <span id="corectValue"></span><span th:text="#{lang.message.characters}">символов</span></p>
+                            <form action="/view/add_message"  method="post">
+                                <div class="form-group">
+                                    <!--class=" col-sm-6 col-md-6 col-md-offset-1"-->
+                                    <div >
+                                        <input hidden="hidden"  th:name="idAdver" id="idAdver"/>
+                                        <input hidden="hidden"  th:name="url" th:value="${url}"/>
+                                        <!--<div class="error" th:if="${textMessEr}" th:text="#{lang.text.error}">Name Error</div>-->
+                                        <textarea cols="50" rows="3" name="textMessage"  id="textMessage" onkeyup="doAjax()" th:placeholder="#{lang.ad.text}"></textarea>
+                                    </div>
+                                    <input name="capcha" type="checkbox" onclick="doMessage()"><span th:text="#{lang.capcha}" >Я не робот.</span></input>
+                                </div>
+                                <button class="btn-info" type="submit" id="btn_msg"  value="submit" th:text="#{lang.btn.send}"  disabled>Відправити</button>
+                                <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+
+                            </form>
+                        </div>
+                    </div >
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--/modal-->
+<!--Advt List-->
+<div class="eshop-section section">
+    <div class="container">
+        <div class="row">
+            <div  th:each="adver:${listAdver}">
+                <div class="col-md-3 col-sm-6">
+                    <!-- Adver -->
+                    <div class="shop-item">
+                        <!-- Product Image -->
+                        <div class="shop-item-image">
+                            <img   th:src="@{'/img/'+${adver.getPhoto()}}" alt="Card image cap"  />
+                        </div>
+                        <!-- Adver Title -->
+                        <div class="title">
+                            <h2 th:text="${adver.getStatus()}"></h2>
+                            <h4 th:text="${adver.getSubcategory().name}"></h4>
+                        </div>
+                        <!-- class="card-text"Adver bodyclass="btn btn-primary"style=""-->
+                        <div>
+                            <b> <span th:text="#{lang.in.city}">В місті :</span></b>
+                            <br/>
+                            <b><span class=" ml-1" style="color:blue " th:text="${adver.getCity().name}"></span></b>
+
+                            <p>
+                                <a  th:onclick="'javascript:toggle_show(\''+'B'+${adver.getId()}+'\');'" th:text="#{lang.btn.read.more}">
+                                    Докладніше
+                                </a>
+                            <div th:id="B+${adver.getId()}" style="display:none; width: 200px;">
+                                <div th:text="${adver.getDat().toString()}"></div>
+                                <div  th:text="${adver.getText()}" ></div>
+
+                            </div>
+                            </p>
+                        </div>
+
+                        <!-- Adver Button -->
+                        <div class="actions">
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <a class="btn btn-primary" id="bt" th:onclick="'javascript:myModalMessage(\''+${adver.getId()}+'\');'" th:text="#{lang.send}">Повідомити</a>
+
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" th:if="${us}==2">
+                                        <form action="/advt/advtDelete"  method="post">
+                                            <input hidden="hidden"  th:name="messDel" th:value="${adver.getId()}"/>
+                                            <input hidden="hidden"  th:name="url" th:value="${url}"/>
+                                            <button class="btn btn-primary" type="submit" th:text="#{lang.btn.delete}">Видалити</button>
+                                            <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+                                        </form>
+                                    </div>
+                                </div>
+                                <!---->
+                                <!--class="m-1"class="m-1"-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Adver -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Advt List-->
+<div class="pagination-wrapper ">
+    <div th:if="${listAdver.getTotalElements()}>0">
+        <div class="pagination pagination-lg">
+            <div class="row">
+
+                <ul class=" pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true" th:text="#{lang.page}">Сторінки</a>
+                    </li>
+                    <div  th:each="i:${#numbers.sequence(1,listAdver.getTotalPages())}">
+                        <li th:if="${i-1 ==listAdver.getNumber()}" class="page-item active" >
+                            <a href="#" th:text="${i}" class="page-link"></a>
+                        </li>
+                        <li th:unless="${i-1 ==listAdver.getNumber()}" class="page-item " >
+                            <a th:href="@{${url}(page=${i-1},size=${listAdver.getSize()})}" th:text="${i}" class="page-link"></a>
+                        </li>
+                    </div>
+                </ul>
+                <div th:if="${listAdver.getTotalElements()}>${listAdver.getSize()}">
+                    <ul class=" pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true" th:text="#{lang.page.size}">Кількість відображаємих елементів</a>
+                        </li>
+
+                        <div  th:each="c:${#numbers.sequence(2,listAdver.getTotalElements(),2)}">
+                            <li th:if="${c==listAdver.getSize()}" class="page-item active" >
+                                <a href="#" th:text="${c}" class="page-link"></a>
+                            </li>
+                            <li th:unless="${c==listAdver.getSize()}" class="page-item " >
+                                <a th:href="@{${url}(page=${listAdver.getNumber()},size=${c})}" th:text="${c}" class="page-link"></a>
+                            </li>
+                        </div>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<ul class="pagination pagination-lg">-->
+    <!--<li class="disabled"><a href="#">Previous</a></li>-->
+    <!--<li class="active"><a href="#">1</a></li>-->
+    <!--<li><a href="#">2</a></li>-->
+    <!--<li><a href="#">3</a></li>-->
+    <!--<li><a href="#">4</a></li>-->
+    <!--<li><a href="#">5</a></li>-->
+    <!--<li><a href="#">6</a></li>-->
+    <!--<li><a href="#">7</a></li>-->
+    <!--<li><a href="#">8</a></li>-->
+    <!--<li><a href="#">9</a></li>-->
+    <!--<li><a href="#">10</a></li>-->
+    <!--<li><a href="#">Next</a></li>-->
+    <!--</ul>-->
+</div>
+
+<div class="eshop-section section">
+    <div class="container">
+        <div class="row">
+            <div  th:each="adverFound:${adverListFound}">
+                <div class="col-md-3 col-sm-6">
+                    <!-- Adver -->
+                    <div class="shop-item">
+                        <!-- Product Image -->
+                        <div class="shop-item-image">
+                            <img   th:src="@{'/img/'+${adverFound.getPhoto()}}" alt="Card image cap"  />
+                        </div>
+                        <!-- Adver Title -->
+                        <div class="title">
+                            <h2 th:text="${adverFound.getStatus()}"></h2>
+                            <h4 th:text="${adverFound.getSubcategory().name}"></h4>
+                        </div>
+                        <!-- class="card-text"Adver bodyclass="btn btn-primary"style=""-->
+                        <div>
+                            <b> <span th:text="#{lang.in.city}">В місті :</span></b>
+                            <br/>
+                            <b><span class=" ml-1" style="color:blue " th:text="${adverFound.getCity().name}"></span></b>
+
+                            <p>
+                                <a  th:onclick="'javascript:toggle_show(\''+'B'+${adverFound.getId()}+'\');'" th:text="#{lang.btn.read.more}">
+                                    Докладніше
+                                </a>
+                            <div th:id="B+${adverFound.getId()}" style="display:none; width: 200px;">
+                                <div th:text="${adverFound.getDat().toString()}"></div>
+                                <div  th:text="${adverFound.getText()}" ></div>
+
+                            </div>
+                            </p>
+                        </div>
+
+                        <!-- Adver Button -->
+                        <div class="actions">
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <a class="btn btn-primary" id="bt1" th:onclick="'javascript:myModalMessage(\''+${adverFound.getId()}+'\');'" th:text="#{lang.send}">Повідомити</a>
+
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" th:if="${us}==2">
+                                        <form action="/advt/advtDelete"  method="post">
+                                            <input hidden="hidden"  th:name="messDel" th:value="${adverFound.getId()}"/>
+                                            <input hidden="hidden"  th:name="url" th:value="${url}"/>
+                                            <button class="btn btn-primary" type="submit" th:text="#{lang.btn.delete}">Видалити</button>
+                                            <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+                                        </form>
+                                    </div>
+                                </div>
+                                <!---->
+                                <!--class="m-1"class="m-1"-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Adver -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Advt List-->
+
+<div class="pagination-wrapper ">
+    <ul class="pagination pagination-lg">
+        <li class="disabled"><a href="#">Previous</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">6</a></li>
+        <li><a href="#">7</a></li>
+        <li><a href="#">8</a></li>
+        <li><a href="#">9</a></li>
+        <li><a href="#">10</a></li>
+        <li><a href="#">Next</a></li>
+    </ul>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div th:insert="~{fragments/footer.html :: footer}"></div>
+<!--End Footer -->
+<!-- Javascripts -->
+<script src="../static/static/js/my_js.js"></script>
+<div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
+</body>
+</html>
+
+
+<!--&lt;!&ndash; Product Title &ndash;&gt;-->
+<!--<div class="title">-->
+<!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+<!--</div>-->
+<!--&lt;!&ndash; Product Available Colors&ndash;&gt;-->
+<!--<div class="colors">-->
+<!--<span class="color-white"></span>-->
+<!--<span class="color-black"></span>-->
+<!--<span class="color-blue"></span>-->
+<!--<span class="color-orange"></span>-->
+<!--<span class="color-green"></span>-->
+<!--</div>-->
+<!--&lt;!&ndash; Product Price&ndash;&gt;-->
+<!--<div class="price">-->
+<!--$999.99-->
+<!--</div>-->
+<!--&lt;!&ndash; Add to Cart Button &ndash;&gt;-->
+<!--<div class="actions">-->
+<!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; End Product &ndash;&gt;-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-6">-->
+<!--<div class="shop-item">-->
+<!--<div class="shop-item-image">-->
+<!--<a href="page-product-details.html"><img src="img/images/test/690x804.jpg" alt="Item Name"></a>-->
+<!--</div>-->
+<!--<div class="title">-->
+<!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+<!--</div>-->
+<!--<div class="colors">-->
+<!--<span class="color-white"></span>-->
+<!--<span class="color-black"></span>-->
+<!--</div>-->
+<!--<div class="price">-->
+<!--$999.99-->
+<!--</div>-->
+<!--<div class="actions">-->
+<!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-6">-->
+<!--<div class="shop-item">-->
+<!--<div class="shop-item-image">-->
+<!--<a href="page-product-details.html"><img src="img/images/test/690x804.jpg" alt="Item Name"></a>-->
+<!--</div>-->
+<!--<div class="title">-->
+<!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+<!--</div>-->
+<!--<div class="colors">-->
+<!--<span class="color-white"></span>-->
+<!--<span class="color-black"></span>-->
+<!--</div>-->
+<!--<div class="price">-->
+<!--$999.99-->
+<!--</div>-->
+<!--<div class="actions">-->
+<!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-6">-->
+<!--<div class="shop-item">-->
+<!--<div class="shop-item-image">-->
+<!--<a href="page-product-details.html"><img src="img/images/test/testBig.jpg" alt="Item Name"></a>-->
+<!--</div>-->
+<!--<div class="title">-->
+<!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+<!--</div>-->
+<!--<div class="colors">-->
+<!--<span class="color-white"></span>-->
+<!--<span class="color-black"></span>-->
+<!--<span class="color-blue"></span>-->
+<!--</div>-->
+<!--<div class="price">-->
+<!--$999.99-->
+<!--</div>-->
+<!--<div class="actions">-->
+<!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-6">-->
+<!--<div class="shop-item">-->
+<!--<div class="shop-item-image">-->
+<!--<a href="page-product-details.html"><img src="img/images/test/images.jpg" alt="Item Name"></a>-->
+<!--</div>-->
+<!--<div class="title">-->
+<!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+<!--</div>-->
+<!--<div class="colors">-->
+<!--<span class="color-white"></span>-->
+<!--<span class="color-black"></span>-->
+<!--<span class="color-blue"></span>-->
+<!--<span class="color-orange"></span>-->
+<!--<span class="color-green"></span>-->
+<!--</div>-->
+<!--<div class="price">-->
+<!--$999.99-->
+<!--</div>-->
+<!--<div class="actions">-->
+<!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-md-3 col-sm-6">-->
+<!--<div class="shop-item">-->
+<!--<div class="shop-item-image">-->
+<!--<a href="page-product-details.html"><img src="img/images/product5.jpg" alt="Item Name"></a>-->
+<!--</div>-->
+<!--<div class="title">-->
+<!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+<!--</div>-->
+<!--<div class="colors">-->
+<!--<span class="color-white"></span>-->
+<!--<span class="color-black"></span>-->
+<!--<span class="color-blue"></span>-->
+<!--<span class="color-orange"></span>-->
+<!--<span class="color-green"></span>-->
+<!--</div>-->
+<!--<div class="price">-->
+<!--$999.99-->
+<!--</div>-->
+<!--<div class="actions">-->
+<!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-6">-->
+<!--<div class="shop-item">-->
+<!--<div class="shop-item-image">-->
+<!--<a href="page-product-details.html"><img src="img/images/product6.jpg" alt="Item Name"></a>-->
+<!--</div>-->
+<!--<div class="title">-->
+<!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+<!--</div>-->
+<!--<div class="colors">-->
+<!--<span class="color-white"></span>-->
+<!--<span class="color-black"></span>-->
+<!--</div>-->
+<!--<div class="price">-->
+<!--$999.99-->
+<!--</div>-->
+<!--<div class="actions">-->
+<!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-6">-->
+<!--<div class="shop-item">-->
+<!--<div class="shop-item-image">-->
+<!--<a href="page-product-details.html"><img src="img/images/product7.jpg" alt="Item Name"></a>-->
+<!--</div>-->
+<!--<div class="title">-->
+<!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+<!--</div>-->
+<!--<div class="colors">-->
+<!--<span class="color-white"></span>-->
+<!--<span class="color-black"></span>-->
+<!--<span class="color-red"></span>-->
+<!--</div>-->
+<!--<div class="price">-->
+<!--$999.99-->
+<!--</div>-->
+<!--<div class="actions">-->
+<!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-6">-->
+<!--<div class="shop-item">-->
+<!--<div class="shop-item-image">-->
+<!--<a href="page-product-details.html"><img src="img/images/product8.jpg" alt="Item Name"></a>-->
+<!--</div>-->
+<!--<div class="title">-->
+<!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+<!--</div>-->
+<!--<div class="colors">-->
+<!--<span class="color-white"></span>-->
+<!--<span class="color-black"></span>-->
+<!--</div>-->
+<!--<div class="price">-->
+<!--$999.99-->
+<!--</div>-->
+<!--<div class="actions">-->
+<!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+<!--</div>-->
+<!--</div>-->

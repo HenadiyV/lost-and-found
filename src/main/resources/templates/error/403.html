@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>403</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
+</head>
+<body>
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+
+
+<!-- Navigation & Logo-->
+<!--<div class="conteiner" >-->
+<!--<div th:insert="~{fragments/heder::heder}"></div>-->
+<!--</div>-->
+<!--End Navigation & Logo-->
+
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 >Page 403...</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="error-page-wrapper">
+                    <p ">Sorry, the page error 403...</p>
+                    <p th:text="#{lang401}">Why don't you try the</p> <a href="/" th:text="#{lang404home}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<!--<div th:insert="~{fragments/footer.html :: footer}"></div>-->
+<!--End Footer -->
+
+<!-- Javascripts -->
+<div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
+
+
+</body>
+</html>

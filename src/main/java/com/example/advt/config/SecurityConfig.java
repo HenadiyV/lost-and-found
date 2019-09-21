@@ -1,13 +1,9 @@
 package com.example.advt.config;
 
-import com.example.advt.domain.User;
 import com.example.advt.repos.UserRepository;
 import com.example.advt.service.AuthProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -27,12 +23,9 @@ import org.springframework.security.oauth2.client.token.grant.code.Authorization
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.filter.CompositeFilter;
 
 import javax.servlet.Filter;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,10 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder;
     }
-//    @RequestMapping("/user")
-//    public Principal user(Principal principal) {
-//        return principal;
-//    }
 
     @Bean
     public AuthenticationSuccessHandler successHandler() {
@@ -91,31 +80,7 @@ public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegis
         filter.setFilters(filters);
         return filter;
     }
-//private Filter ssoFilter() {
-//
-//    CompositeFilter filter = new CompositeFilter();
-//    List<Filter> filters = new ArrayList<>();
-//
-//    OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/facebook");
-//    OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
-//    facebookFilter.setRestTemplate(facebookTemplate);
-//    UserInfoTokenServices tokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId());
-//    tokenServices.setRestTemplate(facebookTemplate);
-//    facebookFilter.setTokenServices(tokenServices);
-//    filters.add(facebookFilter);
-//
-//    OAuth2ClientAuthenticationProcessingFilter githubFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/github");
-//    OAuth2RestTemplate githubTemplate = new OAuth2RestTemplate(github(), oauth2ClientContext);
-//    githubFilter.setRestTemplate(githubTemplate);
-//    tokenServices = new UserInfoTokenServices(githubResource().getUserInfoUri(), github().getClientId());
-//    tokenServices.setRestTemplate(githubTemplate);
-//    githubFilter.setTokenServices(tokenServices);
-//    filters.add(githubFilter);
-//
-//    filter.setFilters(filters);
-//    return filter;
-//
-//}
+
     private Filter ssoFilter(ClientResources client, String path) {
         OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(path);
         OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
@@ -125,18 +90,11 @@ public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegis
         CustomUserInfoTokenServices tokenServices = new CustomUserInfoTokenServices(client.getResource().getUserInfoUri(), client.getClient().getClientId());
         tokenServices.setRestTemplate(template);
         filter.setTokenServices(tokenServices);
+        tokenServices.setUserRepository(userRepo);
+        tokenServices.setPasswordEncoder(passwordEncoder);
         return filter;
     }
-//    @Bean
-////    @ConfigurationProperties("facebook.client")
-////    public AuthorizationCodeResourceDetails facebook() {
-////        return new AuthorizationCodeResourceDetails();
-////    }
-////    @Bean
-////    @ConfigurationProperties("facebook.resource")
-////    public ResourceServerProperties facebookResource() {
-////        return new ResourceServerProperties();
-////    }
+
     @Bean
     @ConfigurationProperties("facebook")
     public ClientResources facebook() {
@@ -168,6 +126,105 @@ public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegis
             return resource;
         }
     }
+
+//    @Bean
+//    public AuthoritiesExtractor authoritiesExtractor(OAuth2RestOperations template) {
+//        return map -> {
+//            String url = (String) map.get("organizations_url");
+//            @SuppressWarnings("unchecked")
+//            List<Map<String, Object>> orgs = template.getForObject(url, List.class);
+//            if (orgs.stream()
+//                    .anyMatch(org -> "spring-projects".equals(org.get("login")))) {
+//                return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
+//            }
+//            throw new BadCredentialsException("Not in Spring Projects origanization");
+//        };
+//    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception
+    {
+        http
+           //.antMatcher("/**")
+            //,"/user", .and() "/contact", "/about", "/page-register" "/static/static/img/homepage-slider/**", "/static/static/img/service-icon/**",.ignoringAntMatchers("/test/category","/admin/category/{id}", "/admin_city/city",  "/admin_city/city/{id}" , "/admin_status/status",  "/admin_status/status/{id}", "/admin_role/role",  "/admin_role/role/{id}")
+
+            .authorizeRequests()
+//                ,"/advt"
+            .antMatchers("/test","/testVue","/*","/login**", "/static/static/**","/view/**"
+                    , "/static/static/img/flags/**", "/static/static/img/logo/"
+                    , "/img/**", "/register","/webjars/**", "/error**")
+                .permitAll().anyRequest()
+                .authenticated()
+            .and()
+            .formLogin()
+            .loginPage("/login")
+
+        .successHandler(successHandler())
+                .failureUrl("/login?error")
+
+            .permitAll()
+            .and()
+
+
+            .logout()
+
+           // .invalidateHttpSession(false)
+            .logoutSuccessUrl("/")
+
+            .permitAll()
+                .and()
+                .csrf()
+
+                //.ignoringAntMatchers("/advt/**")
+               .disable();
+//.and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+
+     //   http
+////                .authorizeRequests()
+////                .antMatchers("/resources/**", "/", "/login**", "/registration").permitAll()
+////                .anyRequest().authenticated()
+////                .and().formLogin().loginPage("/login")
+////                .defaultSuccessUrl("/notes").failureUrl("/login?error").permitAll()
+////                .and().logout().logoutSuccessUrl("/").permitAll();
+
+        http
+                .addFilterBefore(ssoFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth)
+    {
+        auth.authenticationProvider(authProvider);
+    }
+
+}
+/////////////////////////////////////////////////////////
+//private Filter ssoFilter() {
+//
+//    CompositeFilter filter = new CompositeFilter();
+//    List<Filter> filters = new ArrayList<>();
+//
+//    OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/facebook");
+//    OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
+//    facebookFilter.setRestTemplate(facebookTemplate);
+//    UserInfoTokenServices tokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId());
+//    tokenServices.setRestTemplate(facebookTemplate);
+//    facebookFilter.setTokenServices(tokenServices);
+//    filters.add(facebookFilter);
+//
+//    OAuth2ClientAuthenticationProcessingFilter githubFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/github");
+//    OAuth2RestTemplate githubTemplate = new OAuth2RestTemplate(github(), oauth2ClientContext);
+//    githubFilter.setRestTemplate(githubTemplate);
+//    tokenServices = new UserInfoTokenServices(githubResource().getUserInfoUri(), github().getClientId());
+//    tokenServices.setRestTemplate(githubTemplate);
+//    githubFilter.setTokenServices(tokenServices);
+//    filters.add(githubFilter);
+//
+//    filter.setFilters(filters);
+//    return filter;
+//
+//}
+
 //    @Bean
 //    @ConfigurationProperties("google.client")
 //    public AuthorizationCodeResourceDetails google()
@@ -203,58 +260,17 @@ public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegis
 //        return googleFilter;
 //    }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception
-    {
-        http
-            .csrf()
-            //.ignoringAntMatchers("/advt/**")
-            .disable()
-            //, .and() "/contact", "/about", "/page-register" "/static/static/img/homepage-slider/**", "/static/static/img/service-icon/**",.ignoringAntMatchers("/test/category","/admin/category/{id}", "/admin_city/city",  "/admin_city/city/{id}" , "/admin_status/status",  "/admin_status/status/{id}", "/admin_role/role",  "/admin_role/role/{id}")
+//    @Bean
+////    @ConfigurationProperties("facebook.client")
+////    public AuthorizationCodeResourceDetails facebook() {
+////        return new AuthorizationCodeResourceDetails();
+////    }
+////    @Bean
+////    @ConfigurationProperties("facebook.resource")
+////    public ResourceServerProperties facebookResource() {
+////        return new ResourceServerProperties();
+////    }
 
-            .authorizeRequests()
-
-            .antMatchers("/","/login**", "/static/static/**"
-                    , "/static/static/img/flags/**"
-                    , "/img/**","/advt", "/register","/webjars/**", "/error**","/userPage")
-                .permitAll().anyRequest()
-                .authenticated()
-            .and()
-            .formLogin()
-            .loginPage("/login")
-
-        .successHandler(successHandler())
-
-
-            .permitAll()
-            .and()
-
-
-            .logout()
-
-           // .invalidateHttpSession(false)
-            .logoutSuccessUrl("/")
-
-            .permitAll();
-//.and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-
-     //   http
-////                .authorizeRequests()
-////                .antMatchers("/resources/**", "/", "/login**", "/registration").permitAll()
-////                .anyRequest().authenticated()
-////                .and().formLogin().loginPage("/login")
-////                .defaultSuccessUrl("/notes").failureUrl("/login?error").permitAll()
-////                .and().logout().logoutSuccessUrl("/").permitAll();
-
-        http
-                .addFilterBefore(ssoFilter(), UsernamePasswordAuthenticationFilter.class);
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-    {
-        auth.authenticationProvider(authProvider);
-    }
 //        @Bean
 //    public PrincipalExtractor principalExtractor(UserRepository userRepo) {
 //        return map -> {
@@ -280,6 +296,3 @@ public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegis
 ////       // };
 //     };
 //     }
-}
-
-

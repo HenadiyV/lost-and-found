@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
@@ -14,38 +15,39 @@ import java.util.Set;
 27.05.2019
 16:01
 */
-@Entity(name = "user")
-@Table(name = "user")
-public class User implements UserDetails {
+@Entity
+@Table(name = "usr")
+public class User implements UserDetails,Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column(name="name", nullable = false)
-    @NotEmpty(message= "Заповніть поле имя.")
+  //  @NotEmpty(message= "Заповніть поле имя.")
     private String name;
+    private String username;
     @Column(name="email", nullable = false)
-    @NotEmpty(message="Заповніть поле email.")
+  //  @NotEmpty(message="Заповніть поле email.")
     private String email;
     @Column(name="password", nullable = false)
-    @NotEmpty(message="Заповніть поле пароль.")
+  //  @NotEmpty(message="Заповніть поле пароль.")
     private String password;
     @Column(name="phohe")
     private String phone;
   private boolean active;
-//    private String googleName;
-//    private String googleUsername;
+private  String idSocial;
+private String nameSocial;
+    private  Long idSocialUser;
 
+//    @OneToMany(mappedBy="user",targetEntity=Advt.class,cascade = CascadeType.ALL)
+//    private Set<Advt> advts;
 
-    @OneToMany(mappedBy="user",targetEntity=Advt.class,cascade = CascadeType.ALL)
-    private Set<Advt> advts;
-
-    public Set<Advt> getAdvts() {
-        return advts;
-    }
-
-    public void setAdvts(Set<Advt> advts) {
-        this.advts = advts;
-    }
+//    public Set<Advt> getAdvts() {
+//        return advts;
+//    }
+//
+//    public void setAdvts(Set<Advt> advts) {
+//        this.advts = advts;
+//    }
 
     public boolean isActive() {
         return active;
@@ -55,21 +57,6 @@ public class User implements UserDetails {
         this.active = active;
     }
 
-//    public String getGoogleName() {
-//        return googleName;
-//    }
-//
-//    public void setGoogleName(String googleName) {
-//        this.googleName = googleName;
-//    }
-//
-//    public String getGoogleUsername() {
-//        return googleUsername;
-//    }
-//
-//    public void setGoogleUsername(String googleUsername) {
-//        this.googleUsername = googleUsername;
-//    }
 
     public String getName() {
         return name;
@@ -105,11 +92,11 @@ public class User implements UserDetails {
     }
 
     // getter and setter
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -119,6 +106,34 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Long getIdSocialUser() {
+        return idSocialUser;
+    }
+
+    public void setIdSocialUser(Long idSocialUser) {
+        this.idSocialUser = idSocialUser;
+    }
+
+    public String getIdSocial() {
+        return idSocial;
+    }
+
+    public void setIdSocial(String idSocial) {
+        this.idSocial = idSocial;
+    }
+
+    public String getNameSocial() {
+        return nameSocial;
+    }
+
+    public void setNameSocial(String nameSocial) {
+        this.nameSocial = nameSocial;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -191,16 +206,21 @@ public class User implements UserDetails {
 //        return role;
 //    }
 
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", roleId=" +
                 ", phone='" + phone + '\'' +
-                ", role=" + roles +
+                ", active=" + active +
+                ", idSocial='" + idSocial + '\'' +
+                ", nameSocial='" + nameSocial + '\'' +
+                ", idSocialUser=" + idSocialUser +
+                ", roles=" + roles +
                 '}';
     }
 

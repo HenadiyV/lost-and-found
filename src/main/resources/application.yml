@@ -18,7 +18,8 @@
 facebook:
   client:
     clientId: 472324530036850
-    clientSecret: 8c2a9f70f03f870a6523f6312f28af45
+    clientSecret: ${facebookSecret}
+#    8c2a9f70f03f870a6523f6312f28af45
     accessTokenUri: https://graph.facebook.com/oauth/access_token
     userAuthorizationUri: https://www.facebook.com/dialog/oauth
     tokenName: oauth_token
@@ -32,7 +33,8 @@ google:
         accessTokenUri: https://www.googleapis.com/oauth2/v4/token
         clientAuthenticationScheme: form
         clientId: 1075144207253-0vdtldhpojqi4hkj1bumliftsdg33963.apps.googleusercontent.com
-        clientSecret: L9XacHhUTlwXZc5BzaiQISAI
+        clientSecret: ${googlSecret}
+#        L9XacHhUTlwXZc5BzaiQISAI
         scope: openid,email,profile
         userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
     resource:
@@ -55,7 +57,19 @@ spring:
         url: jdbc:mysql://localhost:3306/a_demo?serverTimezone=UTC
         username: root
     jpa:
-        hibernate:
-            ddl-auto: update
+        generate-ddl: true
+        properties:
+            hibernate:
+                jdbc:
+                    lob:
+                        non_contextual_creation: true
+    session:
+        jdbc:
+            initialize-schema: always
+            schema: classpath:session_tables.sql
+            table-name: SPRING_SESSION
 upload:
-    path: g:/Java/1_1_Kursovoy/advt/src/uploads/
+    path: g:/Java/1_1_Kursovoy/lost-and-found/src/uploads/
+
+animals:
+    path: g:/Java/1_1_Kursovoy/lost-and-found/src/uploads/animals

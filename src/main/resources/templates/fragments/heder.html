@@ -6,7 +6,61 @@
 </head>
 <body>
 <div th:fragment="heder">
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>-->
+	<script src="../static/static/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript">
+        $.ajax({
+            url : "/user",
+            success : function(data) {
+                if(data.name){
+                $(".unauthenticated").hide();
+                $("#user").html(data.name);
 
+                $(".authenticated").show();}
+            },
+            error : function(data) {
+                $("#user").html('');
+                $(".unauthenticated").show();
+                $(".authenticated").hide();
+                if (location.href.indexOf("error=true")>=0) {
+                    $(".error").show();
+                }
+            }
+        });
+        // $.get("/user", function(data) {
+        //     //
+        //     $("#user").html(data);
+        //     $(".unauthenticated").hide()
+        //     $(".authenticated").show()
+        // });
+        var logout = function() {
+        $.post("/logout", function() {
+        $("#user").html('');
+        $(".unauthenticated").show();
+        $(".authenticated").hide();
+        })
+        return true;
+        }
+	</script>
+    <!--<script th:inline="javascript">-->
+        <!--var frontendData=[[${frontendData}]];-->
+    <!--</script>-->
+	<!--<script type="text/javascript">-->
+        <!--$.get("/user", function(data) {-->
+            <!--$("#user").html(data.userAuthentication.details.name);-->
+            <!--$(".unauthenticated").hide()-->
+            <!--$(".authenticated").show()-->
+        <!--});-->
+        <!--var logout = function() {-->
+            <!--$.post("/logout", function() {-->
+                <!--$("#user").html('');-->
+                <!--$(".unauthenticated").show();-->
+                <!--$(".authenticated").hide();-->
+            <!--})-->
+            <!--return true;-->
+        <!--}-->
+	<!--</script>-->
  <!-- Navigation & Logo-->
         <div class="mainmenu-wrapper">
 	        <div class="container">
@@ -15,13 +69,13 @@
 						<ul>
 							<li>
 								<div class="dropdown choose-country">
-									<a class="#" data-toggle="dropdown" href="#" ><img src="img/flags/network_local_2674.png"  alt="World"></a>
+									<a class="#" data-toggle="dropdown" href="#" ><img src="/img/flags/network_local_2674.png"  alt="World"></a>
 									<!--<img src="../../static/static/img/flags/globe_7793.png" height="128"height="32"  width="32"-->
-											<!--width="128"/>-->
+							 				<!--width="128"/>-->
 									<ul class="dropdown-menu" role="menu">
-										<li role="menuitem"><a href="#" th:href="@{?locale=en}"><img src="img/flags/us.png" alt="United States"> US</a></li>
-										<li role="menuitem"><a href="#" th:href="@{?locale=ua}"><img src="img/flags/ua.png" alt="Украина"> UA</a></li>
-										<li role="menuitem"><a href="#" th:href="@{?locale=ru}"><img src="img/flags/ru.png" alt="Россия">RU</a></li>
+										<li role="menuitem"><a href="#" th:href="@{?locale=en}"><img src="/img/flags/us.png" alt="United States"> US</a></li>
+										<li role="menuitem"><a href="#" th:href="@{?locale=ua}"><img src="/img/flags/ua.png" alt="Украина"> UA</a></li>
+										<li role="menuitem"><a href="#" th:href="@{?locale=ru}"><img src="/img/flags/ru.png" alt="Россия">RU</a></li>
 									</ul>
 								</div>
 								<!--<div class="form-group col-lg-2">-->
@@ -31,15 +85,43 @@
 										<!--<option value="2">China</option>-->
 										<!--<option value="3">New Zealand</option>-->
 									<!--</select>-->
-								<!--</div>-->
+								<!--th:if="${frontData}"</div>class="container authenticated" <div id="auth_user"></div>-->
 							</li>
-			        		<li><a href="/login" th:text="#{lang.btn.login}">Login</a></li>
+			        		<li>
+								<div class="unauthenticated">
+									<a class="btn btn-primary" href="/login">Sing in</a>
+								</div>
+								<div class="authenticated" style="display:none">
+									<h5 th:inline="text">[[${#httpServletRequest.remoteUser}]]</h5>
+									<!--<div></div>-->
+										<!--<span id="user"></span>-->
+										<a href="/main" class="btn btn-primary" style="color:white"> кабинет </a>
+									<a href="/logout"><button onClick="logout()" class="btn btn-primary">Sing out</button></a>
+
+								</div>
+<!--<div th:if="${param.logout}" >-->
+
+<!--&lt;!&ndash;<p th:if="${frontendData.profile}" ? th:text="${frontendData.profile}" : th:text="${frontendData.profile.name}"></p>&ndash;&gt;-->
+
+    <!--<a href="/logout" th:text="#{lang.btn.logout}">Logout</a>-->
+<!--</div>-->
+							</li>
+
+
+                            <!--<li>-->
+								<!---->
+                                <!--&lt;!&ndash;<div th:unles="${param.logout}">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<a href="/login" th:text="#{lang.btn.login}">Login</a>&ndash;&gt;-->
+
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--</li>-->
+
 			        	</ul>
 					</div>
 		        </div>
 		        <nav id="mainmenu" class="mainmenu">
 					<ul>
-						<li class="logo-wrapper"><a href="/"><img src="img/logo/FoundHelp-logo.png" alt="Multipurpose Twitter Bootstrap Template"></a></li>
+						<li class="logo-wrapper"><a href="/"><img src="/img/logo/FoundHelp-logo.png" alt="Multipurpose Twitter Bootstrap Template"></a></li>
 						<li class="active">
 							<a href="/" th:text="#{lang.index}">Home</a>
 						</li>
@@ -54,36 +136,9 @@
 						</li>
 
 						<li>
-							<a href="/add-advt" th:text="#{lang.message.text}">Questions</a>
+							<a href="/advt" th:text="#{lang.message.text}">Questions</a>
 						</li>
 
-						<!--<li class="has-submenu">-->
-							<!--<a href="#">Pages +</a>-->
-							<!--<div class="mainmenu-submenu">-->
-								<!--<div class="mainmenu-submenu-inner"> -->
-
-									<!---->
-										<!--<div>-->
-										<!--<h4>General Pages</h4>-->
-										<!--<ul>-->
-											<!--<li><a href="/about">About Us</a></li>-->
-											<!--<li><a href="/contact">Contact Us</a></li>-->
-											<!--<li><a href="/faq">Frequently Asked Questions</a></li>-->
-											<!--&lt;!&ndash;<li><a href="page-testimonials-clients.html">Testimonials & Clients</a></li>&ndash;&gt;-->
-											<!--<li><a href="/events">Events</a></li>-->
-											<!--&lt;!&ndash;<li><a href="/page-404">404 Page</a></li>&ndash;&gt;-->
-											<!--&lt;!&ndash;<li><a href="page-sitemap.html">Sitemap</a></li>&ndash;&gt;-->
-											<!--<li><a href="/login">Login</a></li>-->
-											<!--<li><a href="/register">Register</a></li>-->
-											<!--<li><a href="/password-reset">Password Reset</a></li>-->
-											<!--<li><a href="/terms-privacy">Terms & Privacy</a></li>-->
-											<!--&lt;!&ndash;<li><a href="../page-coming-soon.html">Coming Soon</a></li>&ndash;&gt;-->
-										<!--</ul>-->
-									<!--</div>-->
-									<!---->
-								<!--</div>&lt;!&ndash; /mainmenu-submenu-inner &ndash;&gt;-->
-							<!--</div>&lt;!&ndash; /mainmenu-submenu &ndash;&gt;-->
-						<!--</li>-->
 
 					</ul>
 				</nav>
@@ -91,16 +146,96 @@
         </div>
         <!--End Navigation & Logo-->
 
-	<script>
-
-        //     $.getElementById("#select_selector").on('change',function() {
-        //         $.getElementById("#select_selector1 option").eq($(this).find(':selected').index()).prop('selected',true);
-        //         // $(document).ready(function() { });
-        // });
-        // document.getElementById('#select_selector').on(change(function(){
-        //     document.getElementById("#select_selector1 option").eq($(this).find(':selected').index()).prop('selected',true);
-        // });
-	</script>
+	<!--<script src="/static/static/js/auth_user.js"></script>-->
 </div>
 </body>
 </html>
+
+<!--<li class="has-submenu">-->
+<!--<a href="#">Pages +</a>-->
+<!--<div class="mainmenu-submenu">-->
+<!--<div class="mainmenu-submenu-inner"> -->
+
+<!---->
+<!--<div>-->
+<!--<h4>General Pages</h4>-->
+<!--<ul>-->
+<!--<li><a href="/about">About Us</a></li>-->
+<!--<li><a href="/contact">Contact Us</a></li>-->
+<!--<li><a href="/faq">Frequently Asked Questions</a></li>-->
+<!--&lt;!&ndash;<li><a href="page-testimonials-clients.html">Testimonials & Clients</a></li>&ndash;&gt;-->
+<!--<li><a href="/events">Events</a></li>-->
+<!--&lt;!&ndash;<li><a href="/page-404">404 Page</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;<li><a href="page-sitemap.html">Sitemap</a></li>&ndash;&gt;-->
+<!--<li><a href="/login">Login</a></li>-->
+<!--<li><a href="/register">Register</a></li>-->
+<!--<li><a href="/password-reset">Password Reset</a></li>-->
+<!--<li><a href="/terms-privacy">Terms & Privacy</a></li>-->
+<!--&lt;!&ndash;<li><a href="../page-coming-soon.html">Coming Soon</a></li>&ndash;&gt;-->
+<!--</ul>-->
+<!--</div>-->
+<!---->
+<!--</div>&lt;!&ndash; /mainmenu-submenu-inner &ndash;&gt;-->
+<!--</div>&lt;!&ndash; /mainmenu-submenu &ndash;&gt;-->
+<!--</li>-->
+
+
+<!--<script>-->
+
+<!--//     $.getElementById("#select_selector").on('change',function() {-->
+<!--//         $.getElementById("#select_selector1 option").eq($(this).find(':selected').index()).prop('selected',true);-->
+<!--//         // $(document).ready(function() { });-->
+<!--// });-->
+<!--// document.getElementById('#select_selector').on(change(function(){-->
+<!--//     document.getElementById("#select_selector1 option").eq($(this).find(':selected').index()).prop('selected',true);-->
+<!--// });-->
+<!--</script>-->
+<!--<script type="text/javascript">-->
+
+
+<!--$.ajaxSetup({-->
+<!--beforeSend : function(xhr, settings) {-->
+<!--if (settings.type == 'POST' || settings.type == 'PUT'-->
+<!--|| settings.type == 'DELETE') {-->
+<!--if (!(/^http:.*/.test(settings.url) || /^https:.*/-->
+<!--.test(settings.url))) {-->
+<!--// Only send the token to relative URLs i.e. locally.-->
+<!--xhr.setRequestHeader("X-XSRF-TOKEN",-->
+<!--Cookies.get('XSRF-TOKEN'));-->
+<!--}-->
+<!--}-->
+<!--}-->
+<!--});-->
+<!--$.get("/user", function(data) {-->
+<!--$("#user").html(data.userAuthentication.details.name);-->
+<!--$(".unauthenticated").hide()-->
+<!--$(".authenticated").show()-->
+<!--});-->
+
+<!--var logout = function() {-->
+<!--$.post("/logout", function() {-->
+<!--$("#user").html('');-->
+<!--$(".unauthenticated").show();-->
+<!--$(".authenticated").hide();-->
+<!--})-->
+<!--return true;-->
+<!--}-->
+<!--$.ajax({-->
+<!--url : "/user",-->
+<!--success : function(data) {-->
+<!--$(".unauthenticated").hide();-->
+<!--$("#user").html(data.userAuthentication.details.name);-->
+<!--$(".authenticated").show();-->
+<!--},-->
+<!--error : function(data) {-->
+<!--$("#user").html('');-->
+<!--$(".unauthenticated").show();-->
+<!--$(".authenticated").hide();-->
+<!--if (location.href.indexOf("error=true")>=0) {-->
+<!--$(".error").show();-->
+<!--}-->
+<!--}-->
+<!--});-->
+<!--// $(document).ready(function () {-->
+<!--// //your code here });-->
+<!--</script>-->

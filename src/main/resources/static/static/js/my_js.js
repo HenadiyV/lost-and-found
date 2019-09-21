@@ -14,6 +14,7 @@ function myModalMessage(id) {
 
 }
 function message_show(id) {
+
     document.getElementById(id).style.display = document.getElementById(id).style.display == 'none' ? 'block' : 'none';
 
 }
@@ -28,7 +29,9 @@ function doAjax() {
     });
 }
 function doMessage() {
+    var t=$('#textMessage').val();
+    if(t!=""){
     //document.getElementById('btn_msg').style.display = document.getElementById('btn_msg').style.disabled == 'true' ? 'false' : 'true';
-    document.getElementById('btn_msg').disabled=  document.getElementById('btn_msg').disabled==false  ?true  : false;
+    document.getElementById('btn_msg').disabled=  document.getElementById('btn_msg').disabled==false  ?true  : false;}
 
 }

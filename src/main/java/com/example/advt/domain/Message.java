@@ -12,43 +12,24 @@ import java.util.Objects;
 @Table(name = "message")
 public class Message {
 
-    /**
-     * Default constructor
-     */
     public Message() {
     }
 
-    /**
-     *
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
 
-    /**
-     *
-     */
     @Column(name = "contact")
     public String contact;
 
-    /**
-     *
-     */
     @Column(name = "text")
     public String text;
 
-    /**
-     *
-     */
     @Column(name = "idToUser")
     public int idToUser;
 
-    /**
-     *
-     */
     @Column(name = "idAdvt")
     public int idAdvt;
-
 
     public int getId() {
         return id;

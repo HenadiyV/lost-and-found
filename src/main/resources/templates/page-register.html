@@ -45,21 +45,31 @@
 				<div class="row">
 					<div class="col-sm-5">
 						<div class="basic-login">
-							<form role="form">
+							<form role="form" th:action="@{/register}"  method="post">
 								<div class="form-group">
-		        				 	<label for="register-username"><i class="icon-user"></i> <b th:text="#{register.social.email}">Email</b></label>
-									<input class="form-control" id="register-username" type="text" placeholder="">
+								<!--for="register-username"-->
+								<label ><i class="icon-user"></i> <b th:text="#{register.social.name}">Name</b></label>
+								<input class="form-control" id="name" name="name" type="text" placeholder="">
+							</div>
+								<div class="form-group">
+									<!--for="register-username"-->
+									<label ><i class="icon-user"></i> <b th:text="#{register.social.email}">Email</b></label>
+									<input class="form-control" id="email" name="email" type="text" placeholder="">
 								</div>
 								<div class="form-group">
-		        				 	<label for="register-password"><i class="icon-lock"></i> <b th:text="#{register.social.password}">Password</b></label>
-									<input class="form-control" id="register-password" type="password" placeholder="">
+									<!--for="register-password"-->
+		        				 	<label ><i class="icon-lock"></i> <b th:text="#{register.social.password}">Password</b></label>
+									<input class="form-control" id="password" name="password" type="password" placeholder="">
 								</div>
 								<div class="form-group">
-		        				 	<label for="register-password2"><i class="icon-lock"></i> <b th:text="#{register.social.repassword}">Re-enter Password</b></label>
-									<input class="form-control" id="register-password2" type="password" placeholder="">
+									<!--for="register-password2"-->
+		        				 	<label ><i class="icon-lock"></i> <b th:text="#{register.social.repassword}">Re-enter Password</b></label>
+									<input class="form-control" id="password2" name="password2" type="password" placeholder="">
 								</div>
 								<div class="form-group">
-									<button type="submit" class="btn pull-right" th:text="#{register.social.register}">Register</button>
+									<button type="submit" class="btn pull-right"  th:text="#{register.social.register}">Register</button>
+									<!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+
 									<div class="clearfix"></div>
 								</div>
 							</form>
@@ -69,7 +79,7 @@
 						<p th:text="#{register.social.text }">Or login with your Facebook or Twitter</p>
 						<div class="social-login-buttons">
 							<a th:href="@{/auth/facebook}" class="btn-facebook-login" th:text="#{login.social.facebook}">Login with Facebook</a>
-							<a th:href="@{/auth/twitter}" class="btn-twitter-login" th:text="#{login.social.twitter}" >Login with Twitter</a>
+							<!--<a th:href="@{/auth/twitter}" class="btn-twitter-login" th:text="#{login.social.twitter}" >Login with Twitter</a>-->
 							<a  th:href="@{/auth/google}" class="btn-google-login" th:text="#{login.social.google}" >Login with Google</a>
 						</div>
 					</div>

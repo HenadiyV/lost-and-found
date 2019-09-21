@@ -2,7 +2,10 @@ package com.example.advt.config;
 
 import com.example.advt.domain.Role;
 import com.example.advt.domain.User;
+
 import com.example.advt.repos.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,7 +25,6 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.util.Assert;
 
 import java.util.Collections;
@@ -42,8 +44,9 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
     private String tokenType = "Bearer";
     private AuthoritiesExtractor authoritiesExtractor = new FixedAuthoritiesExtractor();
     private PrincipalExtractor principalExtractor = new FixedPrincipalExtractor();
+@Autowired
+    private UserRepository userRepository;
 
-    private UserRepository userRepo;
     private PasswordEncoder passwordEncoder;
 
     public CustomUserInfoTokenServices(){}
@@ -54,9 +57,8 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
         this.clientId = clientId;
     }
 
-    public void setUserRepo(UserRepository userRepo)
-    {
-        this.userRepo = userRepo;
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public void setPasswordEncoder(PasswordEncoder passwordEncoder)
@@ -100,12 +102,80 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
             throws AuthenticationException, InvalidTokenException
     {
         Map<String, Object> map = getMap(this.userInfoEndpointUrl, accessToken);
+ //User us=new User();
+// String idSocial="";
+// String nameSocial="";
+// String name="";
+ //String socialEmail="";
+// String photo="";
+// String gender="";
+// String locale="";
+        if(map.containsKey("sub")|| map.containsKey("id")){
 
-        if(map.containsKey("sub"))
-        {
-            String googleName = (String) map.get("name");
-            String googleUsername = (String) map.get("email");
+            String  idSocial=(String)map.get("sub")!=null ?(String)map.get("sub"):(String)map.get("id");
+            String  nameSocial=(String)map.get("sub")!=null ?"google":"facebook";
+            String  socialEmail=(String) map.get("email");
+            String    name=(String) map.get("name");
+   //        photo=(String)map.get("sub")!=null?(String) map.get("picture"):(String) map.get("photos");
+//           gender=(String) map.get("gender");
+//            locale=(String) map.get("locale");
 
+
+
+            User   user= userRepository.findByEmail(socialEmail);
+
+
+        if(user==null){
+          user= new User();
+            user.setActive(true);
+            user.setRoles(Collections.singleton(Role.USER));
+        }
+            user.setIdSocial(idSocial);
+            user.setName(name);
+            user.setEmail(socialEmail);
+           user.setNameSocial(nameSocial);
+
+
+            user.setPassword(passwordEncoder.encode("oauth2user"));
+           userRepository.save(user);
+
+
+        }
+//        if(map.containsKey("id")){
+//
+//            idSocial=(String)map.get("id");
+//            nameSocial="facebook";
+//            socialEmail=(String) map.get("email");
+//            name=(String) map.get("name");
+//            //        photo=(String)map.get("sub")!=null?(String) map.get("picture"):(String) map.get("photos");
+////           gender=(String) map.get("gender");
+////            locale=(String) map.get("locale");
+//
+//
+//
+//            User   user= userRepository.findByEmail(socialEmail);
+//
+////            try{
+////
+////            }catch (Exception ex){
+////                System.out.println("ERROR FAK!!!!");
+////            }
+//            if(user==null){
+//               user= new User();
+//                user.setActive(true);
+//                user.setRoles(Collections.singleton(Role.USER));
+//            }
+//            user.setIdSocial(idSocial);
+//            user.setName(name);
+//            user.setEmail(socialEmail);
+//            user.setNameSocial(nameSocial);
+//
+//
+//            user.setPassword(passwordEncoder.encode("oauth2user"));
+//            userRepository.save(user);
+//
+//
+//        }
             //User user = userRepo.findByGoogleUserName(googleUsername);
 
 //            if(user == null)
@@ -123,7 +193,7 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
 //            user.setPassword(passwordEncoder.encode("oauth2user"));
 //
 //            userRepo.save(user);
-        }
+      //  }
 
         if (map.containsKey("error"))
         {
@@ -133,19 +203,28 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
         return extractAuthentication(map);
     }
 
+//    private boolean myFun(String str){
+//        if(userSocialRepository.findByIdSocial(str)!=null){
+//            return true;
+//        }else{
+//            return false;
+//        }
+//}
+
     private OAuth2Authentication extractAuthentication(Map<String, Object> map) {
         System.out.println("EXTRACT AUTHENTICATION");
 
         for(Map.Entry<String, Object> e : map.entrySet())
         {
             System.out.println(e.getKey() + " " + e.getValue().toString());
-            if(e.getKey().equals("sub")){
-                
-            }
+
+
         }
 
 
         Object principal = getPrincipal(map);
+
+
         List<GrantedAuthority> authorities = this.authoritiesExtractor
                 .extractAuthorities(map);
         OAuth2Request request = new OAuth2Request(null, this.clientId, null, true, null,

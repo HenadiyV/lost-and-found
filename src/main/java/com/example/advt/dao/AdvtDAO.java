@@ -13,7 +13,7 @@ import java.util.Date;
  *14.09.2019
  */
 @Data
-public class AdvtDTO {
+public class AdvtDAO {
     //  private String category;
      @NotNull(message="Виберіть місто")
     private City city;
@@ -31,7 +31,7 @@ public class AdvtDTO {
     private String status;
    private String chracters;
     private String url;
-    public AdvtDTO() {
+    public AdvtDAO() {
     }
 
 

@@ -66,7 +66,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-5">
-                <h3 th:text="#{lang.contactUs.message}">Send Us a Message</h3>
+                <h3 th:text="#{lang.contactUs.messageUser}">Send Us a Message</h3>
 
                 <form action="/advt/add-advt"  method="post"
                       enctype="multipart/form-data">
@@ -81,7 +81,7 @@
                     </div>
                     <div class=" col-sm-9">
                         <div class="error" th:if="${cityEr}" th:text="#{lang.city.error}">Name Error</div>
-                        <label th:text="#{lang.city}"><b>Cityy</b> </label><br/>
+                        <label th:text="#{lang.city}"><b>City</b> </label><br/>
                         <select class="form-control" id="city" name="city">
                             <option value="" th:text="#{lang.select.city}">Виберіть місто</option>
                             <option th:each="city : ${cityList}"
@@ -147,7 +147,7 @@
                     <div class=" col-sm-9">
                         <input hidden="hidden" type="text" name="url" id="url" th:value="${url}">
                         <input hidden="hidden" type="text" name="status" id="status" th:value="${status}">
-                        <input hidden="hidden" type="text" name="category" id="category" th:value="${category.id}">
+                        <input hidden="hidden" type="text" name="category" id="category" th:value="${category}">
                         <button class="btn-red" type="submit" id="submit" th:text="#{lang.btn.send}">Відправити</button>
                     </div>
                     <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->

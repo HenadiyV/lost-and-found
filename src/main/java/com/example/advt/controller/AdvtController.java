@@ -1,15 +1,13 @@
 package com.example.advt.controller;
 
 
-import com.example.advt.dao.AdvtDTO;
+import com.example.advt.dao.AdvtDAO;
 import com.example.advt.domain.*;
 import com.example.advt.repos.*;
 import com.example.advt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,7 +54,7 @@ private SubcategoryRepository subcategoryRepository;
  }
 //  ,
     @GetMapping("/add-advt")
-    public String pageAddAdvt(AdvtDTO advtDto,
+    public String pageAddAdvt(AdvtDAO advtDAO,
                               @RequestParam(required = false, value ="status") String status,
                               @RequestParam(required = false, value ="category") Category category ,
                               @RequestParam( value ="url") String url,Map<String, Object> model)throws ParseException{
@@ -71,7 +69,7 @@ private SubcategoryRepository subcategoryRepository;
 //           advt.setAnimal(null);
         }
        // userService.authUserMap(model);
-       model.put("category", category);
+       model.put("category", Id);
        model.put("status", status);
         model.put("url", url);
         //advt.setCategory(category);
@@ -86,11 +84,11 @@ private SubcategoryRepository subcategoryRepository;
     }
     @PostMapping("/add-advt")
     public String pageAddAdvtPost(Principal principal,
-            @Valid AdvtDTO advtDto, BindingResult bindingResult, Model model,
+                                  @Valid AdvtDAO advtDAO, BindingResult bindingResult, Model model,
                                   @RequestParam(required = false, value = "dataStart")
                                     @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataStart,
 //                                 @RequestParam("category") Category category ,
-                              //  @RequestParam("url") String url ,
+                                  //  @RequestParam("url") String url ,
                                   @RequestParam("subcategory") Integer subcategory ,
                                   @RequestParam(required = false, value = "file")
                                           MultipartFile file)throws ParseException, IOException{
@@ -99,15 +97,15 @@ private SubcategoryRepository subcategoryRepository;
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errorMap);
-            if (advtDto.getCity() == null) {
+            if (advtDAO.getCity() == null) {
                 model.addAttribute("cityEr", "Не вибранно місто");
 
             }
-            if (advtDto.getSubcategory() == 0) {
+            if (advtDAO.getSubcategory() == 0) {
                 model.addAttribute("categoryEr", "Не вибранно категорию.");
 
             }
-            if (advtDto.getStatus() == null) {
+            if (advtDAO.getStatus() == null) {
                 model.addAttribute("statusEr", "Не вказано статус.");
 
             }
@@ -115,18 +113,21 @@ private SubcategoryRepository subcategoryRepository;
                 model.addAttribute("dataSotpEr", "Не вказано дату .");
 
             }
-            if (advtDto.getTextAdvt().isEmpty()) {
+            if (advtDAO.getTextAdvt().isEmpty()) {
                 model.addAttribute("textAdverEr", "Не вказано текст оголошеня.");
             }
             Iterable<City> cityList = cityRepository.findAll();
             model.addAttribute("cityList", cityList);
-//            Category categ=categoryRepository.getOne(advtDto.getCategory().id);
-            if(advtDto.getCategory()>0){
-                Iterable<Subcategory> categoryList = subcategoryRepository.findByCategoryId(advtDto.getCategory());
+//            Category categ=categoryRepository.getOne(advtDAO.getCategory().id);
+            if(advtDAO.getCategory()>0){
+                Iterable<Subcategory> categoryList = subcategoryRepository.findByCategoryId(advtDAO.getCategory());
                 model.addAttribute("categoryList", categoryList);
-            advtDto.setCategory(advtDto.getCategory());
+            advtDAO.setCategory(advtDAO.getCategory());
             }
-            advtDto.setChracters("standart");
+            advtDAO.setChracters("standart");
+            model.addAttribute("category", advtDAO.getCategory());
+            model.addAttribute("status", advtDAO.getStatus());
+            model.addAttribute("url", advtDAO.getUrl());
             return "page-add-advt";
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -151,17 +152,18 @@ private SubcategoryRepository subcategoryRepository;
         }
 
             if (result&&user!=null) {
-                advtDto.setChracters("standart");
+                advtDAO.setChracters("standart");
 boolean found=false;
-if(advtDto.getStatus().equals("Знайденно")){
+if(advtDAO.getStatus().equals("Знайденно")){
     found=true;
 }
 //              String email= userService.authUserEmail();
 
-            Category cat=categoryRepository.getOne(advtDto.getCategory());
-            Subcategory sub=subcategoryRepository.getOne(subcategory);
+            Category cat=categoryRepository.getOne(advtDAO.getCategory());
+            Subcategory sub= new Subcategory();
+                sub = subcategoryRepository.findById(subcategory).get();
             Long userId=user.getId();
-             Advt adv = new Advt(advtDto.getTextAdvt(),true, photo, advtDto.getStatus(),advtDto.getChracters(),user.getId(), startDate,found, cat ,advtDto.getCity(),sub);
+             Advt adv = new Advt(advtDAO.getTextAdvt(),true, photo, advtDAO.getStatus(), advtDAO.getChracters(),user.getId(), startDate,found, cat , advtDAO.getCity(),sub);
 
 
             advtRepository.save(adv);
@@ -175,6 +177,18 @@ if(advtDto.getStatus().equals("Знайденно")){
 //        model.addAttribute("adver", advt);
 //        model.addAttribute("photo", photo);
 //        model.addAttribute("photoUp", uploadPath + photo);
-        return "redirect:"+advtDto.getUrl();
+        return "redirect:"+ advtDAO.getUrl();
+    }
+    @PostMapping("/delete")
+    public String sdvtDelete(@RequestParam("advtDel") Long Id,@RequestParam("url") String url) throws IOException {
+     Advt advt= advtRepository.getOne(Id);
+    if(advt!=null)
+    {
+        if(!advt.getPhoto().equals("noimage.png")){
+      userService.deleteMyFile(advt.getPhoto());
+        }
+    advtRepository.delete(advt);
+    }
+        return "redirect:"+url;
     }
 }

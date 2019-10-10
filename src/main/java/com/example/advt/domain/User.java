@@ -37,7 +37,7 @@ public class User implements UserDetails,Serializable {
 private  String idSocial;
 private String nameSocial;
     private  Long idSocialUser;
-
+private String activationCode;
 //    @OneToMany(mappedBy="user",targetEntity=Advt.class,cascade = CascadeType.ALL)
 //    private Set<Advt> advts;
 
@@ -66,7 +66,13 @@ private String nameSocial;
         this.name = name;
     }
 
+    public String getactivationCode() {
+        return activationCode;
+    }
 
+    public void setactivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
 
     //    @ManyToOne
 //    private Role role;
@@ -208,6 +214,25 @@ private String nameSocial;
 
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return active == user.active &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(phone, user.phone) &&
+                Objects.equals(idSocial, user.idSocial) &&
+                Objects.equals(nameSocial, user.nameSocial) &&
+                Objects.equals(idSocialUser, user.idSocialUser) &&
+                Objects.equals(activationCode, user.activationCode) &&
+                Objects.equals(roles, user.roles);
+    }
+
+    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
@@ -220,16 +245,9 @@ private String nameSocial;
                 ", idSocial='" + idSocial + '\'' +
                 ", nameSocial='" + nameSocial + '\'' +
                 ", idSocialUser=" + idSocialUser +
+                ", activationCode='" + activationCode + '\'' +
                 ", roles=" + roles +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return getId() == user.getId();
     }
 
     @Override

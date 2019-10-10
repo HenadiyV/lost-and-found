@@ -2,6 +2,7 @@ package com.example.advt.controller;
 
 import com.example.advt.domain.City;
 import com.example.advt.domain.Views;
+import com.example.advt.dto.CityDto;
 import com.example.advt.repos.CityRepository;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.BeanUtils;
@@ -27,10 +28,11 @@ public class CityController {
     }
 
     @GetMapping
-   @JsonView({Views.IdName.class})
+//  @JsonView({Views.FullMessage.class})
     public List<City> list(){
-        return cityRepository.findAll();
-    }
+        CityDto ST=new CityDto((List<City>)cityRepository.findAll());
+        return ST.getListCitys();
+}
     @GetMapping("{id}")
     public City getOne(@PathVariable("id") City city) {
         return city;

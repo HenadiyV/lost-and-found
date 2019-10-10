@@ -1,6 +1,9 @@
 package com.example.advt.controller;
 
+import com.example.advt.dao.AdminPostDAO;
+import com.example.advt.domain.AdminPost;
 import com.example.advt.domain.User;
+import com.example.advt.repos.AdminPostRepository;
 import com.example.advt.repos.UserRepository;
 import com.example.advt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +13,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /*
  *@autor Hennadiy Voroboiv
@@ -35,31 +41,12 @@ public class IndexController {
 private UserRepository userRepository;
 @Autowired
 private UserService userService;
+@Autowired
+private AdminPostRepository adminPostRepository;
    final boolean logout=false;
     @GetMapping
     public String index(@AuthenticationPrincipal User user, Model model){
-       // User user=new User();
-      //  String name="";
 
-
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if (principal instanceof User) {
-//            name=((User)principal).getName();
-//        }
-//if(principal.equals("anonymousUser")){data.put("profile","");}
-//        else{
-//        data.put("profile",principal);
-//    model.addAttribute("logout_user","1");
-//        }
-//HashMap<Object ,Object> data= new HashMap<>();
-//        if(authUser()!=null){
-//            data=authUser();
-//        model.addAttribute("frontendData",data);
-
-   // }
-//if(user!=null){
-//        model.addAttribute("frontendData",user.getName());}else{
-//  userService.authUser(model);}
         return "index";
     }
 
@@ -72,89 +59,110 @@ private UserService userService;
         return "redirect:/login?logout";
     }
 
-//    @GetMapping("/logout")
-//    public String logout(){
-//        //userService.authUser(model);
-//        return "redirect:/";
-//    }
 
-    @GetMapping("/about")
-    public String about(@AuthenticationPrincipal User user,Model model){
-        //userService.authUser(model);
+    @GetMapping("about")
+    public String about(){
+
         return "page-about-us";
     }
-    @GetMapping("/contact")
-    public String contact(@AuthenticationPrincipal User user,Model model){
-       // userService.authUser(model);
+    @GetMapping("contact")
+    public String contact(AdminPostDAO adminPost,Map<String, Object> model){
+//Map<String,String> list=new HashMap<String, String>();
+//        list.put("Загальна","Загальна");
+//        list.put("Сервіс","Сервіс");
+//        list.put("Заказ","Заказ");
+//        model.put("topic",list);
         return "page-contact-us";
     }
+// @RequestParam (value="name")String name  , ("name")String name,@RequestParam("email")String email,@RequestParam("prependedInput")String prependedInput,@RequestParam("contact-messageUser")String messageUser
+    @PostMapping("contact")
+    public String addPost(@Valid AdminPostDAO adminPost, BindingResult bindingResult, Model model) throws ParseException {
+
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
+            model.mergeAttributes(errorMap);
+            if (adminPost.getName().isEmpty()) {
+                model.addAttribute("nameError", "Не вказано имя");
+            }
+            if (adminPost.getEmail().isEmpty()) {
+                model.addAttribute("emailError", "Не вказано email");
+            }
+            if (!adminPost.getTopic().equals("General")||adminPost.getTopic().equals("Services")||adminPost.getTopic().equals("Orders")) {
+                model.addAttribute("topicError", "Не вказано тему");
+            }
+            if (adminPost.getMessageUser().isEmpty()) {
+                model.addAttribute("contactMessageUserError", "Не вказано текст");
+            }
+
+        }else{
+            model.addAttribute("sendMessage", "Ваше повідомленя відправлено");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            Date sendDate = dateFormat.parse(dateFormat.format(new Date()));
+            AdminPost adminPost1=new AdminPost(adminPost.getName(),adminPost.getEmail(),adminPost.getMessageUser(),adminPost.getTopic(),true,sendDate);
+            adminPostRepository.save(adminPost1);
+        }
+
+// ,@RequestParam(value="topic")String topic       if(!adminPost.getName().isEmpty()&&!adminPost.getEmail().isEmpty()&& !adminPost.getContactMessageUser().isEmpty()&&!adminPost.getTopic().isEmpty()){
+//            adminPost.setName(name);
+//            AdminPost newAdminPost= new AdminPost(adminPost.getName(),
+//                    adminPost.getEmail(),
+//                    adminPost.getContactMessageUser(),
+//                    adminPost.getTopic(),true);
+//            adminPostRepository.save(adminPost);
+ //       }
+         return "page-contact-us";
+        //return "redirect:/";
+    }
     @GetMapping("/coming")
-    public String coming(@AuthenticationPrincipal User user,Model model){
-       // userService.authUser(model);
+    public String coming(){
+
         return "page-coming-us";
     }
-    @GetMapping("/events")
-    public String events(@AuthenticationPrincipal User user,Model model){
-       // userService.authUser(model);
-        return "page-events";
-    }
-    @GetMapping("/faq")
-    public String faq(@AuthenticationPrincipal User user,Model model){
-       // userService.authUser(model);
+//    @GetMapping("admin")
+//    public String events(){
+//
+//        return "admin-page";
+//    }
+    @GetMapping("faq")
+    public String faq(){
+
         return "page-faq";
     }
     @GetMapping("/reset-password")
     public String resetPassword(@AuthenticationPrincipal User user,Model model){
 
-       // userService.authUser(model);
+
         return "page-password-reset";
     }
     @GetMapping("/homepage-sample")
-    public String homepageSample(@AuthenticationPrincipal User user,Model model){
-      //  userService.authUser(model);
+    public String homepageSample(){
+
         return "page-homepage-sample";
     }
 
     @GetMapping("/product-details")
     public String productDetails(Model model){
-       // userService.authUser(model);
+
         return "page-product-details";
     }
 
     @GetMapping("/terms-privacy")
     public String termsPrivacy(Model model){
-      //  userService.authUser(model);
+
         return "page-terms-privacy";
     }
 
     @GetMapping("/piople")
     public String piople(Model model){
-       // userService.authUser(model);
+
         return "page-people";
     }
 
-//    @GetMapping("/advt")
-//    public String addAdvt(Model model){
-//        authUser(model);
-//        return "page-advt";
-//    }
+
     @GetMapping("/test")
     public String listAdvt(Model model){
-        //authUser(model);
+
         return "testVue";
     }
-//    @GetMapping("/animal")
-//    public String listAnimal(Model model){
-//        //authUser(model);
-//        return "page_advt_animals";
-//    }
-//     private void authUser(Model model){
-//         HashMap<Object ,Object> data= new HashMap<>();
-//         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//         if(principal.equals("anonymousUser")){ data.put("profile"," ");}
-//        else{
-//             data.put("profile",principal);
-//             model.addAttribute("frontendData",data);
-//         }
-//     }
+
 }

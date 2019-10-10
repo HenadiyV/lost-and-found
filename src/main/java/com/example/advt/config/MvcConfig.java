@@ -32,8 +32,12 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**")
                 .addResourceLocations("file:///"+uploadPath+"/");
-        registry.addResourceHandler("/static/**")
-                .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/static/static/**")
+                .addResourceLocations("classpath:/static/static/");
+//        registry.setOrder(Integer.MIN_VALUE);
+//        registry.addResourceHandler("/favicon.ico")
+//                .addResourceLocations("/")
+//                .setCachePeriod(0);
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

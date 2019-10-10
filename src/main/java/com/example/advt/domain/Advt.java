@@ -3,6 +3,7 @@ package com.example.advt.domain;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 /*
  *@autor Hennadiy Voroboiv
@@ -49,9 +50,17 @@ public class Advt {
     public void setCategory(Category category) {
         this.category = category;
     }
-    /**
-     *
-     */
+
+//    @OneToMany(mappedBy="advt",targetEntity=MessageUser.class,cascade = CascadeType.ALL)
+//  private Set<MessageUser> mess;
+
+//    public Set<MessageUser> getMess() {
+//        return mess;
+//    }
+//
+//    public void setMess(Set<MessageUser> mess) {
+//        this.mess = mess;
+//    }
 //    @ManyToOne
 //    private User user;
 //

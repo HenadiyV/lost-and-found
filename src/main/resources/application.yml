@@ -51,6 +51,9 @@ google:
 #            resource:
 #                preferTokenInfo: true
 #                userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+#mail:
+#    debug: true
+#
 spring:
     datasource:
         password: 1111
@@ -68,8 +71,59 @@ spring:
             initialize-schema: always
             schema: classpath:session_tables.sql
             table-name: SPRING_SESSION
+
+#    mail:
+#
+#         host: smtp.gmail.com
+#         password: 84726751Vge
+#         port: 587
+#
+#         properties:
+#             mail:
+#                 smtp:
+#                     auth: true
+##                     connectiontimeout: 5000
+#                     starttls:
+#                         enable: true
+#                         required: true
+##                     timeout: 5000
+##                     writetimeout: 5000
+#         username: henadiyvognev@gmail.com
+
+#    mail:
+#            host: smtp.gmail.com
+#            username: henadiyvognev@gmail.com
+#            password: 84726751Vge
+#            port: 587
+#            protocol: smtp
+#            properties:
+#                mail:
+#                    smtp:
+#                        auth: true
+#                        starttls:
+#                            enable: true
+
+#
+
+
+#                        connectiontimeout : 5000
+#                        timeout : 5000
+#                        writetimeout : 5000
+
+
+
 upload:
     path: g:/Java/1_1_Kursovoy/lost-and-found/src/uploads/
 
 animals:
     path: g:/Java/1_1_Kursovoy/lost-and-found/src/uploads/animals
+
+#cnixxsimmqrcfwpr
+#84726751vge
+#vognevhenadij@gmail.com
+
+#$84726751vge
+#henadiyv@gmail.com
+
+#84726751Vge
+#henadiyvognev@gmail.com

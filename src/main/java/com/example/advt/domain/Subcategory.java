@@ -1,6 +1,7 @@
 package com.example.advt.domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 /*
@@ -39,4 +40,46 @@ public class Subcategory {
         this.category = category;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Subcategory)) return false;
+        Subcategory that = (Subcategory) o;
+        return id == that.id &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(category, that.category) &&
+                Objects.equals(advt, that.advt);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, category, advt);
+    }
+
+    @Override
+    public String toString() {
+        return "Subcategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category +
+                ", advt=" + advt +
+                '}';
+    }
 }

@@ -1,36 +1,24 @@
 package com.example.advt.controller;
 
 import com.example.advt.dao.AdvtEditDAO;
-import com.example.advt.domain.Advt;
-import com.example.advt.domain.City;
-import com.example.advt.domain.Subcategory;
-import com.example.advt.domain.User;
-import com.example.advt.repos.AdvtRepository;
-import com.example.advt.repos.CategoryRepository;
-import com.example.advt.repos.CityRepository;
-import com.example.advt.repos.SubcategoryRepository;
+import com.example.advt.dao.AdvtViewDAO;
+import com.example.advt.dao.GuestMessageViewDAO;
+import com.example.advt.domain.*;
+import com.example.advt.repos.*;
 import com.example.advt.service.UserService;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.*;
 
@@ -44,6 +32,7 @@ import java.util.*;
 public class MainController {
     @Value("${upload.path}")
     private String uploadPath;
+    private boolean adm;
     @Autowired
     private UserService userService;
     @Autowired
@@ -54,71 +43,115 @@ public class MainController {
     private SubcategoryRepository subcategoryRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-@GetMapping
-    public String mainPage(Principal principal,Map<String, Object> model,
-                           @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable){
-    if(principal!=null){
-        User user = (User) userService.loadUserByUsername(principal.getName());
-        Page<Advt> adverList = advtRepository.findByUserId(user.getId(),  pageable);
-        model.put("listAdver", adverList);
-        model.put("us",2);
-    return "page-user";
-    }
-    else{
-        return "redirect:/";
-    }
-}
+    @Autowired
+    private MessageRepository messageRepository;
 
+    @GetMapping
+    public String mainPage(Principal principal, Map<String, Object> model,
+                           @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        if (principal != null) {
+            User user = (User) userService.loadUserByUsername(principal.getName());
+            List<Advt> adverList = advtRepository.findByUserId(user.getId());
+            List<MessageUser> messageUserList = messageRepository.findByIdToUser(user.getId());
 
-//@RequestMapping(value = "/edit/{advtId}", method = RequestMethod.GET)@PathParam(value = "advtId1") Long id,
+            List<AdvtViewDAO> viewMessage = new ArrayList<>();
+
+            for (Advt ad : adverList) {
+                AdvtViewDAO adV = new AdvtViewDAO();
+
+                int coun = 0;
+                Date d = null;
+                for (MessageUser mes : messageUserList) {
+                    if (mes.getIdAdvt() == ad.getId() && mes.isActive()) {
+                        coun++;
+//                   if(d==null){
+//
+//                   }
+                        d = mes.getDat();
+                    }
+                }
+
+                adV.setCountMess(coun);
+                adV.setDatMess(d);
+                adV.setSubcategory(ad.getSubcategory().name);
+                adV.setAdvtId(ad.getId());
+                adV.setActivAdvt(ad.isActiv());
+
+                adV.setCategory(ad.getCategory().getName());
+                adV.setCharacters(ad.getCharacters());
+                adV.setCity(ad.getCity().getName());
+                adV.setDataS(ad.getDat());
+                adV.setPhoto(ad.getPhoto());
+                adV.setStatus(ad.getStatus());
+                adV.setTextAdvt(ad.getText());
+                adV.setUserId(ad.getUserId());
+                viewMessage.add(adV);
+
+            }
+
+            if(userService.userAdmin()){
+                model.put("adm", 1);
+            }
+
+            Page<AdvtViewDAO> pviewMessage = searchPatientPage(viewMessage, pageable);
+            model.put("url", "main");
+            model.put("viewMessage", pviewMessage);
+            model.put("us", 2);
+            // model.put("num", pviewMessage.getTotalElements());, int size
+            return "page-user";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    public Page<AdvtViewDAO> searchPatientPage(List<AdvtViewDAO> list, Pageable pageable) {
+        List<AdvtViewDAO> patientsList = new ArrayList<AdvtViewDAO>();
+        list.sort(Comparator.comparing(AdvtViewDAO::getAdvtId).reversed());
+        patientsList.addAll(list);
+        int start = (int) pageable.getOffset();
+        int end = (start + pageable.getPageSize()) > patientsList.size() ? patientsList.size() : (start + pageable.getPageSize());
+
+        return new PageImpl<AdvtViewDAO>(patientsList.subList(start, end), pageable, patientsList.size());
+    }
+
     @GetMapping("/edit")
-    public String editAdvt(AdvtEditDAO advtEdit ,@RequestParam(value="advtId") Advt advt, Map<String, Object> model){
+    public String editAdvt(AdvtEditDAO advtEdit, @RequestParam(value = "advtId") Advt advt, Map<String, Object> model) {
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
-//      Advt advt=advtRepository.getOne(id);
-        Integer Id=advt.getCategory().id;
-        if(Id>0) {
-            Iterable<Subcategory> categoryList = subcategoryRepository.findByCategoryId(Id);
+        int Id = advt.getCategory().id;
+        if (Id > 0) {
+            Iterable<Subcategory> categoryList = subcategoryRepository.findAllById(Id);
             model.put("categoryList", categoryList);
         }
-//        List<Map<String, String>> statusList = new ArrayList<Map<String, String>>(){{
-//        add(new HashMap<String, String>() {{ put("id", "1"); put("text", "Розшукується"); }});
-//            add(new HashMap<String, String>() {{ put("id", "2"); put("text", "Зник"); }});
-//            add(new HashMap<String, String>() {{ put("id", "3"); put("text", "Загубленно"); }});
-//            add(new HashMap<String, String>() {{ put("id", "4"); put("text", "Знайденно"); }});
-//        }};
-        List<String> statusList= Arrays.asList("Розшукується","Зник","Загубленно","Знайденно");
-        model.put("statusList",statusList);
-//        model.put("status",advt.getStatus());
-//        model.put("cityName",advt.getCity().name);
-//        model.put("cityId",advt.getCity().id);
-//        model.put("subCategoryName",advt.getSubcategory().name);
-//        model.put("subCategoryId",advt.getSubcategory().id);
-//        model.put("dataS",advt.getDat());
-//        model.put("photo",advt.getPhoto());
-//        model.put("text",advt.getText());
-        model.put("advt",advt);
+        List<String> statusList = Arrays.asList("Розшукується", "Зник", "Загубленно", "Знайденно");
+        model.put("statusList", statusList);
+        model.put("advt", advt);
+        if(userService.userAdmin()){
+            model.put("adm", 1);
+        }
+
         return "page-edit-advt";
     }
+
     @PostMapping("/edit")
-    public String editAdvtPost( Advt advt,
+    public String editAdvtPost(Advt advt,
                                @RequestParam(required = false, value = "dataStart") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataStart,
-//   @ModelAttribute Advt advt,@RequestParam(value="advtId")                            @RequestParam(value="cityId")int cityId,
-                            //  @RequestParam(value="subCategoryId")int subCategoryId,
-//                               @RequestParam(value="dataS")@DateTimeFormat(pattern = "yyyy-MM-dd") Date dataS,
-//                               @RequestParam(value="photo")String photo,
                                @RequestParam(required = false, value = "file")
-                                           MultipartFile file,
+                                       MultipartFile file,
                                Model model) throws IOException {
         boolean result = true;
-        Advt advtOld=advtRepository.getOne(advt.getId());
-        if(dataStart!=advtOld.getDat()){
+        Advt advtOld = advtRepository.getOne(advt.getId());
+        if (dataStart != advtOld.getDat()) {
             advt.setDat(dataStart);
         }
 
         String photo = "";
-        if(file!=null&& !file.getOriginalFilename().isEmpty()){
-           // deleteMyFile(advtOld.getPhoto());
+
+        String f = file.getOriginalFilename();
+        if (!f.equals("")) {
+            userService.deleteMyFile(advtOld.getPhoto());
+
+
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
@@ -129,47 +162,185 @@ public class MainController {
             fileName = fileName.substring(startIndex + 1);
             photo = uuid + fileName;
             file.transferTo(new File(uploadPath + "/" + photo));
-        }else photo="noimage.png";
-        advt.setPhoto(photo);
-//        if (bindingResult.hasErrors()) {
-//            Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
-//            model.mergeAttributes(errorMap);
-//            if (advt.getCity() == null) {
-//                model.addAttribute("cityEr", "Не вибранно місто");
-//
-//            }
-//            if (advt.getSubcategory().id == 0) {
-//                model.addAttribute("categoryEr", "Не вибранно категорию.");
-//
-//            }
-//            if (advt.getStatus() == null) {
-//                model.addAttribute("statusEr", "Не вказано статус.");
-//
-//            }
-//            if (dataStart == null) {
-//                model.addAttribute("dataSotpEr", "Не вказано дату .");
-//
-//            }
-//            if (advt.getText().isEmpty()) {
-//                model.addAttribute("textAdverEr", "Не вказано текст оголошеня.");
-//            }
-//            Iterable<City> cityList = cityRepository.findAll();
-//            model.addAttribute("cityList", cityList);
-////            Category categ=categoryRepository.getOne(advt.getCategory().id);
-//            if(advt.getCategory().getId()>0){
-//                Iterable<Subcategory> categoryList = subcategoryRepository.findByCategoryId(advt.getCategory().getId());
-//                model.addAttribute("categoryList", categoryList);
-//                advt.setCategory(advt.getCategory());
-//            }
+        } else {
 
-//            return "page-edit-advt";
-//        }
-advtRepository.save(advt);
-    return "redirect:/main";
+            photo = advt.getPhoto().toString();
+        }
+
+        advt.setPhoto(photo);
+
+        advtRepository.save(advt);
+        return "redirect:/main";
     }
-    public void deleteMyFile(String fileName) throws IOException {
-        //FileUtils.touch(new File("src/test/resources/fileToDelete.txt"));
-        String nam=uploadPath+"\\"+fileName;
-        FileUtils.forceDelete(FileUtils.getFile(nam));
+
+    @GetMapping("message{idAdvt}")
+    public String MessageList(@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
+
+        model.put("idAdvt", Id);
+        model.put("all",0);
+        if(userService.userAdmin()){
+            model.put("adm", 1);
+        }
+
+        return "page-user-message";
+    }
+
+
+    @GetMapping("/hide")
+    public String hideMessage(@RequestParam(value = "idAdvt") Long IdAdvt,
+                              @RequestParam(value = "idMess") Long Id,
+
+                              Map<String, Object> model) {
+        MessageUser mess = messageRepository.getOne(Id);
+        mess.setActive(false);
+        messageRepository.save(mess);
+        return "redirect:/main/message_active" + IdAdvt;
+    }
+
+    @GetMapping("/unhide")
+    public String unHideMessage(@RequestParam(value = "idAdvt") Long IdAdvt,
+                                @RequestParam(value = "idMess") Long Id,
+
+                                Map<String, Object> model) {
+        MessageUser mess = messageRepository.getOne(Id);
+        mess.setActive(true);
+        messageRepository.save(mess);
+
+        return "redirect:/main/message_active" + IdAdvt;
+    }
+    @GetMapping("/delete")
+    public String deleteMessage(@RequestParam(value = "idAdvt") Long IdAdvt,
+                                @RequestParam(value = "idMess") Long Id,
+                                Map<String, Object> model) {
+        MessageUser mess = messageRepository.getOne(Id);
+
+        messageRepository.delete(mess);
+
+        return "redirect:/main/message_all" + IdAdvt;
+    }
+
+    @GetMapping("message_all{idAdvt}")
+    public String messageAll(@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
+        List<MessageUser> listMessage = messageRepository.findByIdAdvt(Id);
+       Advt advt=advtRepository.getOne(Id);
+       List<GuestMessageViewDAO>  guestMessageViewDAOList=new ArrayList<>();
+       for(MessageUser messageUser: listMessage){
+           GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),messageUser.getText(),messageUser.getContact(),messageUser.isActive(),messageUser.getDat(),
+           advt.getId(),advt.getText(),advt.getCity().name,advt.getStatus(),advt.getSubcategory().name,advt.getDat());
+           guestMessageViewDAOList.add(guestMessageViewDAO);
+       }
+        model.put("listMessage", guestMessageViewDAOList);
+        model.put("all",0);
+        if(userService.userAdmin()){
+            model.put("adm", 1);
+        }
+
+        return "page-user-message";
+    }
+
+    @GetMapping("message_pasive{idAdvt}")
+    public String messagePasive(@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
+        List<MessageUser> listMessage = messageRepository.findByIdAdvtAndActive(Id, false);
+        Advt advt=advtRepository.getOne(Id);
+        List<GuestMessageViewDAO>  guestMessageViewDAOList=new ArrayList<>();
+        for(MessageUser messageUser: listMessage){
+            GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),messageUser.getText(),messageUser.getContact(),false,messageUser.getDat(),
+                    advt.getId(),advt.getText(),advt.getCity().name,advt.getStatus(),advt.getSubcategory().name,advt.getDat());
+            guestMessageViewDAOList.add(guestMessageViewDAO);
+        }
+        model.put("listMessage", guestMessageViewDAOList);
+        model.put("all",0);
+        if(userService.userAdmin()){
+            model.put("adm", 1);
+        }
+
+        return "page-user-message";
+    }
+
+    @GetMapping("message_active{idAdvt}")
+    public String messageActive(@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
+        List<MessageUser> listMessage = messageRepository.findByIdAdvtAndActive(Id, true);
+        Advt advt=advtRepository.getOne(Id);
+        List<GuestMessageViewDAO>  guestMessageViewDAOList=new ArrayList<>();
+        for(MessageUser messageUser: listMessage){
+            GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),messageUser.getText(),messageUser.getContact(),true,messageUser.getDat(),
+                    advt.getId(),advt.getText(),advt.getCity().name,advt.getStatus(),advt.getSubcategory().name,advt.getDat());
+            guestMessageViewDAOList.add(guestMessageViewDAO);
+        }
+        model.put("listMessage", guestMessageViewDAOList);
+        model.put("all",0);
+        if(userService.userAdmin()){
+            model.put("adm", 1);
+        }
+
+        return "page-user-message";
+    }
+    @GetMapping("all_message_active")
+    public String allMessageActive(@AuthenticationPrincipal User user, Map<String, Object> model) {
+
+//        Long id=Long.parseLong(Id);
+        if(user!=null){
+       List<MessageUser> listMessage = messageRepository.findByIdToUserAndActive(user.getId(),true);
+            List<GuestMessageViewDAO>  guestMessageViewDAOList=new ArrayList<>();
+            for(MessageUser messageUser: listMessage){
+Advt advt=advtRepository.getOne(messageUser.getIdAdvt());
+                GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),messageUser.getText(),messageUser.getContact(),messageUser.isActive(),messageUser.getDat(),
+                        advt.getId(),advt.getText(),advt.getCity().name,advt.getStatus(),advt.getSubcategory().name,advt.getDat());
+                guestMessageViewDAOList.add(guestMessageViewDAO);
+            }
+       model.put("listMessage", guestMessageViewDAOList);
+       model.put("all",1);
+        }
+        if(userService.userAdmin()){
+            model.put("adm", 1);
+        }
+
+        return "page-user-message";
+    }
+
+    @GetMapping("all_message")
+    public String allMessage(@AuthenticationPrincipal User user, Map<String, Object> model) {
+
+//        Long id=Long.parseLong(Id);
+        if(user!=null){
+            List<MessageUser> listMessage = messageRepository.findByIdToUser(user.getId());
+            List<GuestMessageViewDAO>  guestMessageViewDAOList=new ArrayList<>();
+            for(MessageUser messageUser: listMessage){
+                Advt advt=advtRepository.getOne(messageUser.getIdAdvt());
+                GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),messageUser.getText(),messageUser.getContact(),messageUser.isActive(),messageUser.getDat(),
+                        advt.getId(),advt.getText(),advt.getCity().name,advt.getStatus(),advt.getSubcategory().name,advt.getDat());
+                guestMessageViewDAOList.add(guestMessageViewDAO);
+            }
+            model.put("listMessage", guestMessageViewDAOList);
+            model.put("all",1);
+        }
+        if(userService.userAdmin()){
+            model.put("adm", 1);
+        }
+
+        return "page-user-message";
     }
 }
+//        Set<AdvtViewDAO> list=searchPatient(patient);
+// int page, int size
+// new PageRequest(page, size)
+// Collections.sort(list,Collections.reverseOrder());
+
+//   photo=advt.getPhoto().toString();
+//        if(file!=null){
+//            photo=file.getName();
+//        }
+//        if(advt.getPhoto().toString()=="") {}else  {
+//&& !file.getName().isEmpty()
+//            photo = "noimage.png";
+//        }
+
+//  @RequestParam(required = false,value="messageAll",defaultValue = "0")String messageAll,
+
+//    @RequestMapping(value = "/message1", method = RequestMethod.GET, produces = {"text/html; charset=UTF-8"})
+
+//        List <MessageUser> listMessage=messageRepository.findByIdAdvtAndActive(IdAdvt,true);
+////        model.put("listMessage",listMessage);
+
+//        List <MessageUser> listMessage=messageRepository.findByIdAdvtAndActive(IdAdvt,true);
+//        model.put("listMessage",listMessage);

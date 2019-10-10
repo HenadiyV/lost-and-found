@@ -812,14 +812,14 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 //        userRepo.save(user);
 //
 //        if (!StringUtils.isEmpty(user.getEmail())) {
-//            String message = String.format(
+//            String messageUser = String.format(
 //                    "Hello, %s! \n" +
 //                            "Welcome to Sweater. Please, visit next link: http://localhost:8080/activate/%s",
 //                    user.getUsername(),
 //                    user.getActivationCode()
 //            );
 //
-//            mailSender.send(user.getEmail(), "Activation code", message);
+//            mailSender.send(user.getEmail(), "Activation code", messageUser);
 //        }
 //
 //        return true;
@@ -840,3 +840,559 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 //    }
 
 }
+
+Peopl
+
+<!--&lt;!&ndash;Pagination&ndash;&gt;-->
+<!--<div class="container">-->
+    <!--<div class="pagination-wrapper ">-->
+        <!--<div th:if="${listAdver.getTotalElements()}>0">-->
+
+                <!--<div class="row">-->
+                <!--<div class="container">-->
+                    <!--<ul class="pagination pagination-lg">-->
+                        <!--<li class="page-item disabled">-->
+                            <!--<a class="page-link" href="#" tabindex="-1" aria-disabled="true" th:text="#{lang.page}">Сторінки</a>-->
+                        <!--</li>-->
+                        <!--<div  th:each="i:${#numbers.sequence(1,listAdver.getTotalPages())}">-->
+                            <!--<li th:if="${i-1 ==listAdver.getNumber()}" class="page-item active" >-->
+                                <!--<a href="#" th:text="${i}" class="page-link"></a>-->
+                            <!--</li>-->
+                            <!--<li th:unless="${i-1 ==listAdver.getNumber()}" class="page-item " >-->
+                                <!--<a th:href="@{${url}(page=${i-1},size=${listAdver.getSize()})}" th:text="${i}" class="page-link"></a>-->
+                            <!--</li>-->
+                        <!--</div>-->
+                    <!--</ul>-->
+                <!--</div>-->
+                    <!--<div class="container">-->
+                    <!--<div th:if="${listAdver.getTotalElements()}>${listAdver.getSize()}">-->
+                        <!--<ul class="pagination pagination-lgn">-->
+                            <!--<li class="page-item disabled">-->
+                                <!--<a class="page-link" href="#" tabindex="-1" aria-disabled="true" th:text="#{lang.page.size}">Кількість відображаємих елементів</a>-->
+                            <!--</li>-->
+
+                            <!--<div  th:each="c:${#numbers.sequence(2,listAdver.getTotalElements(),2)}">-->
+                                <!--<li th:if="${c==listAdver.getSize()}" class="page-item active" >-->
+                                    <!--<a href="#" th:text="${c}" class="page-link"></a>-->
+                                <!--</li>-->
+                                <!--<li th:unless="${c==listAdver.getSize()}" class="page-item " >-->
+                                    <!--<a th:href="@{${url}(page=${listAdver.getNumber()},size=${c})}" th:text="${c}" class="page-link"></a>-->
+                                <!--</li>-->
+                            <!--</div>-->
+
+                        <!--</ul>-->
+                    <!--</div>-->
+                    <!--</div>-->
+            <!--</div>-->
+
+        <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<ul class="pagination pagination-lg">&ndash;&gt;-->
+    <!--&lt;!&ndash;<li class="disabled"><a href="#">Previous</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li class="active"><a href="#">1</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a href="#">2</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a href="#">3</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a href="#">4</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a href="#">5</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a href="#">6</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a href="#">7</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a href="#">8</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a href="#">9</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a href="#">10</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;<li><a href="#">Next</a></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash;EndPagination&ndash;&gt;-->
+<!--&lt;!&ndash;StartAdvt&ndash;&gt;-->
+<!--<div class="section blog-posts-wrapper">-->
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+
+            <!--&lt;!&ndash; Post &ndash;&gt;-->
+            <!--<div th:each="adver:${listAdver}">-->
+                <!--<div class="col-md-4 col-sm-6">-->
+                    <!--<div class="blog-post">-->
+                        <!--&lt;!&ndash; Post Image &ndash;&gt;-->
+                        <!--<div class="imgMy">-->
+                            <!--<img   th:src="@{'/img/'+${adver.getPhoto()}}" alt="Card image cap"  />-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; End Post Image &ndash;&gt;-->
+                        <!--&lt;!&ndash; Post Title & Summary &ndash;&gt;-->
+                        <!--<div class="post-title">-->
+                            <!--<h2 th:text="${adver.getStatus()}"></h2>-->
+                            <!--<h4 th:text="${adver.getSubcategory().name}"></h4>-->
+
+                        <!--</div>-->
+                        <!--<div class="post-summary">-->
+                            <!--<div>-->
+                                <!--<b> <span th:text="#{lang.in.city}">В місті :</span></b>-->
+                                <!--<br/>-->
+                                <!--<b><span class=" ml-5" style="color:blue " th:text="${adver.getCity().name}"></span></b>-->
+
+                                <!--<p>-->
+
+                                    <!--<a  th:onclick="'javascript:toggle_show(\''+'B'+${adver.getId()}+'\');'" th:text="#{lang.btn.read.more}">-->
+                                        <!--Докладніше-->
+                                    <!--</a>-->
+                                <!--<div th:id="B+${adver.getId()}" style="display:none; width: 200px;">-->
+                                    <!--<div th:text="${adver.getDat().toString()}"></div>-->
+                                    <!--<div  th:text="${adver.getText()}" ></div>-->
+
+                                <!--</div>-->
+                                <!--</p>-->
+                            <!--</div>-->
+                            <!--<div class="actions">-->
+                                <!--<div >-->
+                                    <!--<div class="row">-->
+                                        <!--<div class="col-md-6 col-sm-6">-->
+                                        <!--<a class="btn btn-primary" id="bt" th:onclick="'javascript:myModalMessage(\''+${adver.getId()}+'\',\''+${adver.getUserId()}+'\');'" th:text="#{lang.send}">Повідомити</a>-->
+
+                                        <!--</div>-->
+                                        <!--<div class="col-md-6 col-sm-6 " th:if="${us}==2">-->
+                                            <!--<form action="/advt/advtDelete"  method="post">-->
+                                                <!--<input hidden="hidden"  th:name="messDel" th:value="${adver.getId()}"/>-->
+
+                                                <!--<button class="btn btn-primary" type="submit" th:text="#{lang.btn.delete}">Видалити</button>-->
+                                                <!--&lt;!&ndash;<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />&ndash;&gt;-->
+                                            <!--</form>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+
+                                <!--</div>-->
+                                <!--&lt;!&ndash; End Post Title & Summary &ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; End Post &ndash;&gt;-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash;stopAdvt&ndash;&gt;-->
+
+
+
+<!--Start-->
+<!--<div class="section blog-posts-wrapper">-->
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+
+            <!--&lt;!&ndash; Post &ndash;&gt;-->
+            <!--<div th:each="adverFound:${adverListFound}">-->
+                <!--<div class="col-md-4 col-sm-6">-->
+                    <!--<div class="blog-post">-->
+                        <!--&lt;!&ndash; Post Image &ndash;&gt;-->
+                        <!--<div class="imgMy">-->
+                            <!--<img   th:src="@{'/img/'+${adverFound.getPhoto()}}" alt="Card image cap"  />-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; End Post Image &ndash;&gt;-->
+                        <!--&lt;!&ndash; Post Title & Summary &ndash;&gt;-->
+                        <!--<div class="post-title">-->
+                            <!--<h2 th:text="${adverFound.getStatus()}"></h2>-->
+                            <!--<h4 th:text="${adverFound.getSubcategory().name}"></h4>-->
+
+                        <!--</div>-->
+                        <!--<div class="post-summary">-->
+                            <!--<div>-->
+                                <!--<b> <span th:text="#{lang.in.city}">В місті :</span></b>-->
+                                <!--<br/>-->
+                                <!--<b><span class=" ml-5" style="color:blue " th:text="${adverFound.getCity().name}"></span></b>-->
+
+                                <!--<p>-->
+
+                                    <!--<a  th:onclick="'javascript:toggle_show(\''+'B'+${adverFound.getId()}+'\');'" th:text="#{lang.btn.read.more}">-->
+                                        <!--Докладніше-->
+                                    <!--</a>-->
+                                <!--<div th:id="B+${adverFound.getId()}" style="display:none; width: 200px;">-->
+                                    <!--<div th:text="${adverFound.getDat().toString()}"></div>-->
+                                    <!--<div  th:text="${adverFound.getText()}" ></div>-->
+
+                                <!--</div>-->
+                                <!--</p>-->
+                            <!--</div>-->
+                            <!--<div class="actions">-->
+                                <!--<div >-->
+                                    <!--<div class="row">-->
+                                        <!--<div class="col-md-6 col-sm-6">-->
+                                            <!--<a class="btn btn-primary" id="bt1" th:onclick="'javascript:myModalMessage(\''+${adverFound.getId()}+'\',\''+${adverFound.getUserId()}+'\');'" th:text="#{lang.send}">Повідомити</a>-->
+
+                                        <!--</div>-->
+                                        <!--<div class="col-md-6 col-sm-6 " th:if="${us}==2">-->
+                                            <!--<form action="/advt/advtDelete"  method="post">-->
+                                                <!--<input hidden="hidden"  th:name="messDel" th:value="${adverFound.getId()}"/>-->
+
+                                                <!--<button class="btn btn-primary" type="submit" th:text="#{lang.btn.delete}">Видалити</button>-->
+                                                <!--&lt;!&ndash;<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />&ndash;&gt;-->
+                                            <!--</form>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+
+                                <!--</div>-->
+                                <!--&lt;!&ndash; End Post Title & Summary &ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; End Post &ndash;&gt;-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--stop-->
+        <!--<div class="pagination-wrapper ">-->
+            <!--<ul class="pagination pagination-lg">-->
+                <!--<li class="disabled"><a href="#">Previous</a></li>-->
+                <!--<li class="active"><a href="#">1</a></li>-->
+                <!--<li><a href="#">2</a></li>-->
+                <!--<li><a href="#">3</a></li>-->
+                <!--<li><a href="#">4</a></li>-->
+                <!--<li><a href="#">5</a></li>-->
+                <!--<li><a href="#">6</a></li>-->
+                <!--<li><a href="#">7</a></li>-->
+                <!--<li><a href="#">8</a></li>-->
+                <!--<li><a href="#">9</a></li>-->
+                <!--<li><a href="#">10</a></li>-->
+                <!--<li><a href="#">Next</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+ <!--<div class="col-md-3" th:if="${lost}">-->
+                <!--<form th:action="@{/view/people-found}" method="get">-->
+                <!--<button class="btn-blue" style="width: 100%; text-align: center " type="submit" th:text="#{lang.btn.foundName}">найден </button></form>-->
+            <!--</div>-->
+            <!--<div class="col-md-3" th:unless="${lost}">-->
+                <!--<form th:action="@{/view/people-lost}" method="get">-->
+                <!--<button class="btn-blue" style="width: 100%; text-align: center " type="submit" th:text="#{lang.btn.lostName}">разыскиваеться </button>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div class="col-md-3">-->
+                <!--&lt;!&ndash;<div class="col-sm-4 col-md-4  m-3"></div>&ndash;&gt;-->
+                <!--<form action="/advt/add-advt"  method="get">-->
+                    <!--<input hidden="hidden" type="text" name="status" value="Знайденно">-->
+                    <!--<input hidden="hidden" type="text" name="url" value="/view/people-found">-->
+                    <!--<input hidden="hidden" type="text" name="category" th:value="${category}">-->
+                    <!--<button class=" btn-green " style="width: 100%; text-align: center " type="submit"  th:text="#{lang.btn.found}">Повідомити про Знайденно </button>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div class="col-md-3">-->
+                <!--&lt;!&ndash;<div class="col-sm-4 col-md-4  m-3"></div>&ndash;&gt;-->
+                <!--<form action="/advt/add-advt"  method="get">-->
+                    <!--<input hidden="hidden" type="text" name="url" value="/view/people-lost">-->
+                    <!--<input hidden="hidden" type="text" name="status" th:value="${status}">-->
+                    <!--<input hidden="hidden" type="text" name="category"th:value="${category}">-->
+                    <!--<button class="btn-red " style="width: 100%; text-align: center" type="submit" th:text="#{lang.btn.lost}">Повідомити про втрату </button>-->
+                <!--</form>-->
+            <!--</div>-->
+<!--&lt;!&ndash; Product Title &ndash;&gt;-->
+<!--<div class="title">-->
+    <!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+<!--</div>-->
+<!--&lt;!&ndash; Product Available Colors&ndash;&gt;-->
+<!--<div class="colors">-->
+    <!--<span class="color-white"></span>-->
+    <!--<span class="color-black"></span>-->
+    <!--<span class="color-blue"></span>-->
+    <!--<span class="color-orange"></span>-->
+    <!--<span class="color-green"></span>-->
+<!--</div>-->
+<!--&lt;!&ndash; Product Price&ndash;&gt;-->
+<!--<div class="price">-->
+    <!--$999.99-->
+<!--</div>-->
+<!--&lt;!&ndash; Add to Cart Button &ndash;&gt;-->
+<!--<div class="actions">-->
+    <!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; End Product &ndash;&gt;-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-6">-->
+    <!--<div class="shop-item">-->
+        <!--<div class="shop-item-image">-->
+            <!--<a href="page-product-details.html"><img src="img/images/test/690x804.jpg" alt="Item Name"></a>-->
+        <!--</div>-->
+        <!--<div class="title">-->
+            <!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+        <!--</div>-->
+        <!--<div class="colors">-->
+            <!--<span class="color-white"></span>-->
+            <!--<span class="color-black"></span>-->
+        <!--</div>-->
+        <!--<div class="price">-->
+            <!--$999.99-->
+        <!--</div>-->
+        <!--<div class="actions">-->
+            <!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-6">-->
+    <!--<div class="shop-item">-->
+        <!--<div class="shop-item-image">-->
+            <!--<a href="page-product-details.html"><img src="img/images/test/690x804.jpg" alt="Item Name"></a>-->
+        <!--</div>-->
+        <!--<div class="title">-->
+            <!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+        <!--</div>-->
+        <!--<div class="colors">-->
+            <!--<span class="color-white"></span>-->
+            <!--<span class="color-black"></span>-->
+        <!--</div>-->
+        <!--<div class="price">-->
+            <!--$999.99-->
+        <!--</div>-->
+        <!--<div class="actions">-->
+            <!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-6">-->
+    <!--<div class="shop-item">-->
+        <!--<div class="shop-item-image">-->
+            <!--<a href="page-product-details.html"><img src="img/images/test/testBig.jpg" alt="Item Name"></a>-->
+        <!--</div>-->
+        <!--<div class="title">-->
+            <!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+        <!--</div>-->
+        <!--<div class="colors">-->
+            <!--<span class="color-white"></span>-->
+            <!--<span class="color-black"></span>-->
+            <!--<span class="color-blue"></span>-->
+        <!--</div>-->
+        <!--<div class="price">-->
+            <!--$999.99-->
+        <!--</div>-->
+        <!--<div class="actions">-->
+            <!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-6">-->
+    <!--<div class="shop-item">-->
+        <!--<div class="shop-item-image">-->
+            <!--<a href="page-product-details.html"><img src="img/images/test/images.jpg" alt="Item Name"></a>-->
+        <!--</div>-->
+        <!--<div class="title">-->
+            <!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+        <!--</div>-->
+        <!--<div class="colors">-->
+            <!--<span class="color-white"></span>-->
+            <!--<span class="color-black"></span>-->
+            <!--<span class="color-blue"></span>-->
+            <!--<span class="color-orange"></span>-->
+            <!--<span class="color-green"></span>-->
+        <!--</div>-->
+        <!--<div class="price">-->
+            <!--$999.99-->
+        <!--</div>-->
+        <!--<div class="actions">-->
+            <!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+    <!--<div class="col-md-3 col-sm-6">-->
+        <!--<div class="shop-item">-->
+            <!--<div class="shop-item-image">-->
+                <!--<a href="page-product-details.html"><img src="img/images/product5.jpg" alt="Item Name"></a>-->
+            <!--</div>-->
+            <!--<div class="title">-->
+                <!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+            <!--</div>-->
+            <!--<div class="colors">-->
+                <!--<span class="color-white"></span>-->
+                <!--<span class="color-black"></span>-->
+                <!--<span class="color-blue"></span>-->
+                <!--<span class="color-orange"></span>-->
+                <!--<span class="color-green"></span>-->
+            <!--</div>-->
+            <!--<div class="price">-->
+                <!--$999.99-->
+            <!--</div>-->
+            <!--<div class="actions">-->
+                <!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-md-3 col-sm-6">-->
+        <!--<div class="shop-item">-->
+            <!--<div class="shop-item-image">-->
+                <!--<a href="page-product-details.html"><img src="img/images/product6.jpg" alt="Item Name"></a>-->
+            <!--</div>-->
+            <!--<div class="title">-->
+                <!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+            <!--</div>-->
+            <!--<div class="colors">-->
+                <!--<span class="color-white"></span>-->
+                <!--<span class="color-black"></span>-->
+            <!--</div>-->
+            <!--<div class="price">-->
+                <!--$999.99-->
+            <!--</div>-->
+            <!--<div class="actions">-->
+                <!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-md-3 col-sm-6">-->
+        <!--<div class="shop-item">-->
+            <!--<div class="shop-item-image">-->
+                <!--<a href="page-product-details.html"><img src="img/images/product7.jpg" alt="Item Name"></a>-->
+            <!--</div>-->
+            <!--<div class="title">-->
+                <!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+            <!--</div>-->
+            <!--<div class="colors">-->
+                <!--<span class="color-white"></span>-->
+                <!--<span class="color-black"></span>-->
+                <!--<span class="color-red"></span>-->
+            <!--</div>-->
+            <!--<div class="price">-->
+                <!--$999.99-->
+            <!--</div>-->
+            <!--<div class="actions">-->
+                <!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-md-3 col-sm-6">-->
+        <!--<div class="shop-item">-->
+            <!--<div class="shop-item-image">-->
+                <!--<a href="page-product-details.html"><img src="img/images/product8.jpg" alt="Item Name"></a>-->
+            <!--</div>-->
+            <!--<div class="title">-->
+                <!--<h3><a href="page-product-details.html">Lorem ipsum dolor</a></h3>-->
+            <!--</div>-->
+            <!--<div class="colors">-->
+                <!--<span class="color-white"></span>-->
+                <!--<span class="color-black"></span>-->
+            <!--</div>-->
+            <!--<div class="price">-->
+                <!--$999.99-->
+            <!--</div>-->
+            <!--<div class="actions">-->
+                <!--<a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        --------------------------------------------Admin
+         <!--<div class="container">-->
+                                <!--<div th:insert="~{fragments/subcategory::subcategory}"></div>-->
+                            <!--</div>-->
+                            <!--<div class="single-post-info">-->
+
+                              <!---->
+                            <!--</div>-->
+                            <!--<div class="single-post-image">-->
+                                <!--<img src="/img/image/blog-large.jpg" alt="Post Title">-->
+                            <!--</div>-->
+                            <!--<div class="single-post-content">-->
+                                <!--<h3>Lorem ipsum dolor sit amet</h3>-->
+                                <!--<p>-->
+                                    <!--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio. Duis elementum ligula eu ipsum condimentum accumsan.-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--Vivamus euismod elit ac libero facilisis tristique. Duis mollis non ligula vel tincidunt. Nulla consectetur libero id nunc ornare, vel vulputate tellus mollis. Sed quis nulla magna. Integer rhoncus sem quis ultrices lobortis. Maecenas tempus nulla quis dolor vulputate egestas. Phasellus cursus tortor quis massa faucibus fermentum vel sit amet tortor. Phasellus vehicula lorem et tortor luctus, a dignissim lacus tempor. Aliquam volutpat molestie metus sit amet aliquam. Duis vestibulum quam tortor, sed ultrices orci sagittis nec.-->
+                                <!--</p>-->
+                                <!--<h3>Sed sit amet metus sit</h3>-->
+                                <!--<p>-->
+                                    <!--Proin fermentum, purus id eleifend molestie, nisl arcu rutrum tellus, a luctus erat tortor ut augue. Vivamus feugiat nisi sit amet dignissim fermentum. Duis elementum mattis lacinia. Sed sit amet metus sit amet leo semper feugiat. Nulla vel orci nec neque interdum facilisis egestas vitae lorem. Phasellus elit ante, posuere at augue quis, porta vestibulum magna. Nullam non mattis odio. Donec eget velit leo. Nunc et diam volutpat tellus ultrices fringilla eu a neque. Integer lectus nunc, vestibulum a turpis vitae, malesuada lacinia nibh. In sit amet leo ut turpis convallis bibendum. Nullam nec purus sapien. Quisque sollicitudin cursus felis sit amet aliquam.-->
+                                <!--</p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; Comments &ndash;&gt;-->
+                            <!--<div class="post-coments">-->
+                                <!--<h4>Comments (53)</h4>-->
+                                <!--<ul class="post-comments">-->
+                                    <!--<li>-->
+                                        <!--<div class="comment-wrapper">-->
+                                            <!--<div class="comment-author"><img src="/img/image/user1.jpg" alt="User Name"> User Name</div>-->
+                                            <!--<p>-->
+                                                <!--Morbi eleifend congue elit nec sagittis. Praesent aliquam lobortis tellus, nec consequat massa ornare vitae. Ut fermentum justo vel venenatis eleifend. Fusce id magna eros. Interdum et malesuada fames ac ante ipsum primis in faucibus.-->
+                                            <!--</p>-->
+                                            <!--&lt;!&ndash; Comment Controls &ndash;&gt;-->
+                                            <!--<div class="comment-actions">-->
+                                                <!--<span class="comment-date">June 10th, 2013 3:16 pm</span>-->
+                                                <!--<a href="#" data-toggle="tooltip" data-original-title="Vote Up" class="show-tooltip"><i class="glyphicon glyphicon-thumbs-up"></i></a>-->
+                                                <!--<a href="#" data-toggle="tooltip" data-original-title="Vote Down" class="show-tooltip"><i class="glyphicon glyphicon-thumbs-down"></i></a>-->
+                                                <!--<span class="label label-success">+8</span>-->
+                                                <!--<a href="#" class="btn btn-micro btn-grey comment-reply-btn"><i class="glyphicon glyphicon-share-alt"></i> Reply</a>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<ul>-->
+                                            <!--<li>-->
+                                                <!--<div class="comment-wrapper">-->
+                                                    <!--<div class="comment-author"><img src="/img/image/user2.jpg" alt="User Name"> User Name</div>-->
+                                                    <!--<p>-->
+                                                        <!--Vivamus euismod elit ac libero facilisis tristique. Duis mollis non ligula vel tincidunt. Nulla consectetur libero id nunc ornare, vel vulputate tellus mollis. Sed quis nulla magna.-->
+                                                    <!--</p>-->
+                                                    <!--&lt;!&ndash; Comment Controls &ndash;&gt;-->
+                                                    <!--<div class="comment-actions">-->
+                                                        <!--<span class="comment-date">June 10th, 2013 3:16 pm</span>-->
+                                                        <!--<a href="#" data-toggle="tooltip" data-original-title="Vote Up" class="show-tooltip"><i class="glyphicon glyphicon-thumbs-up"></i></a>-->
+                                                        <!--<a href="#" data-toggle="tooltip" data-original-title="Vote Down" class="show-tooltip"><i class="glyphicon glyphicon-thumbs-down"></i></a>-->
+                                                        <!--<span class="label label-danger">-2</span>-->
+                                                        <!--<a href="#" class="btn btn-micro btn-grey comment-reply-btn"><i class="glyphicon glyphicon-share-alt"></i> Reply</a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</li>-->
+                                        <!--</ul>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<div class="comment-wrapper">-->
+                                            <!--<div class="comment-author"><img src="/img/image/user5.jpg" alt="User Name"> User Name</div>-->
+                                            <!--<p>-->
+                                                <!--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel magna lectus.-->
+                                            <!--</p>-->
+                                            <!--&lt;!&ndash; Comment Controls &ndash;&gt;-->
+                                            <!--<div class="comment-actions">-->
+                                                <!--<span class="comment-date">June 10th, 2013 3:16 pm</span>-->
+                                                <!--<a href="#" data-toggle="tooltip" data-original-title="Vote Up" class="show-tooltip"><i class="glyphicon glyphicon-thumbs-up"></i></a>-->
+                                                <!--<a href="#" data-toggle="tooltip" data-original-title="Vote Down" class="show-tooltip"><i class="glyphicon glyphicon-thumbs-down"></i></a>-->
+                                                <!--<span class="label label-success">+8</span>-->
+                                                <!--<a href="#" class="btn btn-micro btn-grey comment-reply-btn"><i class="glyphicon glyphicon-share-alt"></i> Reply</a>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                                <!--&lt;!&ndash; Pagination &ndash;&gt;-->
+                                <!--<div class="pagination-wrapper ">-->
+                                    <!--<ul class="pagination pagination-sm">-->
+                                        <!--<li class="disabled"><a href="#">Previous</a></li>-->
+                                        <!--<li class="active"><a href="#">1</a></li>-->
+                                        <!--<li><a href="#">2</a></li>-->
+                                        <!--<li><a href="#">3</a></li>-->
+                                        <!--<li><a href="#">4</a></li>-->
+                                        <!--<li><a href="#">5</a></li>-->
+                                        <!--<li><a href="#">Next</a></li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                                <!--&lt;!&ndash; Comments Form &ndash;&gt;-->
+                                <!--<h4>Leave a Comment</h4>-->
+                                <!--<div class="comment-form-wrapper">-->
+                                    <!--<form class="">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<label for="comment-name"><i class="glyphicon glyphicon-user"></i> <b>Your name</b></label>-->
+                                            <!--<input class="form-control" id="comment-name" type="text" placeholder="">-->
+                                        <!--</div>-->
+                                        <!--<div class="form-group">-->
+                                            <!--<label for="comment-email"><i class="glyphicon glyphicon-envelope"></i> <b>Your Email</b></label>-->
+                                            <!--<input class="form-control" id="comment-email" type="text" placeholder="">-->
+                                        <!--</div>-->
+                                        <!--<div class="form-group">-->
+                                            <!--<label for="comment-message"><i class="glyphicon glyphicon-comment"></i> <b>Your Message</b></label>-->
+                                            <!--<textarea class="form-control" rows="5" id="comment-message"></textarea>-->
+                                        <!--</div>-->
+                                        <!--<div class="form-group">-->
+                                            <!--<button type="submit" class="btn btn-large pull-right">Send</button>-->
+                                        <!--</div>-->
+                                        <!--<div class="clearfix"></div>-->
+                                    <!--</form>-->

@@ -36,10 +36,7 @@
 					</div>
 				</div>
 
-				<div th:if="${param.logout}" >
-					<p th:text="#{lang.out.profile}">Ви вийшли з свого профілю.</p>
-					<!--<a href="/" th:href="@{/}" th:text="#{lang.index}">Головна</a>-->
-				</div>
+
 		</div>
 		</div>
         
@@ -51,6 +48,11 @@
 
 					<div class="col-sm-5">
 						<div >
+							<div  th:if="${message}">
+								<p  th:text="#{user.exists}">Сообщиние email</p>
+								<!--<p th:text="#{lang.out.profile}">Ви вийшли з свого профілю.</p>-->
+								<!--<a href="/" th:href="@{/}" th:text="#{lang.index}">Головна</a>-->
+							</div>
 							<div class="error" th:if="${param.error}" >
 								<p th:text="#{lang.login.error}">Невірно вказане імя або пароль.</p>
 							</div>
@@ -79,7 +81,7 @@
 						</div>
 					</div>
 					<div class="col-sm-7 social-login">
-						<p th:text="#{lang.register.social}">Or login with your Facebook or Twitter</p>
+						<p th:text="#{register.social.singin}">Or login with your Facebook or Twitter</p>
 						<div class="social-login-buttons">
 							<a th:href="@{/login/facebook}" class="btn-facebook-login" th:text="#{login.social.facebook}">Login with Facebook</a>
 							<!--<a th:href="@{/login/twitter}" class="btn-twitter-login" th:text="#{login.social.twitter}" >Login with Twitter</a>-->

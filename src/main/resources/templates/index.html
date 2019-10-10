@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width">
 	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>-->
     <div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
+	<link rel="icon" type="image/png" href="image/favicon.ico"/>
 
 	<!--<script>-->
         <!--window.onload=function(){-->
@@ -45,6 +46,9 @@
         <!-- Navigation & Logo-->
 		<div class="conteiner" >
 			<div th:insert="~{fragments/heder::heder}"></div>
+			<div>
+				<a href="/sendSimpleEmail">Email</a>
+			</div>
 		</div>
 
 		<!--<div >-->
@@ -109,19 +113,19 @@
 				<div class="row">
 					<div class="col-md-4 col-sm-6">
 						<div class="in-press press-wired">
-							<a href="/view/people">Найденое</a>
-							<!--th:text="#{}"-->
+							<a href="/view/people-lost" th:text="#{people.text}">Люди</a>
+							<!---->
 						</div>
 					</div>
 					<div class="col-md-4 col-sm-6">
 						<div class="in-press press-mashable">
-							<a href="/view/animal" >Потеряное</a>
+							<a href="/view/animal-lost" th:text="#{animal.text}">Животные</a>
 							<!--th:text="#{}"-->
 						</div>
 					</div>
 					<div class="col-md-4 col-sm-6">
 						<div class="in-press press-techcrunch">
-							<a href="/view/thing">Morbi eleifend congue elit nec sagittis. Praesent aliquam lobortis tellus, nec consequat vitae</a>
+							<a href="/view/thing-lost" th:text="#{thing.text}"> Вещи</a>
 							<!---->
 						</div>
 					</div>

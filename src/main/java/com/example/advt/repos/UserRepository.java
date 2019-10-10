@@ -3,6 +3,7 @@ package com.example.advt.repos;
 
 import com.example.advt.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
@@ -11,9 +12,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String email);
   //User findByUsername(String email);
 ////    User findByUsername(String name);
+  User findByActivationCode(String code);
    User findByEmail(String email);
 User findByIdSocial(String idSocial);
-// User findOne(Long id);
+ Optional<User> findById(Long id);
+
 
 //    User findByGoogleUserName(String username);
 //

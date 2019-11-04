@@ -1,31 +1,30 @@
+var $=jQuery.noConflict();
 function toggle_show(id) {
     document.getElementById(id).style.display = document.getElementById(id).style.display == 'none' ? 'block' : 'none';
-
 }
+
 function myModal() {
     $("#myModal").modal();
 }
-function myModalMessage(id,usId) {
-    $("#myModalMessage").modal();
 
+function myModalMessage(id,usId) {
+    window.$("#myModalMessage").modal();
     $('#idAdver').val(id);
     $('#userId').val(usId);
     $('#textMessage').val("");
     $('#corectValue').html("100 ");
-
 }
+
 function message_show(id) {
-
     document.getElementById(id).style.display = document.getElementById(id).style.display == 'none' ? 'block' : 'none';
-
 }
+
 function doAjax() {
     $.ajax({
         url : 'message1',
         data:({textMessage: $('#textMessage').val()}),
         success:function (data) {
             $('#corectValue').html(data);
-
         }
     });
 }
@@ -33,31 +32,24 @@ function doAjax() {
 function doMessage() {
     var t=$('#textMessage').val();
     if(t!=""){
-    //document.getElementById('btn_msg').style.display = document.getElementById('btn_msg').style.disabled == 'true' ? 'false' : 'true';
-    document.getElementById('btn_msg').disabled=  document.getElementById('btn_msg').disabled==false  ?true  : false;}
-
+    document.getElementById('btn_msg').disabled=document.getElementById('btn_msg').disabled==false  ?true  : false;
+    }
 }
 
 $(document).ready(function () {
 
     $("#mess-form").submit(function (event) {
-
-        //stop submit the form, we will post it manually.
         event.preventDefault();
-
-       // fire__ajax__submit();
         searchText();
-       // closeModal();
     });
-
 });
+
 function searchText() {
     var search = {
         idAdver: $('#idAdver').val(),
         userId: $('#userId').val(),
         contact: $('#contact').val(),
         textMessage: $('#textMessage').val(),
-
     }
     $.ajax({
         type: "POST",
@@ -65,13 +57,9 @@ function searchText() {
         url: 'add_message',
         dataType: 'json',
         cache: false,
-
         data: JSON.stringify(search), // Note it is important
         success: function (result) {
-            // do what ever you want with data
-           // ;
-
-            $('#idAdver').val(""),
+                  $('#idAdver').val(""),
                 $('#userId').val(""),
                 $('#contact').val(""),
             $('#textMessage').val("");
@@ -79,21 +67,52 @@ function searchText() {
     });
 }
 
-function chekMy(str) {
+$(function() {
+    $("input[type='checkbox']:checked").change(function() {
+        var byt=document.getElementById('submit1');
+        if(this.checked){
+        byt.disabled=false;
+            // console.log("ok");
+        }else{
 
+            byt.disabled=true;
+        // console.log("no");
+        }
+    })
+});
+
+function chekMy(str) {
     alert(str);
 }
+
 function hideMess(idAdvt,idMess){
     $.ajax({
         url : 'hide',
        data:({'idAdvt': idAdvt,'idMess':idMess}),
         success:function (data) {
-           // $('#corectValue').html(data);
-alert("ok");
         }
     });
 }
 
+function ConfirmDelete(mess)
+{
+    var x = confirm(mess);
+    if (x)
+        return true;
+    else
+        return false;
+}
+//$(document).ready(function(){});
+// jQuery.noConflict();
+// (function( $ ) {
+//     $(function() {
+//         // More code using $ as alias to jQuery
+//         $('button').click(function(){
+//             $('#modalID').modal('show');
+//         });
+//     });
+// })(jQuery);
+//document.getElementById('btn_msg').style.display = document.getElementById('btn_msg').style.disabled == 'true' ? 'false' : 'true';
 /////////////////////
 // function doMess() {
 //     // var mes={

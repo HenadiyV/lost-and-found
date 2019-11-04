@@ -37,8 +37,9 @@ $(document).ready(function(){
 	$('.show-tooltip').tooltip();
 
 	//Contact Us Map
+	var mes=$('#map-mess').val();
 	if($('#contact-us-map').length > 0){ //Checks if there is a map element
-       var map = L.map('contact-us-map').setView([49.25, 27.0], 9);
+       var map = L.map('contact-us-map').setView([49.25, 27.0], 16);
         // var map = L.map('contact-us-map', {
         //     	center: [49.25, 27.0],
         //     	scrollWheelZoom: false,
@@ -51,10 +52,12 @@ $(document).ready(function(){
             accessToken: 'your.mapbox.access.token'
         }).addTo(map);
 
-        var marker=	L.marker([49.4229,27.0089])
+        //49.4229,27.0089
+        var marker=	L.marker([49.4264,26.9880 ])
             .addTo(map)
-            .bindPopup('Привет я здесь!')
+            .bindPopup(mes)
             .openPopup();
+
 		// var map = L.map('contact-us-map', {
 		// 	center: [51.502, -0.09],
 		// 	scrollWheelZoom: false,

@@ -7,14 +7,47 @@
 </head>
 <body>
 <div th:fragment="subcategory">
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+
         <div class="container">
-            <div class="row">
-                <div id="app"></div>
-                <script src="/static/static/js/subcategory.js"></script>
-            </div>
-        </div>
+            <table   id="tableSub">
+                <caption th:text="#{lang.category.name}" >Category</caption>
+                        <div th:each="cat:${category}">
+                            <tr>
+
+                                <td><input hidden="hidden" th:value="${cat.getName()}" th:id="'C'+${cat.getId()}"/></td>
+                                <td>
+                                    <p th:text="${cat.getName()}" style="color: green"></p>
+                                  </td>
+
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td> <div th:id="'T'+${cat.getId()}"></div></td>
+                            </tr>
+                            <div th:each="sub:${subcategory}">
+                                <div th:if="${cat.getId()} == ${sub.getCategory().getId()}">
+                                    <tr th:id="'TR'+${sub.getId()}">
+                                        <td><b><p th:id="'L'+${sub.getId()}" th:text="${sub.getName()}"></p></b></td>
+                                        <td><input type="text"   th:id="'I'+${sub.getId()}" th:value="${sub.getName()}"/></td>
+                                        <td> <input  type="button"  th:id="'E'+${sub.getId()}" th:value="#{admin.user.edit}"   th:onclick="'javascript:editSubcategory(\''+${sub.getId()}+'\',\''+${sub.getCategory().getId()}+'\');'" /></td>
+                                        <td> <input  type="button"  th:id="'D'+${sub.getId()}" th:value="#{admin.user.delete}"  th:onclick="'javascript:deleteSubcategory(\''+${sub.getId()}+'\');'" /></td>
+
+                                    </tr>
+
+                                </div>
+                            </div>
+
+                            <tr>
+                                <td ></td><td></td>
+                                <td><input  type="button"  th:value="#{admin.user.add}"   th:onclick="'javascript:adminModal(\''+${cat.getId()}+'\');'"/></td>
+
+                            </tr>
+                        </div>
+                    </table>
+                </div>
+    <script src="/static/static/js/subcategory.js"></script>
 </div>
+<!--border="1"<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>-->
 </body>
 </html>

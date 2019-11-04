@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--modal-->
+<div  th:fragment="modal">
+    <div class="container">
+        <div class="modal fade" id="myModalMessage" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal -->
+                <div class="modal-content">
+                    <div  class="modal-header">
+                        <h3 th:text="#{lang.messageUser}"><span class="glyphicon glyphicon-lock"></span> Повідомлення </h3>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" >
+                        <div>
+                            <!--style="padding:10px 10px;"-->
+                            <form id="mess-form" method="post">
+                                <div class="form-group">
+                                    <div >
+                                        <input hidden="hidden"  th:name="idAdver" id="idAdver"/>
+                                        <input hidden="hidden"  th:name="userId" id="userId"/>
+                                        <input hidden="hidden"  th:name="url" id="url" th:value="${url}"/>
+                                        <input type="text" name="contact" id="contact" th:placeholder="#{lang.messageUser.contact}"/>
+                                        <h3 th:text="#{lang.messageUser.limited}">Довжина повідомлення обмежена</h3>
+                                        <p><span th:text="#{lang.messageUser.remainder}"> Осталось : </span> <span id="corectValue" style="color:red"></span><span th:text="#{lang.messageUser.characters}">символов</span></p>
+                                        <textarea cols="75" rows="3" name="textMessage"  id="textMessage" onkeyup="doAjax()" th:placeholder="#{lang.ad.text}"></textarea>
+                                    </div>
+                                    <input name="capcha" id="capcha" type="checkbox" onclick="doMessage()"><b><span th:text="#{lang.capcha}" >Я не робот.</span></b></input>
+                                </div>
+                                <a href="#" onclick="searchText()"><button class="btn-info " id="btn_msg" type="submit"  value="submit" th:text="#{lang.btn.send}"  th:onclick="'javascript:chekMy(\''+#{lang.messageUser.go}+'\');'" data-dismiss="modal"  disabled>Відправити</button></a>
+                                <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+
+                            </form>
+                        </div>
+                    </div >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/modal-->
+</body>
+</html>

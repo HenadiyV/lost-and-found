@@ -8,46 +8,49 @@
 <div th:fragment="heder">
     <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
     <!--<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>-->
-	<script src="../static/static/js/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript">
-        $.ajax({
+	<!--<script src="../static/static/js/jquery-1.9.1.min.js"></script>-->
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+	<script src="http://code.jquery.com/ui/1.8.22/jquery-ui.min.js" type="text/javascript"></script>
+
+	<script>
+        var $b = jQuery.noConflict();
+       // alert($b.fn.jquery);
+	</script>
+    <script type="text/javascript">
+        $b.ajax({
             url : "/user",
             success : function(data) {
                 if(data.name){
-                $(".unauthenticated").hide();
-               $("#user").html("Hello "+data.name);
-                     $("#countMessage").html(data.countMessage);
-                     $("#countPosts").html(data.countPosts);
-                     $("#userId").val(data.userId);
-                $(".authenticated").show();}
-               // alert(data.countMessage);
+                $b(".unauthenticated").hide();
+               $b("#user").html("Hello "+data.name);
+                     $b("#countMessage").html(data.countMessage);
+                     $b("#countPosts").html(data.countPosts);
+                     $b("#userId").val(data.userId);
+                $b(".authenticated").show();}
+
             },
             error : function(data) {
-                $("#user").html('');
-                $(".unauthenticated").show();
-                $(".authenticated").hide();
+                $b("#user").html('');
+                $b(".unauthenticated").show();
+                $b(".authenticated").hide();
                 if (location.href.indexOf("error=true")>=0) {
-                    $(".error").show();
+                    $b(".error").show();
                 }
             }
         });
-        // $.get("/user", function(data) {
-        //     //
-        //     $("#user").html(data);
-        //     $(".unauthenticated").hide()
-        //     $(".authenticated").show()
-        // });
+
         var logout = function() {
-        $.post("/logout", function() {
-        $("#user").html('');
-        $(".unauthenticated").show();
-        $(".authenticated").hide();
+        $b.post("/logout", function() {
+        $b("#user").html('');
+        $b(".unauthenticated").show();
+        $b(".authenticated").hide();
         })
         return true;
         }
         function userMessage(){
-            var idUs=$("#userId").val();
-           $.ajax ({
+            var idUs=$b("#userId").val();
+           $b.ajax ({
                type : "GET",
                url : "/message/all-message",
                dataType: 'json',
@@ -56,29 +59,12 @@
                data: JSON.stringify(idUs),
 
                success : function() {
-                   alert("Ok");
-			   }
-			});
-		}
-	</script>
-    <!--<script th:inline="javascript">-->
-        <!--var frontendData=[[${frontendData}]];-->
-    <!--</script>-->
-	<!--<script type="text/javascript">-->
-        <!--$.get("/user", function(data) {-->
-            <!--$("#user").html(data.userAuthentication.details.name);-->
-            <!--$(".unauthenticated").hide()-->
-            <!--$(".authenticated").show()-->
-        <!--});-->
-        <!--var logout = function() {-->
-            <!--$.post("/logout", function() {-->
-                <!--$("#user").html('');-->
-                <!--$(".unauthenticated").show();-->
-                <!--$(".authenticated").hide();-->
-            <!--})-->
-            <!--return true;-->
-        <!--}-->
-	<!--</script>-->
+
+               }
+            });
+        }
+    </script>
+
  <!-- Navigation & Logo-->
         <div class="mainmenu-wrapper">
 	        <div class="container">
@@ -150,8 +136,8 @@
 							<a class="dropdown-toggle " data-toggle="dropdown" href="#" ><span th:text="#{lang.btn.lostName}">Разыскиваеться</span>
 								<span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="/view/people-lost" th:text="#{people}">Люди</a></li>
-									<li><a href="/view/animal-lost" th:text="#{animal}">животные</a></li>
+									<li><a href="/view/people-lost" th:text="#{people.header.title}">Люди</a></li>
+									<li><a href="/view/animal-lost" th:text="#{animal.header.title}">животные</a></li>
 									<li><a href="/view/thing-lost" th:text="#{thing}">вещи</a></li>
 								</ul>
 							<!--</div>-->
@@ -161,16 +147,16 @@
 								<a class=" dropdown-toggle"  data-toggle="dropdown" href="#" ><span th:text="#{lang.btn.foundName}">Найдено</span>
 									<span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="/view/people-found" th:text="#{people}">Люди</a></li>
-									<li><a href="/view/animal-found" th:text="#{animal}">животные</a></li>
+									<li><a href="/view/people-found" th:text="#{people.header.title}">Люди</a></li>
+									<li><a href="/view/animal-found" th:text="#{animal.header.title}">животные</a></li>
 									<li><a href="/view/thing-found" th:text="#{thing}">вещи</a></li>
 								</ul>
 
 						</li>
 						<li class="dropdown">
 							<!--<div ></div>-->
-								<a class=" dropdown-toggle"  data-toggle="dropdown" href="#" >About
-									<span class="caret"></span></a>
+								<a class=" dropdown-toggle"  data-toggle="dropdown" href="#" ><span th:text="#{lang.futer.contactus}">About</span>
+									<span class="caret" ></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="/faq" th:text="#{lang.futer.faq}">Frequently Asked Questions</a></li>
 									<li><a href="/about" th:text="#{lang.futer.about}">About Us</a></li>
@@ -191,91 +177,3 @@
 </body>
 </html>
 
-<!--<li class="has-submenu">-->
-<!--<a href="#">Pages +</a>-->
-<!--<div class="mainmenu-submenu">-->
-<!--<div class="mainmenu-submenu-inner"> -->
-
-<!---->
-<!--<div>-->
-<!--<h4>General Pages</h4>-->
-<!--<ul>-->
-<!--<li><a href="/about">About Us</a></li>-->
-<!--<li><a href="/contact">Contact Us</a></li>-->
-<!--<li><a href="/faq">Frequently Asked Questions</a></li>-->
-<!--&lt;!&ndash;<li><a href="page-testimonials-clients.html">Testimonials & Clients</a></li>&ndash;&gt;-->
-<!--<li><a href="/events">Events</a></li>-->
-<!--&lt;!&ndash;<li><a href="/page-404">404 Page</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;<li><a href="page-sitemap.html">Sitemap</a></li>&ndash;&gt;-->
-<!--<li><a href="/login">Login</a></li>-->
-<!--<li><a href="/register">Register</a></li>-->
-<!--<li><a href="/password-reset">Password Reset</a></li>-->
-<!--<li><a href="/terms-privacy">Terms & Privacy</a></li>-->
-<!--&lt;!&ndash;<li><a href="../page-coming-soon.html">Coming Soon</a></li>&ndash;&gt;-->
-<!--</ul>-->
-<!--</div>-->
-<!---->
-<!--</div>&lt;!&ndash; /mainmenu-submenu-inner &ndash;&gt;-->
-<!--</div>&lt;!&ndash; /mainmenu-submenu &ndash;&gt;-->
-<!--</li>-->
-
-
-<!--<script>-->
-
-<!--//     $.getElementById("#select_selector").on('change',function() {-->
-<!--//         $.getElementById("#select_selector1 option").eq($(this).find(':selected').index()).prop('selected',true);-->
-<!--//         // $(document).ready(function() { });-->
-<!--// });-->
-<!--// document.getElementById('#select_selector').on(change(function(){-->
-<!--//     document.getElementById("#select_selector1 option").eq($(this).find(':selected').index()).prop('selected',true);-->
-<!--// });-->
-<!--</script>-->
-<!--<script type="text/javascript">-->
-
-
-<!--$.ajaxSetup({-->
-<!--beforeSend : function(xhr, settings) {-->
-<!--if (settings.type == 'POST' || settings.type == 'PUT'-->
-<!--|| settings.type == 'DELETE') {-->
-<!--if (!(/^http:.*/.test(settings.url) || /^https:.*/-->
-<!--.test(settings.url))) {-->
-<!--// Only send the token to relative URLs i.e. locally.-->
-<!--xhr.setRequestHeader("X-XSRF-TOKEN",-->
-<!--Cookies.get('XSRF-TOKEN'));-->
-<!--}-->
-<!--}-->
-<!--}-->
-<!--});-->
-<!--$.get("/user", function(data) {-->
-<!--$("#user").html(data.userAuthentication.details.name);-->
-<!--$(".unauthenticated").hide()-->
-<!--$(".authenticated").show()-->
-<!--});-->
-
-<!--var logout = function() {-->
-<!--$.post("/logout", function() {-->
-<!--$("#user").html('');-->
-<!--$(".unauthenticated").show();-->
-<!--$(".authenticated").hide();-->
-<!--})-->
-<!--return true;-->
-<!--}-->
-<!--$.ajax({-->
-<!--url : "/user",-->
-<!--success : function(data) {-->
-<!--$(".unauthenticated").hide();-->
-<!--$("#user").html(data.userAuthentication.details.name);-->
-<!--$(".authenticated").show();-->
-<!--},-->
-<!--error : function(data) {-->
-<!--$("#user").html('');-->
-<!--$(".unauthenticated").show();-->
-<!--$(".authenticated").hide();-->
-<!--if (location.href.indexOf("error=true")>=0) {-->
-<!--$(".error").show();-->
-<!--}-->
-<!--}-->
-<!--});-->
-<!--// $(document).ready(function () {-->
-<!--// //your code here });-->
-<!--</script>-->

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div th:fragment="user">
+    <style>
+        table{
+
+           border-color:silver;
+
+        }
+    </style>
+    <div class="container">
+        <!---->
+        <div th:if="${ban}">
+            <table border="1" id="tableBan">
+
+                <caption>User</caption>
+                <tr>
+
+                    <th th:text="#{admin.user.name}">Имя</th>
+                    <th th:text="#{admin.user.email}">Email</th>
+                    <th th:text="#{admin.user.phone}">phone</th>
+
+                    <th th:text="#{admin.user.active}">active</th>
+                    <th >Role</th>
+                    <th th:text="#{users.ban}">ban</th>
+                    <th th:text="#{users.unban}">unban</th>
+                    <th th:text="#{admin.user.delete}">delete</th>
+
+                </tr>
+<tr>
+    <td><label th:text="${admin.getName()}"></label></td>
+    <td th:text="${admin.getEmail()}"></td>
+    <td th:text="${admin.getPhone()}"></td>
+
+    <td th:text="${admin.isActive()}"></td>
+    <td th:text="${admin.getRoles()}"></td>
+</tr>
+                <div th:each="usr:${userList}">
+
+
+                        <tr th:id="'U'+${usr.getId()}">
+
+
+                            <td><label th:text="${usr.getName()}"></label></td>
+                            <td th:text="${usr.getEmail()}"></td>
+                            <td th:text="${usr.getPhone()}"></td>
+
+                            <td th:text="${usr.isActive()}"></td>
+                            <td th:text="${usr.getRoles()}"></td>
+                            <td ><button  type="button" th:id="'BU'+${usr.getId()}" th:text="#{users.ban}"
+                                          th:onclick="'javascript:lockUser(\''+${usr.getId()}+'\',\''+#{users.ban}+'\',\''+#{users.unban}+'\',\''+#{admin.user.delete}+'\');'"></button ></td>
+
+
+                            <td><button  type="button" th:id="'DU'+${usr.getId()}" th:text="#{users.unban}"
+                                         th:onclick="'javascript:unlockUser(\''+${usr.getId()}+'\',\''+#{users.ban}+'\',\''+#{users.unban}+'\',\''+#{admin.user.delete}+'\');'"></button ></td>
+
+
+                            <td><button  type="button" th:id="'DelU'+${usr.getId()}" th:text="#{admin.user.delete}"
+                                         th:onclick="'javascript:deleteUser(\''+${usr.getId()}+'\',\''+#{users.ban}+'\',\''+#{users.unban}+'\',\''+#{admin.user.delete}+'\');'"></button ></td>
+
+
+                        </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <div th:id="'U'+${usr.getId()}"></div>
+                        </td>
+
+
+                        </td>
+                    </tr>
+
+
+                </div>
+            </table>
+
+        </div>
+        <div th:if="${detalis}">
+            <table border="1" id="tableDetalis">
+
+                <caption>User</caption>
+                <tr>
+                    <th>Id</th>
+                    <th th:text="#{admin.user.name}">Имя</th>
+                    <th th:text="#{admin.user.email}">Email</th>
+                    <th th:text="#{admin.user.phone}">phone</th>
+                    <th th:text="#{admin.user.social}">social name</th>
+                    <th th:text="#{admin.user.active}">active</th>
+                    <th th:text="#{admin.user.advt}">advt</th>
+
+
+
+
+                </tr>
+                <div th:each="usr:${userList}">
+                    <tr th:id="'U'+${usr.getId()}">
+
+                        <td><p th:text="${usr.getId()}" style="color: red"></p></td>
+                        <td><label th:text="${usr.getName()}"></label></td>
+                        <td th:text="${usr.getEmail()}"></td>
+                        <td th:text="${usr.getPhone()}"></td>
+                        <td><p th:text="${usr.getNameSocial()}"></p></td>
+
+                        <td th:text="${usr.isActive()}"></td>
+
+                        <td>
+                            <form action="/admin/user-advt1" method="get">
+                                <input hidden="hidden" name="idUser" th:value="${usr.getId()}"/>
+                                <button type="submit" th:text="#{admin.user.advt}"></button>
+                            </form>
+                        </td>
+
+                    </tr>
+
+                </div>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

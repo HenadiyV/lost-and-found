@@ -19,6 +19,9 @@
         .mya:hover{
             color: #5cb85c;
         }
+        .myspan{
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -31,77 +34,33 @@
 <div class="section section-breadcrumbs">
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-sm-3">
+            <div class="col-md-4 col-sm-4">
                 <h1 th:text="#{lang.messageUser.title}" >Messages</h1>
+                <a class="my_a" th:href="@{'/main/all_message'}"  th:text="#{lang.messageUser.message.all}"  >Показать все сообщения </a>
             </div>
-            <
-            <div class="col-md-3 col-sm-3 " th:if="${all}==0">
+            <!--<div class="col-md-4 col-sm-4 ">-->
+                <!---->
+        <!--</div>-->
+
+            <div class="col-md-4 col-sm-4 " th:if="${all}==0">
             <!--<div class="row"></div>-->
             <!--<div></div>-->
-                <a class="mya" th:href="@{'/main/message_pasive'+${idAdvt} }" th:text="#{lang.messageUser.pasive}" >Показать неактивные сообщения  </a><br/>
-                <a class="mya" th:href="@{'/main/message_active'+${idAdvt} }" th:text="#{lang.messageUser.activeShow}" >Показать активные сообщения  </a><br/>
-                <a class="mya" th:href="@{'/main/message_all'+${idAdvt} }"  th:text="#{lang.messageUser.all}"  >Показать все сообщения </a>
-            </div>
-            <div class="col-md-3 col-sm-3 " th:if="${all}==1">
-                <a class="mya" th:href="@{'/main/all_message'}"  th:text="#{lang.messageUser.all}"  >Показать все сообщения </a>
-            </div>
-            <!--<div class="col-sm-3 ">-->
+                <a class="my_a" th:href="@{'/main/message_all'+${idAdvt} }"  th:text="#{lang.messageUser.advt.message.all}"  >Показать все сообщения </a><br/>
+                <span class="myspan" th:text="${pasiv}"></span>  <a class="my_a" th:href="@{'/main/message_pasive'+${idAdvt} }" th:text="#{lang.messageUser.pasive}" >Показать неактивные сообщения </a>  <br/>
+                <span class="myspan" th:text="${activ}"></span>  <a class="my_a" th:href="@{'/main/message_active'+${idAdvt} }" th:text="#{lang.messageUser.active}" >Показать активные сообщения </a><br/>
 
-            <!--</div>-->
-            <!--<div class="col-sm-3 ">-->
+            </div>
 
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-md-4">-->
-                <!--&lt;!&ndash;<div class="col-sm-4 col-md-4  m-3"></div>&ndash;&gt;-->
-                <!--<form action="/main/message"  method="get">-->
-                    <!--<input hidden="hidden" name="messageAll" th:value="2"/>-->
-                    <!--<input hidden="hidden" name="idAdvt" th:value="${idAdvt}"/>-->
-                    <!--<button class="btn-blue " style="width: 100%; text-align: center" type="submit"  th:text="#{lang.btn.message.pasive}">Показать неактивные сообщения </button>-->
-                <!--</form>-->
-            <!--</div>-->
+
         </div>
 
     </div>
 </div>
 <!--End Page Title -->
-<!--modal-->
-<div class="container">
-    <div class="container">
 
-        <div class="modal fade" id="userMessageModal" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal -->
-                <div class="modal-content">
-
-                    <div class="modal-header" >
-                        <h4 th:text="#{lang.messageUser}"><span class="glyphicon glyphicon-lock"></span> Повідомлення </h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                    </div>
-
-
-                    <div class="modal-body" style="padding:40px 50px;">
-                        <div>
-                            <input  type="text" th:name="idMess1"  />
-                            <label id="datMess"></label>
-                            <label id="textMess"></label>
-
-                        </div>
-                    </div >
-
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
-<!--/modal-->
 
 <!--Advt List-->
-<div class="eshop-section section"  >
+<div class="eshop-section section">
     <div class="container">
         <div class="row">
             <!---->
@@ -113,17 +72,12 @@
                         <!--Title-->
                         <div class="title">
                             <h2 th:text="#{lang.messageUser.guest}"></h2>
-                            <h4 th:text="${mess.getContact()}"></h4>
+                           <b> <h4 th:text="${mess.getContact()}"></h4></b>
                             <b> <span th:text="#{lang.messageUser.text}">Text :</span></b>
                             <br/>
                             <textarea class="form-control" rows="5" name="textAdvt" th:text="${mess.getTextMessage()}"></textarea>
                             <p th:text="${mess.getDatMessage().toString()}"></p>
                         </div>
-
-                               <!--<div class="portfolio-image">-->
-                                    <!--<a href="page-portfolio-item.html"><img src="img/portfolio2.jpg" alt="Project Name"></a>-->
-                                       <!--</div>-->
-
                                      <div class="portfolio-info-fade">
                                             <ul>
                                                 <li class="portfolio-project-name" th:text="${mess.getSubcategoryAdvt()}">Project Name</li>
@@ -131,19 +85,13 @@
                                                 <li th:text="${mess.getDatAdvt().toString()}">Website design & Development</li>
                                                 <li th:text="${mess.getCityAdvt()}">Client: Some Client LTD</li>
                                                 <li th:text="${mess.getTextAdvt()}">Client: Some Client LTD</li>
-                                                <!--<li th:text="${mess.getTextAdvt()}">Client: Some Client LTD</li>-->
-                                                <!--<li class="read-more"><a href="page-portfolio-item.html" class="btn">Read more</a></li>-->
+
                                            </ul>
                                       </div>
-
-
-
-                        <!--<a class="btn btn-primary" id="bt"  th:text="#{lang.send}">Повідомити</a>-->
-                        <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />class="col-md-6 col-sm-6"-->
                     </div>
                         <div class="row">
                     <div th:if="${mess.isActive()}" class="col-md-6 col-sm-6">
-                        <div  >
+                        <div >
                             <form action="/main/hide"  method="get">
                                 <input hidden="hidden"  name="idMess" th:value="${mess.getIdMessage()}"/>
                                 <input hidden="hidden"  name="idAdvt" th:value="${mess.getIdAdvt()}"/>
@@ -184,6 +132,65 @@
 <div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
 </body>
 </html>
+
+<!--modal-->
+<!--<div class="container">-->
+    <!--<div class="container">-->
+
+        <!--<div class="modal fade" id="userMessageModal" role="dialog">-->
+            <!--<div class="modal-dialog">-->
+
+                <!--&lt;!&ndash; Modal &ndash;&gt;-->
+                <!--<div class="modal-content">-->
+
+                    <!--<div class="modal-header" >-->
+                        <!--<h4 th:text="#{lang.messageUser}"><span class="glyphicon glyphicon-lock"></span> Повідомлення </h4>-->
+                        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+
+                    <!--</div>-->
+
+
+                    <!--<div class="modal-body" style="padding:40px 50px;">-->
+                        <!--<div>-->
+                            <!--<input  type="text" th:name="idMess1"  />-->
+                            <!--<label id="datMess"></label>-->
+                            <!--<label id="textMess"></label>-->
+
+                        <!--</div>-->
+                    <!--</div >-->
+
+
+                <!--</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--/modal-->
+<!--<div class="portfolio-image">-->
+<!--<a href="page-portfolio-item.html"><img src="img/portfolio2.jpg" alt="Project Name"></a>-->
+<!--</div>-->
+
+<!--<li th:text="${mess.getTextAdvt()}">Client: Some Client LTD</li>-->
+<!--<li class="read-more"><a href="page-portfolio-item.html" class="btn">Read more</a></li>-->
+
+<!--<a class="btn btn-primary" id="bt"  th:text="#{lang.send}">Повідомити</a>-->
+<!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />class="col-md-6 col-sm-6"-->
+<!--<div class="col-sm-3 ">-->
+
+<!--</div>-->
+<!--<div class="col-sm-3 ">-->
+
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-4">-->
+<!--&lt;!&ndash;<div class="col-sm-4 col-md-4  m-3"></div>&ndash;&gt;-->
+<!--<form action="/main/message"  method="get">-->
+<!--<input hidden="hidden" name="messageAll" th:value="2"/>-->
+<!--<input hidden="hidden" name="idAdvt" th:value="${idAdvt}"/>-->
+<!--<button class="btn-blue " style="width: 100%; text-align: center" type="submit"  th:text="#{lang.btn.message.pasive}">Показать неактивные сообщения </button>-->
+<!--</form>-->
+<!--</div>-->
 <!--<div class="col-md-3 col-sm-6">-->
 <!--&lt;!&ndash; Adver &ndash;&gt;-->
 <!--<div class="shop-item">-->

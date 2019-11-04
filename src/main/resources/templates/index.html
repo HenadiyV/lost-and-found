@@ -16,24 +16,6 @@
     <div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
 	<link rel="icon" type="image/png" href="image/favicon.ico"/>
 
-	<!--<script>-->
-        <!--window.onload=function(){-->
-            <!--var menuElem = document.getElementById('dropdown-menu'),-->
-            <!--titleElem = menuElem.querySelector('.title');-->
-            <!--document.onclick = function(event) {-->
-                <!--var target = elem = event.target;-->
-                <!--while (target != this) {-->
-                    <!--if (target == menuElem) {-->
-                        <!--if(elem.tagName == 'A') titleElem.innerHTML = elem.textContent;-->
-                        <!--menuElem.classList.toggle('open')-->
-                        <!--return;-->
-                    <!--}-->
-                    <!--target = target.parentNode;-->
-                <!--}-->
-                <!--menuElem.classList.remove('open');-->
-            <!--}-->
-        <!--}-->
-	<!--</script>-->
 
 </head>
     <body>
@@ -46,27 +28,17 @@
         <!-- Navigation & Logo-->
 		<div class="conteiner" >
 			<div th:insert="~{fragments/heder::heder}"></div>
-			<div>
-				<a href="/sendSimpleEmail">Email</a>
-			</div>
-		</div>
-
-		<!--<div >-->
-			<!--Logged in as: <span id="user"></span>-->
 			<!--<div>-->
-				<!--<button onClick="logout()" class="btn btn-primary">Logout</button>-->
+				<!--<a href="/sendSimpleEmail">Email</a>-->
 			<!--</div>-->
-		<!--</div>-->
-		<!--<div class="conteiner" >-->
-			<!--<div th:insert="~{fragments/user::user}"></div>-->
-		<!--</div>-->
+		</div>
 
 		<!-- Homepage Slider -->
         <div class="homepage-slider">
         	<div id="sequence">
 				<ul class="sequence-canvas">
 					<!-- Slide 1 -->
-					<li class="bg4" >
+					<li class="bg1" >
 						<!-- Slide Title -->
 						<h2 class="title" th:text="#{lang.index.slider1}">Мы любим их.</h2>
 						<!-- Slide Text -->
@@ -86,7 +58,7 @@
 					</li>
 					<!-- End Slide 2 -->
 					<!-- Slide 3 -->
-					<li class="bg1">
+					<li class="bg4">
 						<!-- Slide Title -->
 						<h2 class="title" th:text="#{lang.index.slider3}">Радость встречи!</h2>
 						<!-- Slide Text -->
@@ -95,12 +67,14 @@
 						<img class="slide-img" src="/img/homepage-slider/slide3.png" alt="Slide 3" />
 					</li>
 					<!-- End Slide 3 -->
+
 				</ul>
 				<div class="sequence-pagination-wrapper">
 					<ul class="sequence-pagination">
 						<li>1</li>
 						<li>2</li>
 						<li>3</li>
+
 					</ul>
 				</div>
 			</div>
@@ -133,14 +107,7 @@
 			</div>
 		</div>
 		<!--End Press Coverage -->
-		<!--<div id="dropdown-menu" class="dropdown-menu">-->
-			<!--<span class="title">English</span>-->
-			<!--<ul>-->
-				<!--<li><a href="#">English</a></li>-->
-				<!--<li><a href="#">Русский</a></li>-->
-				<!--<li><a href="#">Украинский</a></li>-->
-			<!--</ul>-->
-		<!--</div>-->
+
 		
 
 
@@ -148,307 +115,8 @@
 		<div th:insert="~{fragments/footer.html :: footer}"></div>
 
 <!--End Footer -->
-
+		<!-- Javascripts -->
 		<div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
-		<!--<script type="text/javascript">-->
-
-
-            <!--$.ajaxSetup({-->
-                <!--beforeSend : function(xhr, settings) {-->
-                    <!--if (settings.type == 'POST' || settings.type == 'PUT'-->
-                        <!--|| settings.type == 'DELETE') {-->
-                        <!--if (!(/^http:.*/.test(settings.url) || /^https:.*/-->
-                            <!--.test(settings.url))) {-->
-                            <!--// Only send the token to relative URLs i.e. locally.-->
-                            <!--xhr.setRequestHeader("X-XSRF-TOKEN",-->
-                                <!--Cookies.get('XSRF-TOKEN'));-->
-                        <!--}-->
-                    <!--}-->
-                <!--}-->
-            <!--});-->
-            <!--$.get("/user", function(data) {-->
-                <!--$("#user").html(data.userAuthentication.details.name);-->
-                <!--$(".unauthenticated").hide()-->
-                <!--$(".authenticated").show()-->
-            <!--});-->
-
-            <!--var logout = function() {-->
-                <!--$.post("/logout", function() {-->
-                    <!--$("#user").html('');-->
-                    <!--$(".unauthenticated").show();-->
-                    <!--$(".authenticated").hide();-->
-                <!--})-->
-                <!--return true;-->
-            <!--}-->
-            <!--$.ajax({-->
-                <!--url : "/user",-->
-                <!--success : function(data) {-->
-                    <!--$(".unauthenticated").hide();-->
-                    <!--$("#user").html(data.userAuthentication.details.name);-->
-                    <!--$(".authenticated").show();-->
-                <!--},-->
-                <!--error : function(data) {-->
-                    <!--$("#user").html('');-->
-                    <!--$(".unauthenticated").show();-->
-                    <!--$(".authenticated").hide();-->
-                    <!--if (location.href.indexOf("error=true")>=0) {-->
-                        <!--$(".error").show();-->
-                    <!--}-->
-                <!--}-->
-            <!--});-->
-            <!--// $(document).ready(function () {-->
-            <!--// //your code here });-->
-		<!--</script>-->
-        <!-- Javascripts -->
-
-
+		<script src="/static/static/js/template.js"></script>
     </body>
 </html>
-
-<!--<script th:inline="javascript">-->
-<!--var frontendData=[[${frontendData}]];-->
-<!--</script>-->
-<!-- Product-slider -->
-<!--<div class="section">-->
-<!--<div class="container">-->
-<!--<div class="row">-->
-<!--<div class="col-md-12">-->
-<!--<div class="products-slider">-->
-<!---->
-<!--&lt;!&ndash; Products Slider Item &ndash;&gt;-->
-<!--<div class="shop-item">-->
-<!--<div class="ribbon-wrapper">-->
-<!--<div class="price-ribbon ribbon-green">Оплата</div>-->
-<!--</div>-->
-<!--&lt;!&ndash; Product Image &ndash;&gt;-->
-<!--<div class="image">-->
-<!--<a href="page-product-details.html">-->
-<!--<img src="/img/images/product1.jpg" alt="Item Name">-->
-<!--</a>-->
-<!--</div>-->
-<!--&lt;!&ndash; Product Title &ndash;&gt;-->
-<!--<div class="title">-->
-<!--<h3>-->
-<!--<a href="page-product-details.html">Lorem ipsum dolor</a>-->
-<!--</h3>-->
-<!--</div>-->
-<!--&lt;!&ndash; Product Price &ndash;&gt;-->
-<!--<div class="price">-->
-<!--$999.99-->
-<!--</div>-->
-<!--&lt;!&ndash; Buy Button &ndash;&gt;-->
-<!--<div class="actions">-->
-<!--<a href="page-product-details.html" class="btn btn-small">-->
-<!--<i class="icon-shopping-cart icon-white"></i> Buy</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash; End Products Slider Item &ndash;&gt;-->
-<!--<div class="shop-item">-->
-<!--<div class="image">-->
-<!--<a href="page-product-details.html">-->
-<!--<img src="/img/images/product2.jpg" alt="Item Name">-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="title">-->
-<!--<h3>-->
-<!--<a href="page-product-details.html">Lorem ipsum dolor</a>-->
-<!--</h3>-->
-<!--</div>-->
-<!--<div class="price">-->
-<!--$999.99-->
-<!--</div>-->
-<!--<div class="actions">-->
-<!--<a href="page-product-details.html" class="btn btn-small">-->
-<!--<i class="icon-shopping-cart icon-white"></i> Buy</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="shop-item">-->
-<!--<div class="image">-->
-<!--<a href="page-product-details.html">-->
-<!--<img src="/img/images/product3.jpg" alt="Item Name">-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="title">-->
-<!--<h3>-->
-<!--<a href="page-product-details.html">Lorem ipsum dolor</a>-->
-<!--</h3>-->
-<!--</div>-->
-<!--<div class="price">-->
-<!--$999.99-->
-<!--</div>-->
-<!--<div class="actions">-->
-<!--<a href="page-product-details.html" class="btn btn-small">-->
-<!--<i class="icon-shopping-cart icon-white"></i> Buy</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="shop-item">-->
-<!--<div class="image">-->
-<!--<a href="page-product-details.html">-->
-<!--<img src="/img/images/product4.jpg" alt="Item Name">-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="title">-->
-<!--<h3>-->
-<!--<a href="page-product-details.html">Lorem ipsum dolor</a>-->
-<!--</h3>-->
-<!--</div>-->
-<!--<div class="price">-->
-<!--$999.99-->
-<!--</div>-->
-<!--<div class="actions">-->
-<!--<a href="page-product-details.html" class="btn btn-small">-->
-<!--<i class="icon-shopping-cart icon-white"></i> Buy</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="shop-item">-->
-<!--<div class="image">-->
-<!--<a href="page-product-details.html">-->
-<!--<img src="/img/images/product5.jpg" alt="Item Name">-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="title">-->
-<!--<h3>-->
-<!--<a href="page-product-details.html">Lorem ipsum dolor</a>-->
-<!--</h3>-->
-<!--</div>-->
-<!--<div class="price">-->
-<!--$999.99-->
-<!--</div>-->
-<!--<div class="actions">-->
-<!--<a href="page-product-details.html" class="btn btn-small">-->
-<!--<i class="icon-shopping-cart icon-white"></i> Buy</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="shop-item">-->
-<!--<div class="image">-->
-<!--<a href="page-product-details.html">-->
-<!--<img src="/img/images/product6.jpg" alt="Item Name">-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="title">-->
-<!--<h3>-->
-<!--<a href="page-product-details.html">Lorem ipsum dolor</a>-->
-<!--</h3>-->
-<!--</div>-->
-<!--<div class="price">-->
-<!--$999.99-->
-<!--</div>-->
-<!--<div class="actions">-->
-<!--<a href="page-product-details.html" class="btn btn-small">-->
-<!--<i class="icon-shopping-cart icon-white"></i> Buy</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="shop-item">-->
-<!--<div class="image">-->
-<!--<a href="page-product-details.html">-->
-<!--<img src="/img/images/product7.jpg" alt="Item Name">-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="title">-->
-<!--<h3>-->
-<!--<a href="page-product-details.html">Lorem ipsum dolor</a>-->
-<!--</h3>-->
-<!--</div>-->
-<!--<div class="price">-->
-<!--$999.99-->
-<!--</div>-->
-<!--<div class="actions">-->
-<!--<a href="page-product-details.html" class="btn btn-small">-->
-<!--<i class="icon-shopping-cart icon-white"></i> Buy</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="shop-item">-->
-<!--<div class="image">-->
-<!--<a href="page-product-details.html">-->
-<!--<img src="/img/images/product8.jpg" alt="Item Name">-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="title">-->
-<!--<h3>-->
-<!--<a href="page-product-details.html">Lorem ipsum dolor</a>-->
-<!--</h3>-->
-<!--</div>-->
-<!--<div class="price">-->
-<!--$999.99-->
-<!--</div>-->
-<!--<div class="actions">-->
-<!--<a href="page-product-details.html" class="btn btn-small">-->
-<!--<i class="icon-shopping-cart icon-white"></i> Buy</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--End Product-slider -->
-
-<!-- Pricing Table -->
-<!--<div class="section">-->
-<!--<div class="container">-->
-<!--<h2>Pricing</h2>-->
-<!--<div class="row">-->
-<!--&lt;!&ndash; Pricing Plans Wrapper &ndash;&gt;-->
-<!--<div class="pricing-wrapper col-md-12">-->
-<!--&lt;!&ndash; Pricing Plan &ndash;&gt;-->
-<!--<div class="pricing-plan">-->
-<!--&lt;!&ndash; Pricing Plan Ribbon &ndash;&gt;-->
-<!--<div class="ribbon-wrapper">-->
-<!--<div class="price-ribbon ribbon-red">Popular</div>-->
-<!--</div>-->
-<!--<h2 class="pricing-plan-title">Starter</h2>-->
-<!--<p class="pricing-plan-price">FREE</p>-->
-<!--&lt;!&ndash; Pricing Plan Features &ndash;&gt;-->
-<!--<ul class="pricing-plan-features">-->
-<!--<li><strong>1</strong> user</li>-->
-<!--<li><strong>Unlimited</strong> projects</li>-->
-<!--<li><strong>2GB</strong> storage</li>-->
-<!--</ul>-->
-<!--<a href="index.html" class="btn">Order Now</a>-->
-<!--</div>-->
-<!--&lt;!&ndash; End Pricing Plan &ndash;&gt;-->
-<!---->
-<!--<div class="pricing-plan ">-->
-<!--<div class="ribbon-wrapper">-->
-<!--<div class="price-ribbon ribbon-blue">Popular</div>-->
-<!--</div>-->
-<!--<h2 class="pricing-plan-title">Advanced11111</h2>-->
-<!--<p class="pricing-plan-price">$49<span>/mo</span></p>-->
-<!--<ul class="pricing-plan-features">-->
-<!--<li><strong>10</strong> users</li>-->
-<!--<li><strong>Unlimited</strong> projects</li>-->
-<!--<li><strong>20GB</strong> storage</li>-->
-<!--</ul>-->
-<!--<a href="index.html" class="btn">Order Now</a>-->
-<!--</div>-->
-<!--&lt;!&ndash; Promoted Pricing Plan &ndash;&gt;-->
-<!--<div class="pricing-plan pricing-plan-promote">-->
-<!--<h2 class="pricing-plan-title">Premium</h2>-->
-<!--<p class="pricing-plan-price">$99<span>/mo</span></p>-->
-<!--<ul class="pricing-plan-features">-->
-<!--<li><strong>Unlimited</strong> users</li>-->
-<!--<li><strong>Unlimited</strong> projects</li>-->
-<!--<li><strong>100GB</strong> storage</li>-->
-<!--</ul>-->
-<!--<a href="index.html" class="btn">Order Now</a>-->
-<!--</div>-->
-<!--<div class="pricing-plan">-->
-<!--&lt;!&ndash; Pricing Plan Ribbon &ndash;&gt;-->
-<!--<div class="ribbon-wrapper">-->
-<!--<div class="price-ribbon ribbon-green">New</div>-->
-<!--</div>-->
-<!--<h2 class="pricing-plan-title">Mega</h2>-->
-<!--<p class="pricing-plan-price">$199<span>/mo</span></p>-->
-<!--<ul class="pricing-plan-features">-->
-<!--<li><strong>Unlimited</strong> users</li>-->
-<!--<li><strong>Unlimited</strong> projects</li>-->
-<!--<li><strong>100GB</strong> storage</li>-->
-<!--</ul>-->
-<!--<a href="index.html" class="btn">Order Now</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash; End Pricing Plans Wrapper &ndash;&gt;-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!-- End Pricing Table -->

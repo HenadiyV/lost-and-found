@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="search">
+    <div class="row">
+        <form action="/view/search" method="GET">
+            <div class="col-lg-5 col-sm-6 col-md-6 col-xs-8">
+                <select class="form-control" id="subcategory" name="subcategory">
+                    <option value="" th:text="#{lang.select.category}">Виберіть категорію</option>
+                    <option th:each="subcategory : ${subcategoryList}"
+
+                            th:value="${subcategory.id}"
+                            th:text="${subcategory.name}">
+                    </option>
+                </select>
+                <input  hidden="hidden" name="found" th:value="${found}"/>
+                <input  hidden="hidden" name="categorySearch" th:value="${categorySearch}"/>
+                <input  hidden="hidden" name="urlSearch" th:value="${urlSearch}"/>
+            </div>
+            <div class="col-lg-5 col-sm-6 col-md-6 col-xs-8">
+                <div class="ui-widget">
+                    <input class="form-control" id="lang1"  value="" th:placeholder="#{lang.city.insert}"/>
+                    <!--<div id="listCity" style=";"></div>-->
+                    <select  id="City" name="city" onclick="cityIdInput()" style="height: 30px;display:none">
+                        <option th:text="#{lang.city}" value="">City</option>
+                    </select>
+
+                </div>
+            </div>
+            <br/>
+            <div class="col-lg-12 col-sm-8 col-md-10 col-xs-8" >
+            <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+                    <a href="#"  onclick="clearElement()" ><button class="btn btn-md"   type="submit" th:text="#{lang.search}">Search</button></a>
+            </div>
+        </form>
+    </div>
+    <script src="/static/static/js/advt.js"></script>
+</div>
+</body>
+</html>

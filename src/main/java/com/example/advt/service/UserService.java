@@ -2,12 +2,16 @@ package com.example.advt.service;
 
 
 
+import com.example.advt.dao.AdvtViewDAO;
 import com.example.advt.domain.Role;
 import com.example.advt.domain.User;
 import com.example.advt.repos.UserRepository;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.*;
 
 /*
@@ -115,9 +120,30 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 
         return true;
     }
+    public int roleUser(Principal principal){
+        if (principal != null) {
+            User user = (User) loadUserByUsername(principal.getName());
+            boolean bl = userAdmin();
+            if (bl) {
+          return 2;
+            } else return 1;
+        }
+        return 0;
+    }
     public void deleteMyFile(String fileName) throws IOException {
         //FileUtils.touch(new File("src/test/resources/fileToDelete.txt"));
+        if(!fileName.equals("noimage.png")){
         String nam=uploadPath+"\\"+fileName;
         FileUtils.forceDelete(FileUtils.getFile(nam));
+        }
+    }
+    public Page<AdvtViewDAO> searchUserPage(List<AdvtViewDAO> list, Pageable pageable) {
+        List<AdvtViewDAO> patientsList = new ArrayList<AdvtViewDAO>();
+        list.sort(Comparator.comparing(AdvtViewDAO::getAdvtId).reversed());
+        patientsList.addAll(list);
+        int start = (int) pageable.getOffset();
+        int end = (start + pageable.getPageSize()) > patientsList.size() ? patientsList.size() : (start + pageable.getPageSize());
+
+        return new PageImpl<AdvtViewDAO>(patientsList.subList(start, end), pageable, patientsList.size());
     }
 }

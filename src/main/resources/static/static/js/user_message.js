@@ -25,7 +25,7 @@ var mess={
 
         success: function (result) {
             userMessageModal(result);
-            alert("ok");
+           // alert("ok");
         }
     });
 }

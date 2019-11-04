@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Contact</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+
+    <div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
+
+</head>
+<body>
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to
+    improve your experience.</p>
+<![endif]-->
+
+
+<!-- Navigation & Logo-->
+<div class="conteiner">
+    <div th:insert="~{fragments/heder::heder}"></div>
+</div>
+<!--End Navigation & Logo-->
+
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 th:text="#{lang.admin.message}">Contact Us</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div align="center">
+        <h3 th:text="#{admin.user.ban}"> <b>Отправка сообщений запрещена.Свяжитесь с администратором.</b></h3>
+</div>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-7">
+
+                <!-- Contact Form id="contactForm" -->
+               <h3 > <b th:text="#{lang.contactUs.messageUser}">Send Us a Message</b></h3>
+                <div class="info" th:if="${sendMessage}"   th:text="#{contact.sendMessage}"></div>
+                <div class="contact-form-wrapper">
+                    <form class="form-horizontal" role="form" action="/blocked" method="post">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label"><b th:text="#{lang.your.name}">Your
+                                name</b></label>
+
+                            <div class="col-sm-9">
+                                <div class="error" th:if="${nameError}" th:text="#{contact.name.error}">Name Error</div>
+                                <input class="form-control" id="name" name="name" type="text" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-3 control-label"><b th:text="#{lang.your.email}">Your
+                                Email</b></label>
+                            <div class="col-sm-9">
+                                <div class="error" th:if="${emailError}" th:text="#{contact.email.error}">Name Error
+                                </div>
+                                <input class="form-control" id="email" name="email" type="text" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="topic" class="col-sm-3 control-label" th:text="#{lang.contactUs.selectTopic}">
+                                </label>
+                            <div class="col-sm-9">
+                                <input type="text" id="topic" name="topic" value="Blocked" readonly/>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="messageUser" class="col-sm-3 control-label" th:text="#{lang.messageUser}"><b>Message</b></label>
+                            <div class="col-sm-9">
+                                <div class="error" th:if="${contactMessageUserError}"
+                                     th:text="#{contact.messageUser.error}">Name Error
+                                </div>
+                                <textarea class="form-control" rows="5" id="messageUser" name="messageUser"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn pull-right" th:text="#{lang.btn.send}">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- End Contact Info -->
+            </div>
+
+            </div>
+            <div class="col-sm-5">
+
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:insert="~{fragments/footer.html :: footer}"></div>
+<!--End Footer -->
+
+
+
+<!-- Javascripts -->
+<div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
+<script src="/static/static/js/template.js"></script>
+
+</body>
+</html>

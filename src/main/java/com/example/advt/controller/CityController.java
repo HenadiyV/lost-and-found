@@ -53,7 +53,11 @@ public class CityController {
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") City city) {
+    public boolean delete(@PathVariable("id") City city) {
+        if(city!=null){
        cityRepository.delete(city);
+       return true;
+        }
+        return false;
     }
 }

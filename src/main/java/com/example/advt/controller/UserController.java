@@ -24,7 +24,7 @@ import java.util.Map;
  */
 
 @RestController
-public class UserControler {
+public class UserController {
     @Autowired
     private UserService userService;
     @Autowired

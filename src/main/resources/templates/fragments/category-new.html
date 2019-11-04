@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div th:fragment="category">
+
+    <div class="container">
+        <table id="tableCat">
+            <caption th:text="#{lang.category.name}">Category</caption>
+            <tr>
+                <td></td>
+                <td>
+                    <div th:id="'TCat'+${max}"></div>
+                </td>
+            </tr>
+            <div th:each="cat:${categoryList}">
+                <tr th:id="'TRCat'+${cat.getId()}">
+
+                    <td><b><p th:id="'LCat'+${cat.getId()}" th:text="${cat.getName()}"></p></b></td>
+
+                    <td><input type="text" th:id="'ICat'+${cat.getId()}"></input></td>
+                    <td><input type="button" th:id="'ECat'+${cat.getId()}" th:value="#{admin.user.edit}"
+                               th:onclick="'javascript:editCategory(\''+${cat.getId()}+'\');'"></input></td>
+                    <td><input type="button" th:id="'DCat'+${cat.getId()}" th:value="#{admin.user.delete}"
+                               th:onclick="'javascript:deleteCategory(\''+${cat.getId()}+'\');'"></input></td>
+                </tr>
+            </div>
+            <tr>
+                <td></td>
+                <td><input type="text" th:id="catNew" th:placeholder="#{admin.user.category}"/></td>
+                <td><input type="button" th:value="#{admin.user.add}"
+                           th:onclick="'javascript:addCategory(\''+${max}+'\')'"></td>
+            </tr>
+        </table>
+
+    </div>
+    <script src="/static/static/js/category_new.js"></script>
+</div>
+
+</body>
+</html>

@@ -7,7 +7,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Contact</title>
+        <title th:text="#{lang.contactUs}">Contact</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
@@ -40,6 +40,7 @@
 				<div class="row">
 					<div class="col-md-6">
 						<h1 th:text="#{lang.contactUs}">Contact Us</h1>
+						<input type="text" hidden="hidden" id="map-mess" th:value="#{lang.contactUs.map}" />
 					</div>
 				</div>
 			</div>
@@ -52,7 +53,7 @@
 						<!-- Map ""-->
 						
 	        			<div id="contact-us-map">
-						<!--<div id="map" style="width: 100%; height: 100%"></div>-->
+
 	        			</div>
 	        			<!-- End Map -->
 	        			<!-- Contact Info -->
@@ -69,6 +70,7 @@
 	        			<!-- End Contact Info -->
 	        		</div>
 	        		<div class="col-sm-5">
+
 	        			<!-- Contact Form id="contactForm" -->
 	        			<h3 th:text="#{lang.contactUs.messageUser}">Send Us a Message</h3>
 						<div class="info" th:if="${sendMessage}" th:text="#{contact.sendMessage}"></div>
@@ -125,24 +127,11 @@
 		<div th:insert="~{fragments/footer.html :: footer}"></div>
 		<!--End Footer -->
 
-		<script>
-			// var map = L.map('map').setView([49.25, 27.0], 9);
-			// L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiaGVuYWRpeSIsImEiOiJjano3NHczcXQwaDVuM2hxcXN3b2QwNmhzIn0.IEzCp7qkb4SYOaOwO1_bxg', {
-			// 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-			// 		maxZoom: 18,
-			// 		id: 'mapbox.streets',
-			// 		accessToken: 'your.mapbox.access.token'
-			// 	}).addTo(map);
-            //
-			// var marker=	L.marker([49.4229,27.0089])
-			// 	.addTo(map)
-			// 	.bindPopup('Привет я здесь!')
-			// 	 .openPopup();
-		</script>
+
 
         <!-- Javascripts -->
 		<div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
-
+		<script src="/static/static/js/template.js"></script>
 
     </body>
 </html>

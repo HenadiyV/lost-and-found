@@ -6,29 +6,7 @@
 </head>
 <body>
 <div th:fragment="adver">
-    <!--<link rel="stylesheet" href="/static/static/bootstrap.min.css">-->
-    <!--Pagination-->
-    <!--<div class="">  </div>-->
 
-                <!--<div class="row"></div>-->
-
-        <!--<ul class="pagination pagination-lg">-->
-        <!--<li class="disabled"><a href="#">Previous</a></li>-->
-        <!--<li class="active"><a href="#">1</a></li>-->
-        <!--<li><a href="#">2</a></li>-->
-        <!--<li><a href="#">3</a></li>-->
-        <!--<li><a href="#">4</a></li>-->
-        <!--<li><a href="#">5</a></li>-->
-        <!--<li><a href="#">6</a></li>-->
-        <!--<li><a href="#">7</a></li>-->
-        <!--<li><a href="#">8</a></li>-->
-        <!--<li><a href="#">9</a></li>-->
-        <!--<li><a href="#">10</a></li>-->
-        <!--<li><a href="#">Next</a></li>-->
-        <!--</ul>-->
-
-
-    <!--EndPagination-->
     <!--StartAdvt-->
     <div class="section blog-posts-wrapper">
         <div class="container">
@@ -107,14 +85,7 @@
                 <li th:if="${i-1==0}" class="page-item disabled" >
                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true" th:text="#{lang.page}">Сторінки</a>
                 </li>
-                <!--<div class="col-sm-2"></div>-->
-                <!--<li class=" disabled">-->
-                <!--<a  href="#" tabindex="-1" aria-disabled="true" th:text="#{lang.page}">Сторінки</a>-->
-                <!--</li>-->
 
-                <!--<div  th:each="i:${#numbers.sequence(1,listAdver.getTotalPages())}"></div>-->
-
-                <!--<div class="col-sm-2"></div>-->
                 <li th:if="${i-1 ==listAdver.getNumber()}" class="page-item active" >
                     <a href="#" th:text="${i}" class="page-link"></a>
                 </li>
@@ -124,13 +95,11 @@
                     <a th:href="@{${url}(page=${i-1},size=${listAdver.getSize()})}" th:text="${i}" class="page-link" ></a>
                 </li>
 
-                <!--<li th:if="${i-1>listAdver.getNumber()}" class="page-item disabled" >-->
-                <!--<a class="page-link" href="#" tabindex="-1" aria-disabled="true" th:text="#{lang.page}">Сторінки</a>-->
-                <!--</li>-->
+
 
             </ul>
 
-            <!--<div class="row">pagination-lg-->
+
 
             <div th:if="${listAdver.getTotalElements()}>${listAdver.getSize()}">
                 <ul class="pagination " th:each="c:${#numbers.sequence(10,listAdver.getTotalElements(),10)}">
@@ -138,8 +107,8 @@
                         <a class="page-link" href="#" tabindex="-1" aria-disabled="true" th:text="#{lang.page.size}">Кількість відображаємих елементів</a>
                     </li>
 
-                    <!--<div  ></div>-->
-                    <!--<div class="col-sm-1">  </div>-->
+
+
                     <li th:if="${c==listAdver.getSize()}" class="page-item active" >
                         <a href="#" th:text="${c}" class="page-link"></a>
                     </li>
@@ -153,7 +122,7 @@
                 </ul>
             </div>
         </div>
-        <!--<div class="row"></div>-->
+
 
     </div>
 </div>

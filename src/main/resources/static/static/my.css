@@ -44,3 +44,24 @@ body {
 .modal-footer {
     background-color: #f9f9f9;
 }
+/*a:link { color: red; }*/
+/*a:visited { color: grey; }*/
+/*a:hover { color: blue; }*/
+/*a:active { background-color: yellow; }*/
+.my_a:link{
+    color: #5CB85C;
+}
+.my_a:visited{
+    color: #5CB85C;
+}
+.my_a:hover{
+    color: white;
+}
+.my_a:active {
+    background-color: yellow;
+}
+.imgMy img {
+    object-fit: cover;
+    /*width: 100%;*/
+    height: 200px;
+}

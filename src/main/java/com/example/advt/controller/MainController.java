@@ -5,6 +5,7 @@ import com.example.advt.dao.AdvtViewDAO;
 import com.example.advt.dao.GuestMessageViewDAO;
 import com.example.advt.domain.*;
 import com.example.advt.repos.*;
+import com.example.advt.service.AdvtService;
 import com.example.advt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,51 +48,24 @@ public class MainController {
     private CategoryRepository categoryRepository;
     @Autowired
     private MessageRepository messageRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private AdvtService advtService;
 
     @GetMapping
     public String mainPage(Principal principal, Map<String, Object> model,
                            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         if (principal != null) {
+
             User user = (User) userService.loadUserByUsername(principal.getName());
-            List<Advt> adverList = advtRepository.findByUserId(user.getId());
-            List<MessageUser> messageUserList = messageRepository.findByIdToUser(user.getId());
+            List<AdvtViewDAO> viewMessage = advtService.advtAndMessage(user.getId());
 
-            List<AdvtViewDAO> viewMessage = new ArrayList<>();
-
-            for (Advt ad : adverList) {
-                AdvtViewDAO adV = new AdvtViewDAO();
-
-                int coun = 0;
-                Date d = null;
-                for (MessageUser mes : messageUserList) {
-                    if (mes.getIdAdvt() == ad.getId() && mes.isActive()) {
-                        coun++;
-                        d = mes.getDat();
-                    }
-                }
-                adV.setCountMess(coun);
-                adV.setDatMess(d);
-                adV.setSubcategory(ad.getSubcategory().name);
-                adV.setAdvtId(ad.getId());
-                adV.setActivAdvt(ad.isActiv());
-
-                adV.setCategory(ad.getCategory().getName());
-                adV.setCharacters(ad.getCharacters());
-                adV.setCity(ad.getCity().getName());
-                adV.setDataS(ad.getDat());
-                adV.setPhoto(ad.getPhoto());
-                adV.setStatus(ad.getStatus());
-                adV.setTextAdvt(ad.getText());
-                adV.setUserId(ad.getUserId());
-                viewMessage.add(adV);
-
-            }
-
-            if (userService.userAdmin()) {
+            if (userService.userAdmin()||userService.baseAdmin(principal)) {
                 model.put("adm", 1);
             }
             Page<AdvtViewDAO> pviewMessage = userService.searchUserPage(viewMessage, pageable);
-            model.put("url", "main");
+            model.put("url", "/main");
             model.put("viewMessage", pviewMessage);
             model.put("us", 2);
             model.put("user", user.getName());
@@ -105,7 +79,9 @@ public class MainController {
     Advt adv;
 
     @GetMapping("/edit")
-    public String editAdvt(AdvtEditDAO advtEdit, @RequestParam(required = false, value = "advtId") Advt advt, Map<String, Object> model) {
+    public String editAdvt(Principal principal,AdvtEditDAO advtEdit,
+                           @RequestParam(required = false, value = "advtId") Advt advt,
+                           Map<String, Object> model) {
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
         try {
@@ -117,7 +93,6 @@ public class MainController {
             } else {
                 advt = adv;
             }
-
             int Id = advt.getCategory().id;
             if (Id > 0) {
                 Iterable<Subcategory> categoryList = subcategoryRepository.findAllById(Id);
@@ -126,7 +101,7 @@ public class MainController {
             List<String> statusList = Arrays.asList("Розшукується", "Зник", "Загубленно", "Знайденно");
             model.put("statusList", statusList);
             model.put("advt", advt);
-            if (userService.userAdmin()) {
+            if (userService.userAdmin()||userService.baseAdmin(principal)) {
                 model.put("adm", 1);
             }
 
@@ -141,14 +116,13 @@ public class MainController {
                                @RequestParam(required = false, value = "dataStart") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataStart,
                                @RequestParam(required = false, value = "file")
                                        MultipartFile file,
+                               @RequestParam(required = false, value = "url") String url,
                                Model model) throws IOException {
         boolean result = true;
         Date day=new Date();
         Advt advtOld = advtRepository.getOne(advt.getId());
         if (dataStart != advtOld.getDat()) {
             day=new Date(dataStart.getTime()+86400000);
-
-//            LocalDateTime.from(day.toInstant().atZone(ZoneId.of("UTC"))).plusDays(1L);
             advt.setDat(day);
         }
         if (!advt.getStatus().equals("Знайденно")) {
@@ -182,20 +156,20 @@ public class MainController {
 
         advtRepository.save(advt);
         adv = null;
-        return "redirect:/main";
+        return "redirect:"+url;
     }
 
     @GetMapping("message{idAdvt}")
-    public String MessageList(@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
+    public String MessageList(Principal principal,@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
 
         model.put("idAdvt", Id);
         model.put("all", 0);
-        if (userService.userAdmin()) {
+        model.put("usr",1 );
+        if (userService.userAdmin()||userService.baseAdmin(principal)) {
             model.put("adm", 1);
         }
         return "page-user-message";
     }
-
 
     @GetMapping("/hide")
     public String hideMessage(@RequestParam(value = "idAdvt") Long IdAdvt,
@@ -232,27 +206,32 @@ public class MainController {
     }
 
     @GetMapping("message_all{idAdvt}")
-    public String messageAll(@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
+    public String messageAll(Principal principal,@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
         List<MessageUser> listMessage = messageRepository.findByIdAdvt(Id);
         Advt advt = advtRepository.getOne(Id);
         int activ = 0;
         int pasiv = 0;
         List<GuestMessageViewDAO> guestMessageViewDAOList = new ArrayList<>();
+
         for (MessageUser messageUser : listMessage) {
+
             if (messageUser.isActive()) {
                 activ++;
             } else {
                 pasiv++;
             }
-            GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(), messageUser.getText(), messageUser.getContact(), messageUser.isActive(), messageUser.getDat(),
-                    advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name, advt.getDat());
+            GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),
+                    messageUser.getText(), messageUser.getContact(), messageUser.isActive(), messageUser.getDat(),
+                    advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
+                    advt.getDat());
             guestMessageViewDAOList.add(guestMessageViewDAO);
         }
         model.put("listMessage", guestMessageViewDAOList);
         model.put("all", 0);
         model.put("activ", activ);
         model.put("pasiv", pasiv);
-        if (userService.userAdmin()) {
+        model.put("usr",1 );
+        if (userService.userAdmin()||userService.baseAdmin(principal)) {
             model.put("adm", 1);
         }
 
@@ -260,7 +239,7 @@ public class MainController {
     }
 
     @GetMapping("message_pasive{idAdvt}")
-    public String messagePasive(@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
+    public String messagePasive(Principal principal,@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
         List<MessageUser> listMessage = messageRepository.findByIdAdvtAndActive(Id, false);
         Advt advt = advtRepository.getOne(Id);
         int activ = 0;
@@ -275,6 +254,7 @@ public class MainController {
         }
         model.put("activ", activ);
         model.put("pasiv", pasiv);
+
         List<GuestMessageViewDAO> guestMessageViewDAOList = new ArrayList<>();
         for (MessageUser messageUser : listMessage) {
             if (messageUser.isActive()) {
@@ -282,15 +262,17 @@ public class MainController {
             } else {
                 pasiv++;
             }
-            GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(), messageUser.getText(), messageUser.getContact(), false, messageUser.getDat(),
-                    advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name, advt.getDat());
+            GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),
+                    messageUser.getText(), messageUser.getContact(), false, messageUser.getDat(),
+                    advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
+                    advt.getDat());
             guestMessageViewDAOList.add(guestMessageViewDAO);
         }
         model.put("listMessage", guestMessageViewDAOList);
         model.put("all", 0);
+        model.put("usr",1 );
 
-
-        if (userService.userAdmin()) {
+        if (userService.userAdmin()||userService.baseAdmin(principal)) {
             model.put("adm", 1);
         }
 
@@ -298,7 +280,7 @@ public class MainController {
     }
 
     @GetMapping("message_active{idAdvt}")
-    public String messageActive(@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
+    public String messageActive(Principal principal,@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
 
         List<MessageUser> listMessage = messageRepository.findByIdAdvtAndActive(Id, true);
         Advt advt = advtRepository.getOne(Id);
@@ -315,16 +297,20 @@ public class MainController {
         model.put("activ", activ);
         model.put("pasiv", pasiv);
         List<GuestMessageViewDAO> guestMessageViewDAOList = new ArrayList<>();
+
         for (MessageUser messageUser : listMessage) {
 
-            GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(), messageUser.getText(), messageUser.getContact(), true, messageUser.getDat(),
-                    advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name, advt.getDat());
+            GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),
+                    messageUser.getText(), messageUser.getContact(), true, messageUser.getDat(),
+                    advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(),
+                    advt.getSubcategory().name, advt.getDat());
+
             guestMessageViewDAOList.add(guestMessageViewDAO);
         }
         model.put("listMessage", guestMessageViewDAOList);
         model.put("all", 0);
-
-        if (userService.userAdmin()) {
+        model.put("usr",1 );
+        if (userService.userAdmin()||userService.baseAdmin(principal)) {
             model.put("adm", 1);
         }
 
@@ -332,23 +318,28 @@ public class MainController {
     }
 
     @GetMapping("all_message_active")
-    public String allMessageActive(@AuthenticationPrincipal User user, Map<String, Object> model) {
+    public String allMessageActive(Principal principal, Map<String, Object> model) {
 
-        if (user != null) {
+        if (principal != null) {
+            User user=userRepository.findByName(principal.getName());
             List<MessageUser> listMessage = messageRepository.findByIdToUserAndActive(user.getId(), true);
             List<GuestMessageViewDAO> guestMessageViewDAOList = new ArrayList<>();
 
             for (MessageUser messageUser : listMessage) {
+
                 Advt advt = advtRepository.getOne(messageUser.getIdAdvt());
-                GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(), messageUser.getText(), messageUser.getContact(), messageUser.isActive(), messageUser.getDat(),
-                        advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name, advt.getDat());
+                GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),
+                        messageUser.getText(), messageUser.getContact(), messageUser.isActive(), messageUser.getDat(),
+                        advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
+                        advt.getDat());
+
                 guestMessageViewDAOList.add(guestMessageViewDAO);
             }
             model.put("listMessage", guestMessageViewDAOList);
             model.put("all", 1);
-
+            model.put("usr",1 );
         }
-        if (userService.userAdmin()) {
+        if (userService.userAdmin()||userService.baseAdmin(principal)) {
             model.put("adm", 1);
         }
 
@@ -356,24 +347,30 @@ public class MainController {
     }
 
     @GetMapping("all_message")
-    public String allMessage(@AuthenticationPrincipal User user, Map<String, Object> model) {
+    public String allMessage(Principal principal, Map<String, Object> model) {
 
-        if (user != null) {
+        if (principal != null) {
+            User user=userRepository.findByName(principal.getName());
             List<MessageUser> listMessage = messageRepository.findByIdToUser(user.getId());
             List<GuestMessageViewDAO> guestMessageViewDAOList = new ArrayList<>();
+
             for (MessageUser messageUser : listMessage) {
+
                 Advt advt = advtRepository.getOne(messageUser.getIdAdvt());
-                GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(), messageUser.getText(), messageUser.getContact(), messageUser.isActive(), messageUser.getDat(),
-                        advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name, advt.getDat());
+                GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),
+                        messageUser.getText(), messageUser.getContact(), messageUser.isActive(), messageUser.getDat(),
+                        advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
+                        advt.getDat());
+
                 guestMessageViewDAOList.add(guestMessageViewDAO);
             }
             model.put("listMessage", guestMessageViewDAOList);
             model.put("all", 1);
+            model.put("usr",1 );
         }
-        if (userService.userAdmin()) {
+        if (userService.userAdmin()||userService.baseAdmin(principal)) {
             model.put("adm", 1);
         }
-
         return "page-user-message";
     }
 }

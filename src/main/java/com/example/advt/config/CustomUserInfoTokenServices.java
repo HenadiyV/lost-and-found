@@ -44,15 +44,15 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
     private String tokenType = "Bearer";
     private AuthoritiesExtractor authoritiesExtractor = new FixedAuthoritiesExtractor();
     private PrincipalExtractor principalExtractor = new FixedPrincipalExtractor();
-@Autowired
+    @Autowired
     private UserRepository userRepository;
 
     private PasswordEncoder passwordEncoder;
 
-    public CustomUserInfoTokenServices(){}
+    public CustomUserInfoTokenServices() {
+    }
 
-    public CustomUserInfoTokenServices(String userInfoEndpointUrl, String clientId)
-    {
+    public CustomUserInfoTokenServices(String userInfoEndpointUrl, String clientId) {
         this.userInfoEndpointUrl = userInfoEndpointUrl;
         this.clientId = clientId;
     }
@@ -61,33 +61,27 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
         this.userRepository = userRepository;
     }
 
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder)
-    {
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public String getUserInfoEndpointUrl()
-    {
+    public String getUserInfoEndpointUrl() {
         return userInfoEndpointUrl;
     }
 
-    public void setUserInfoEndpointUrl(String userInfoEndpointUrl)
-    {
+    public void setUserInfoEndpointUrl(String userInfoEndpointUrl) {
         this.userInfoEndpointUrl = userInfoEndpointUrl;
     }
 
-    public void setTokenType(String tokenType)
-    {
+    public void setTokenType(String tokenType) {
         this.tokenType = tokenType;
     }
 
-    public void setRestTemplate(OAuth2RestOperations restTemplate)
-    {
+    public void setRestTemplate(OAuth2RestOperations restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    public void setAuthoritiesExtractor(AuthoritiesExtractor authoritiesExtractor)
-    {
+    public void setAuthoritiesExtractor(AuthoritiesExtractor authoritiesExtractor) {
         Assert.notNull(authoritiesExtractor, "AuthoritiesExtractor must not be null");
         this.authoritiesExtractor = authoritiesExtractor;
     }
@@ -99,128 +93,52 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
 
     @Override
     public OAuth2Authentication loadAuthentication(String accessToken)
-            throws AuthenticationException, InvalidTokenException
-    {
+            throws AuthenticationException, InvalidTokenException {
         Map<String, Object> map = getMap(this.userInfoEndpointUrl, accessToken);
- //User us=new User();
-// String idSocial="";
-// String nameSocial="";
-// String name="";
- //String socialEmail="";
-// String photo="";
-// String gender="";
-// String locale="";
-        if(map.containsKey("sub")|| map.containsKey("id")){
 
-            String  idSocial=(String)map.get("sub")!=null ?(String)map.get("sub"):(String)map.get("id");
-            String  nameSocial=(String)map.get("sub")!=null ?"google":"facebook";
-            String  socialEmail=(String) map.get("email");
-            String    name=(String) map.get("name");
-   //        photo=(String)map.get("sub")!=null?(String) map.get("picture"):(String) map.get("photos");
-//           gender=(String) map.get("gender");
-//            locale=(String) map.get("locale");
+        if (map.containsKey("sub") || map.containsKey("id")) {
+
+            String idSocial = (String) map.get("sub") != null ? (String) map.get("sub") : (String) map.get("id");
+            String nameSocial = (String) map.get("sub") != null ? "google" : "facebook";
+            String socialEmail = (String) map.get("email");
+            String name = (String) map.get("name");
 
 
+            User user = userRepository.findByEmail(socialEmail);
 
-            User   user= userRepository.findByEmail(socialEmail);
 
-
-        if(user==null){
-          user= new User();
-            user.setActive(true);
-            user.setRoles(Collections.singleton(Role.USER));
-        }
+            if (user == null) {
+                user = new User();
+                user.setActive(true);
+                user.setRoles(Collections.singleton(Role.USER));
+            }
             user.setIdSocial(idSocial);
             user.setName(name);
             user.setEmail(socialEmail);
-           user.setNameSocial(nameSocial);
+            user.setNameSocial(nameSocial);
 
 
             user.setPassword(passwordEncoder.encode("oauth2user"));
-           userRepository.save(user);
+            userRepository.save(user);
 
 
         }
-//        if(map.containsKey("id")){
-//
-//            idSocial=(String)map.get("id");
-//            nameSocial="facebook";
-//            socialEmail=(String) map.get("email");
-//            name=(String) map.get("name");
-//            //        photo=(String)map.get("sub")!=null?(String) map.get("picture"):(String) map.get("photos");
-////           gender=(String) map.get("gender");
-////            locale=(String) map.get("locale");
-//
-//
-//
-//            User   user= userRepository.findByEmail(socialEmail);
-//
-////            try{
-////
-////            }catch (Exception ex){
-////                System.out.println("ERROR FAK!!!!");
-////            }
-//            if(user==null){
-//               user= new User();
-//                user.setActive(true);
-//                user.setRoles(Collections.singleton(Role.USER));
-//            }
-//            user.setIdSocial(idSocial);
-//            user.setName(name);
-//            user.setEmail(socialEmail);
-//            user.setNameSocial(nameSocial);
-//
-//
-//            user.setPassword(passwordEncoder.encode("oauth2user"));
-//            userRepository.save(user);
-//
-//
-//        }
-            //User user = userRepo.findByGoogleUserName(googleUsername);
 
-//            if(user == null)
-//            {
-//                user = new User();
-//                user.setActive(true);
-//                user.setRoles(Collections.singleton(Role.USER));
-//            }
-//
-//            user.setName(googleName);
-//            user.setEmail(googleUsername);
-//            user.setGoogleName(googleName);
-//            user.setGoogleUsername(googleUsername);
-//
-//            user.setPassword(passwordEncoder.encode("oauth2user"));
-//
-//            userRepo.save(user);
-      //  }
-
-        if (map.containsKey("error"))
-        {
+        if (map.containsKey("error")) {
             this.logger.debug("userinfo returned error: " + map.get("error"));
             throw new InvalidTokenException(accessToken);
         }
         return extractAuthentication(map);
     }
 
-//    private boolean myFun(String str){
-//        if(userSocialRepository.findByIdSocial(str)!=null){
-//            return true;
-//        }else{
-//            return false;
-//        }
-//}
-
     private OAuth2Authentication extractAuthentication(Map<String, Object> map) {
         System.out.println("EXTRACT AUTHENTICATION");
 
-        for(Map.Entry<String, Object> e : map.entrySet())
-        {
-            System.out.println(e.getKey() + " " + e.getValue().toString());
-
-
-        }
-
+//        for (Map.Entry<String, Object> e : map.entrySet()) {
+//           // System.out.println(e.getKey() + " " + e.getValue().toString());
+//
+//
+//        }
 
         Object principal = getPrincipal(map);
 
@@ -239,6 +157,7 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
     /**
      * Return the principal that should be used for the token. The default implementation
      * delegates to the {@link PrincipalExtractor}.
+     *
      * @param map the source map
      * @return the principal or {@literal "unknown"}
      */
@@ -252,7 +171,7 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
         throw new UnsupportedOperationException("Not supported: read access token");
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings({"unchecked"})
     private Map<String, Object> getMap(String path, String accessToken) {
         this.logger.info("Getting user info from: " + path);
         try {
@@ -271,8 +190,7 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
                 restTemplate.getOAuth2ClientContext().setAccessToken(token);
             }
             return restTemplate.getForEntity(path, Map.class).getBody();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             this.logger.info("Could not fetch user details: " + ex.getClass() + ", "
                     + ex.getMessage());
             return Collections.<String, Object>singletonMap("error",

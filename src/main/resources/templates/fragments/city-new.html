@@ -15,21 +15,22 @@
     /*#filter { display: none; }*/
 </style>
     <script>
-        var $с = jQuery.noConflict();
+        var $ = jQuery.noConflict();
         // alert($b.fn.jquery);
     </script>
 
         <div class="container">
-            <div class="row">
-            <div id="search" class="col-lg-4 col-sm-4 col=md-6  col-xs-12">
+            <!--<div class="row"></div>-->
+            <!--<div id="search" class="col-lg-4 col-sm-4 col=md-6  col-xs-12"></div> -->
+            <!--<div class="col-lg-4 col-sm-8 col=md-6 col-xs-12"></div>-->
                 <label for="filter" th:text="#{lang.city.filter}">Filter</label>
-                <input type="text" name="filter" value="" id="filter" ></input>
-            </div>
-            <div class="col-lg-4 col-sm-8 col=md-6 col-xs-12">
+                <input type="text" name="filter" value="" id="filter" onkeyup="search()"></input>
+
+
                 <input type="text" th:id="cityNew" th:placeholder="#{lang.city.insert}"/>
                <input  type="button"  th:value="#{admin.user.add}"   th:onclick="'javascript:addCity(\''+${max}+'\',\''+#{lang.city.insert}+'\')'">
-            </div>
-            </div>
+
+
           <table   id="tableCity">
                 <caption th:text="#{lang.city}" >City</caption>
                 <!--<tr>-->
@@ -42,7 +43,7 @@
                 <td> <div th:id="'TCity'+${max}"></div></td>
             </tr>
                         <div th:each="city:${cityList}">
-                            <tr th:id="'TRCity'+${city.getId()}">
+                            <tr th:id="'TRCity'+${city.getId()}" class="visible">
                                 <!--style="color: green"-->
                                 <td> <b><p th:id="'LCity'+${city.getId()}" th:text="${city.getName()}" ></p></b> </td>
 

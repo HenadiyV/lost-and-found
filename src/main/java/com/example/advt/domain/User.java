@@ -17,37 +17,27 @@ import java.util.Set;
 */
 @Entity
 @Table(name = "usr")
-public class User implements UserDetails,Serializable {
+public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="name", nullable = false)
-  //  @NotEmpty(message= "Заповніть поле имя.")
+    @Column(name = "name", nullable = false)
+
     private String name;
     private String username;
-    @Column(name="email", nullable = false)
-  //  @NotEmpty(message="Заповніть поле email.")
-    private String email;
-    @Column(name="password", nullable = false)
-  //  @NotEmpty(message="Заповніть поле пароль.")
-    private String password;
-    @Column(name="phohe")
-    private String phone;
-  private boolean active;
-private  String idSocial;
-private String nameSocial;
-    private  Long idSocialUser;
-private String activationCode;
-//    @OneToMany(mappedBy="user",targetEntity=Advt.class,cascade = CascadeType.ALL)
-//    private Set<Advt> advts;
+    @Column(name = "email", nullable = false)
 
-//    public Set<Advt> getAdvts() {
-//        return advts;
-//    }
-//
-//    public void setAdvts(Set<Advt> advts) {
-//        this.advts = advts;
-//    }
+    private String email;
+    @Column(name = "password", nullable = false)
+
+    private String password;
+    @Column(name = "phohe")
+    private String phone;
+    private boolean active;
+    private String idSocial;
+    private String nameSocial;
+    private Long idSocialUser;
+    private String activationCode;
 
     public boolean isActive() {
         return active;
@@ -74,11 +64,10 @@ private String activationCode;
         this.activationCode = activationCode;
     }
 
-    //    @ManyToOne
-//    private Role role;
+
     //===================================
-    @ElementCollection(targetClass = Role.class,fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role",joinColumns =@JoinColumn(name="user_id") )
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
@@ -91,6 +80,7 @@ private String activationCode;
     }
 
     //================================
+
     /**
      * Default constructor
      */
@@ -187,30 +177,6 @@ private String activationCode;
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
-//    public void setAdvers(Set<Adver> advers) {
-//        this.advers = advers;
-//    }
-//
-//    public void setRole(Role role) {
-//        this.role = role;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public Set<Adver> getAdvers() {
-//        return advers;
-//    }
-//
-//    public Role getRole() {
-//        return role;
-//    }
 
 
     @Override

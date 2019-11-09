@@ -19,6 +19,7 @@ public class AdvtEditDAO {
    private String textAdvt;
     private boolean activ;
     private String status;
+    private String article;
     private String characters;
     private Long userId;
 }

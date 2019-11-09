@@ -95,12 +95,12 @@ private AdminPostRepository adminPostRepository;
 
 
         return "page-contact-us";
-        //return "redirect:/";
+        //return "redirect:/@RequestParam User us",;
     }
-    @GetMapping("blocked")
-    public String blocked(AdminPostDAO adminPost,Map<String, Object> model){
-
-//model.put("mess",);
+    @GetMapping("blocked{id}")
+    public String blocked(@PathVariable(value = "id")User us, Model model){
+        model.addAttribute("name",us.getName());
+        model.addAttribute("email",us.getEmail());
         return "page-unban-us";
     }
 
@@ -130,55 +130,51 @@ private AdminPostRepository adminPostRepository;
         }
 
 
-        // return "page-contact-us";
+
         return "redirect:/";
     }
-    @GetMapping("/coming")
+    @GetMapping("/faq")
     public String coming(){
 
-        return "page-coming-us";
+        return "page-faq";
     }
 
-    @GetMapping("about-project")
-    public String aboutProject(){
-
-        return "about/page-faq-project";
-    }
+//    @GetMapping("/about-project")
+//    public String aboutProject(){
+//
+//        return "page-faq-project";
+//    }
     @GetMapping("/reset-password")
     public String resetPassword(@AuthenticationPrincipal User user,Model model){
 
 
         return "page-password-reset";
     }
-    @GetMapping("/homepage-sample")
-    public String homepageSample(){
+//    @GetMapping("/homepage-sample")
+//    public String homepageSample(){
+//
+//        return "page-homepage-sample";
+//    }
+//
+//    @GetMapping("/product-details")
+//    public String productDetails(Model model){
+//
+//        return "page-product-details";
+//    }
+//
+//    @GetMapping("/terms-privacy")
+//    public String termsPrivacy(Model model){
+//
+//        return "page-terms-privacy";
+//    }
+//
+//    @GetMapping("/piople")
+//    public String piople(Model model){
+//
+//        return "page-people";
+//    }
 
-        return "page-homepage-sample";
-    }
-
-    @GetMapping("/product-details")
-    public String productDetails(Model model){
-
-        return "page-product-details";
-    }
-
-    @GetMapping("/terms-privacy")
-    public String termsPrivacy(Model model){
-
-        return "page-terms-privacy";
-    }
-
-    @GetMapping("/piople")
-    public String piople(Model model){
-
-        return "page-people";
-    }
 
 
-    @GetMapping("/test")
-    public String listAdvt(Model model){
-
-        return "testVue";
-    }
 
 }

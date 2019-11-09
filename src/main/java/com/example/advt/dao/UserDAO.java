@@ -23,8 +23,7 @@ public class UserDAO   {
     public User getUser(String name) {
        return userRepository.findByName(name);
     }
-//    private String gender;
-//    private String localUsere;
+
 
 
 }

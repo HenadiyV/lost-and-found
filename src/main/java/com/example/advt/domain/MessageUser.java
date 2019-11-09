@@ -49,15 +49,6 @@ public class MessageUser implements Serializable {
     public void setIdAdvt(Long idAdvt) {
         this.idAdvt = idAdvt;
     }
-//    @ManyToOne
-//    private Advt advt;
-//    public Advt getAdvt() {
-//        return advt;
-//    }
-//
-//    public void setAdvt(Advt advt) {
-//        this.advt = advt;
-//    }
 
     public boolean isActive() {
         return active;
@@ -107,13 +98,7 @@ public class MessageUser implements Serializable {
         this.idToUser = idToUser;
     }
 
-//    public Long getIdAdvt() {
-//        return idAdvt;
-//    }
-//
-//    public void setIdAdvt(Long idAdvt) {
-//        this.idAdvt = idAdvt;
-//    }
+
 
 
     public MessageUser(String contact, String text, Long idToUser, Long idAdvt, Date dat, boolean active) {

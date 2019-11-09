@@ -18,7 +18,7 @@ import java.util.Map;
  *23.08.2019
  */
 @RestController
-@RequestMapping("city")
+@RequestMapping("admin/city")
 public class CityController {
     private final CityRepository cityRepository;
 

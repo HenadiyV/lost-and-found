@@ -52,7 +52,7 @@ public class AdvtController {
  }
 // добавить обьявление
     String stat="";
- Category cat;
+ Category cat_temp;
  String ur="";
     @GetMapping("/add-advt")
     public String pageAddAdvt(AdvtDAO advtDAO,
@@ -65,9 +65,9 @@ public class AdvtController {
         if(stat.isEmpty()&& !status.isEmpty()){
             stat=status;
         }else{status=stat;}
-        if(cat==null && category!=null){
-            cat=category;
-        }else{category=cat;}
+        if(cat_temp==null && category!=null){
+            cat_temp=category;
+        }else{category=cat_temp;}
         if(ur.isEmpty()&& !url.isEmpty()){
             ur=url;
         }else{url=ur;}
@@ -91,6 +91,8 @@ public class AdvtController {
               @RequestParam("subcategory") Integer subcategory , @RequestParam(required = false, value = "file")
                 MultipartFile file)throws ParseException, IOException{
         boolean result = true;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date startDate = dateFormat.parse(dateFormat.format(new Date()));
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errorMap);
@@ -105,6 +107,10 @@ public class AdvtController {
             }
             if (dataStart == null) {
                 model.addAttribute("dataSotpEr", "Не вказано дату .");
+            }else{
+                if(startDate.after(dataStart)){
+                    model.addAttribute("dataSotpEr", "Не коректну дату .");
+                }
             }
             if (advtDAO.getTextAdvt().isEmpty()) {
                 model.addAttribute("textAdverEr", "Не вказано текст оголошеня.");
@@ -123,8 +129,8 @@ public class AdvtController {
             model.addAttribute("url", advtDAO.getUrl());
             return "page-add-advt";
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        Date startDate = dateFormat.parse(dateFormat.format(new Date()));
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+//        Date startDate = dateFormat.parse(dateFormat.format(new Date()));
         String photo = "";
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
@@ -145,8 +151,11 @@ public class AdvtController {
         }
 if (!user.isActive()){
 
-            return"redirect:/blocked";
+            return"redirect:/blocked"+user.getId();
 }
+        if(startDate.after(dataStart)){
+            startDate=dataStart;
+        }
             if (result  && user !=null) {
                 advtDAO.setChracters("standart");
 boolean found=false;
@@ -157,16 +166,31 @@ if(advtDAO.getStatus().equals("Знайденно")){
             Subcategory sub= new Subcategory();
                 sub = subcategoryRepository.findById(subcategory).get();
             Long userId=user.getId();
-             Advt adv = new Advt(advtDAO.getTextAdvt(),true, photo, advtDAO.getStatus(), advtDAO.getChracters(),user.getId(), startDate,found, cat , advtDAO.getCity(),sub);
+            String art=articl(cat.getName(),sub.getName(), userId,advtDAO.getCity().getId());
+
+
+             Advt adv = new Advt(advtDAO.getTextAdvt(),true, photo, advtDAO.getStatus(), advtDAO.getChracters(),user.getId(), startDate,found, art, cat , advtDAO.getCity(),sub);
             advtRepository.save(adv);
                 stat="";
-                cat=null;
+                cat_temp=null;
                 ur="";
         }
 
         return "redirect:"+ advtDAO.getUrl();
     }
+public String articl(String cat,String sub, Long idUser,int idCity){
+        List<Advt> advts=advtRepository.findAll();
+        Long id=0L;
+        for(Advt ad:advts){
+            if(ad.getId()>id){
+                id=ad.getId();
+            }
+        }
+        String str=String.valueOf(id+1)+"-"+cat.substring(0,1)+"-"+sub.substring(0,1)+"-"+String.valueOf(idUser)+"-"+String.valueOf(idCity);
 
+        return str;
+
+}
     // удалить обьявление
     @PostMapping("/delete")
     public String sdvtDelete(@RequestParam("advtDel") Long Id,@RequestParam("url") String url) throws IOException {
@@ -178,6 +202,8 @@ if(advtDAO.getStatus().equals("Знайденно")){
         }
     advtRepository.delete(advt);
     }
+
+
         return "redirect:"+url;
     }
 }

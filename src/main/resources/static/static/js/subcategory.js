@@ -1,5 +1,5 @@
 
-function editSubcategory(Id,cotgoryId){
+function editSubcategory(Id,categoryId){
     var t='I'+Id;
     var label='L'+Id;
     var n=document.getElementById(t).value;
@@ -7,7 +7,7 @@ function editSubcategory(Id,cotgoryId){
     var sub={
         id:Id,
         name:n,
-        category:cotgoryId
+        category:categoryId
     }
 
     if(n!="") {

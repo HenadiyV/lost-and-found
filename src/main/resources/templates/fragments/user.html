@@ -15,11 +15,16 @@
         }
     </style>
     <div class="container">
-        <!---->
+        <label for="filter" th:text="#{lang.city.filter}">Filter</label>
+        <input type="text" name="filter" value="" id="filter" onkeyup="search()"/>
+        <!--Ban-->
         <div th:if="${ban}">
+
+<input hidden="hidden" id="yes" th:value="#{lang.yes}"/>
+            <input hidden="hidden" id="no" th:value="#{lang.no}"/>
             <table border="1" id="tableBan">
 
-                <caption>User</caption>
+                <caption th:text="#{users.activity}">User</caption>
                 <tr>
 
                     <th th:text="#{admin.user.name}">Имя</th>
@@ -27,20 +32,24 @@
                     <th th:text="#{admin.user.phone}">phone</th>
 
                     <th th:text="#{admin.user.active}">active</th>
-                    <th >Role</th>
+
                     <th th:text="#{users.ban}">ban</th>
                     <th th:text="#{users.unban}">unban</th>
                     <th th:text="#{admin.user.delete}">delete</th>
 
                 </tr>
-<tr>
-    <td><label th:text="${admin.getName()}"></label></td>
-    <td th:text="${admin.getEmail()}"></td>
-    <td th:text="${admin.getPhone()}"></td>
+                <!--<div  th:each="adm:${adminList}">-->
+<!--<tr>-->
 
-    <td th:text="${admin.isActive()}"></td>
-    <td th:text="${admin.getRoles()}"></td>
-</tr>
+    <!--<td><label th:text="${adm.getName()}"></label></td>-->
+    <!--<td th:text="${adm.getEmail()}"></td>-->
+    <!--<td th:text="${adm.getPhone()}"></td>-->
+
+    <!--<td th:text="${adm.isActive()}"></td>-->
+
+
+<!--</tr>-->
+            <!--</div>-->
                 <div th:each="usr:${userList}">
 
 
@@ -51,8 +60,10 @@
                             <td th:text="${usr.getEmail()}"></td>
                             <td th:text="${usr.getPhone()}"></td>
 
-                            <td th:text="${usr.isActive()}"></td>
-                            <td th:text="${usr.getRoles()}"></td>
+                            <div th:if="${usr.isActive()}"><td th:text="#{lang.yes}">Da</td></div>
+
+                            <div th:unless="${usr.isActive()}"><td th:text="#{lang.no}">no</td></div>
+
                             <td ><button  type="button" th:id="'BU'+${usr.getId()}" th:text="#{users.ban}"
                                           th:onclick="'javascript:lockUser(\''+${usr.getId()}+'\',\''+#{users.ban}+'\',\''+#{users.unban}+'\',\''+#{admin.user.delete}+'\');'"></button ></td>
 
@@ -62,7 +73,7 @@
 
 
                             <td><button  type="button" th:id="'DelU'+${usr.getId()}" th:text="#{admin.user.delete}"
-                                         th:onclick="'javascript:deleteUser(\''+${usr.getId()}+'\',\''+#{users.ban}+'\',\''+#{users.unban}+'\',\''+#{admin.user.delete}+'\');'"></button ></td>
+                                         th:onclick="'javascript:deleteUser(\''+${usr.getId()}+'\',\''+#{delete.message}+'\',\''+#{users.ban}+'\',\''+#{users.unban}+'\',\''+#{admin.user.delete}+'\');'"></button ></td>
 
 
                         </tr>
@@ -83,10 +94,12 @@
             </table>
 
         </div>
+        <!--End Ban-->
+        <!--Detalis-->
         <div th:if="${detalis}">
             <table border="1" id="tableDetalis">
 
-                <caption>User</caption>
+                <caption th:text="#{admin.user.and.advt}" >User</caption>
                 <tr>
                     <th>Id</th>
                     <th th:text="#{admin.user.name}">Имя</th>
@@ -108,9 +121,10 @@
                         <td th:text="${usr.getEmail()}"></td>
                         <td th:text="${usr.getPhone()}"></td>
                         <td><p th:text="${usr.getNameSocial()}"></p></td>
+                        <div th:if="${usr.isActive()}"><td th:text="#{lang.yes}">Da</td></div>
 
-                        <td th:text="${usr.isActive()}"></td>
-
+                        <div th:unless="${usr.isActive()}"><td th:text="#{lang.no}">no</td></div>
+                        <!---->
                         <td>
                             <form action="/admin/user-advt1" method="get">
                                 <input hidden="hidden" name="idUser" th:value="${usr.getId()}"/>
@@ -123,6 +137,88 @@
                 </div>
             </table>
         </div>
+        <!--End Detalis-->
+        <!--Role-->
+        <div th:if="${role}">
+
+            <table border="1" id="tableRole">
+
+                <caption th:text="#{admin.user.and.role}">User</caption>
+                <tr>
+
+                    <th th:text="#{admin.user.name}">Имя</th>
+                    <th th:text="#{admin.user.email}">Email</th>
+
+                    <th th:text="#{admin.user.active}">active</th>
+
+                    <th >User</th>
+                    <th >Admin</th>
+                    <th >Moderator</th>
+
+
+                </tr>
+
+                <div th:each="usr:${userList}">
+
+
+                    <tr th:id="'U'+${usr.getIdUser()}">
+
+
+                        <td><label th:text="${usr.getName()}"></label></td>
+                        <td th:text="${usr.getEmail()}"></td>
+
+
+                        <div th:if="${usr.isActive()}"><td th:text="#{lang.yes}">yes</td></div>
+
+                        <div th:unless="${usr.isActive()}"><td th:text="#{lang.no}">no</td></div>
+
+                        <form action="/admin/user-role" method="post">
+                            <input hidden="hidden" name="userId" th:value="${usr.getIdUser()}"/>
+
+
+                             <td th:if="${usr.us}">
+                                 <input type="checkbox" th:name="${roles[0]}" checked="checked"  />
+                            </td>
+                            <td th:unless ="${usr.us}">
+                                <input type="checkbox" th:name="${roles[0]}"/>
+
+                            </td>
+                            <td th:if="${usr.adm}">
+                                <input type="checkbox" th:name="${roles[1]}" checked="checked"  />
+                            </td>
+                            <td th:unless ="${usr.adm}">
+                                <input type="checkbox" th:name="${roles[1]}"/>
+
+                            </td>
+                            <td th:if="${usr.mod}">
+                                <input type="checkbox" th:name="${roles[2]}" checked="checked"  />
+                            </td>
+                            <td th:unless ="${usr.mod}">
+                                <input type="checkbox" th:name="${roles[2]}"/>
+
+                            </td>
+                        <td >
+                            <button  type="submit"  th:text="#{admin.user.btn.save}" ></button >
+                        </td>
+                        </form>
+
+                    </tr>
+
+
+                    <tr>
+
+
+
+
+                        </td>
+                    </tr>
+
+
+                </div>
+            </table>
+
+        </div>
+        <!--End Role-->
     </div>
 </div>
 </body>

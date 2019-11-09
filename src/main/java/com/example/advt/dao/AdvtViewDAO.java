@@ -24,7 +24,7 @@ public class AdvtViewDAO {
    public String photo;
    public String textAdvt;
     public boolean activAdvt;
-
+    public String article;
     public String status;
     public String characters;
     public Long userId;

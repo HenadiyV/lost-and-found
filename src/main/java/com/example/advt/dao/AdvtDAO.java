@@ -14,25 +14,13 @@ import java.util.Date;
  */
 @Data
 public class AdvtDAO {
-    //  private String category;
-     @NotNull(message="Виберіть місто")
     private City city;
     private int category;
     private int subcategory;
-//    @NotNull(message="Виберіть категорію")
-//     private Animal animal;
-//    @NotNull(message="Виберіть категорію")
-//     private People people;
-//    @NotNull(message="Виберіть категорію")
-//     private Thing thing;
-
-    @NotEmpty(message="Введіть текст")
     private String textAdvt;
     private String status;
    private String chracters;
     private String url;
     public AdvtDAO() {
     }
-
-
 }

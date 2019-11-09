@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CityDto {
     private City Sd;
-    List<City> LS=new ArrayList<City>();
+    List<City> cityList=new ArrayList<City>();
 
     public CityDto() {
     }
@@ -19,11 +19,11 @@ public class CityDto {
             City temp=new City();
             temp.setId(stat.getId());
             temp.setName(stat.getName());
-            LS.add(temp);
+            cityList.add(temp);
         }
     }
 
     public List<City> getListCitys() {
-        return LS;
+        return cityList;
     }
 }

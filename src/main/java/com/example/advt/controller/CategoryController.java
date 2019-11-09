@@ -16,7 +16,7 @@ import java.util.List;
  *11.10.2019
  */
 @RestController
-@RequestMapping("category")
+@RequestMapping("admin/category")
 public class CategoryController {
     private final CategoryRepository categoryRepository;
 

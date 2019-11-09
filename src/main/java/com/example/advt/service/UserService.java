@@ -63,7 +63,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 
    return null;
 }
-
+// роль из social
     public boolean userAdmin()
     {
 
@@ -75,7 +75,17 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
         }
         return false;
     }
-    ///////////////////////////////
+    // получение ADMIN из базы
+    public boolean baseAdmin(Principal principal){
+        User user =userRepository.findByName(principal.getName());
+        for(Role rl:user.getRoles()){
+            if(rl.name().equals("ADMIN")){
+                return true;
+            }
+        }
+        return false;
+    }
+    // дабавление пользователя
     public boolean addUser(User user) {
         User userFromDbEmail = userRepository.findByEmail(user.getEmail());
         User userFromDbName = userRepository.findByName(user.getName());
@@ -87,7 +97,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
             return false;
         }
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER ));
+        user.setRoles(Collections.singleton(Role.USER));
         user.setactivationCode(UUID.randomUUID().toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -106,7 +116,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 
         return true;
     }
-
+// проверка активации
     public boolean activateUser(String code) {
         User user = userRepository.findByActivationCode(code);
 
@@ -120,6 +130,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 
         return true;
     }
+    // проверить роль
     public int roleUser(Principal principal){
         if (principal != null) {
             User user = (User) loadUserByUsername(principal.getName());
@@ -130,6 +141,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
         }
         return 0;
     }
+    // удаляем файл
     public void deleteMyFile(String fileName) throws IOException {
         //FileUtils.touch(new File("src/test/resources/fileToDelete.txt"));
         if(!fileName.equals("noimage.png")){
@@ -137,6 +149,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
         FileUtils.forceDelete(FileUtils.getFile(nam));
         }
     }
+    // делим на страницы
     public Page<AdvtViewDAO> searchUserPage(List<AdvtViewDAO> list, Pageable pageable) {
         List<AdvtViewDAO> patientsList = new ArrayList<AdvtViewDAO>();
         list.sort(Comparator.comparing(AdvtViewDAO::getAdvtId).reversed());
@@ -145,5 +158,48 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
         int end = (start + pageable.getPageSize()) > patientsList.size() ? patientsList.size() : (start + pageable.getPageSize());
 
         return new PageImpl<AdvtViewDAO>(patientsList.subList(start, end), pageable, patientsList.size());
+    }
+    // возвращаем USER
+    public List<User> userList(){
+        List<User> userList=new ArrayList<>();
+        List<User> users = userRepository.findAll();
+        for(User us:users){
+            boolean res=false;
+            for(Role rl:us.getRoles()){
+
+                if(rl.name()==("ADMIN"))
+                {
+                    res=true;
+                    break;
+                }
+            }
+            if(res) {
+               // adminListTemp.add(us);
+            }else{userList.add(us);}
+        }
+        return userList;
+    }
+    // возвращаем ADMIN
+    public List<User> adminList(){
+        List<User> userList=new ArrayList<>();
+        List<User> users=userRepository.findAll();
+        for(User us:users){
+            boolean res=false;
+            for(Role rl:us.getRoles()){
+
+                if(rl.name()==("ADMIN"))
+                {
+                    res=true;
+                    break;
+                }
+            }
+            if(res) {
+                userList.add(us);
+            }//else{adminListTemp.add(us);}
+        }
+        return userList;
+    }
+    public int userCount(){
+    return userRepository.findAll().size();
     }
 }

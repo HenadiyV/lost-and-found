@@ -20,16 +20,16 @@ public class UserAdvtDTO {
        if(advtList.size()>0){
           for(Advt adv:advtList){
               UserAdvtDAO usDao =new UserAdvtDAO(adv.getUserId(),adv.getId(),adv.getText(),adv.isActive()
-                      ,adv.getPhoto(),adv.getStatus(),adv.getCharacters(),adv.getDat(),adv.getCity().getName(),adv.getSubcategory().getName());
+                      ,adv.getPhoto(),adv.getStatus(),adv.getArticle(),adv.getCharacters(),adv.getDat(),adv.getCity().getName(),adv.getSubcategory().getName());
               advtDaoList.add(usDao);
           }
        }
-        //this.advtList = advtList;
+
     }
 
     public UserAdvtDTO(Advt adv) {
        this.userAdvtDAO=new UserAdvtDAO(adv.getUserId(),adv.getId(),adv.getText(),adv.isActive()
-                ,adv.getPhoto(),adv.getStatus(),adv.getCharacters(),adv.getDat(),adv.getCity().getName(),adv.getSubcategory().getName());
+                ,adv.getPhoto(),adv.getStatus(),adv.getArticle(),adv.getCharacters(),adv.getDat(),adv.getCity().getName(),adv.getSubcategory().getName());
 
     }
 

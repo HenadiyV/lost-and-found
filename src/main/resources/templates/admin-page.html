@@ -18,6 +18,9 @@
 
     <script href="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script>
+
+    </script>
 </head>
 
 <body>
@@ -71,29 +74,22 @@
     <div class="container">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-sm-4 blog-sidebar">
+            <div class="col-lg-3 col-sm-4 col-md-4 col-xs-12  blog-sidebar">
             <!--<-->
-                <h3>Search our Blog</h3>
-                <form>
-                    <div class="input-group">
-                        <input class="form-control input-md" id="appendedInputButtons" type="text" onkeyup="mySearch()">
-                        <span class="input-group-btn">
-									<button class="btn btn-md" type="button">Search</button>
-								</span>
-                    </div>
-                </form>
+                <!--<h3>Search our Blog</h3>-->
+                <!--<form>-->
+                    <!--<div class="input-group">-->
+                        <!--<input class="form-control input-md" id="appendedInputButtons" type="text" onkeyup="mySearch()">-->
+                        <!--<span class="input-group-btn">-->
+									<!--<button class="btn btn-md" type="button">Search</button>-->
+								<!--</span>-->
+                    <!--</div>-->
+                <!--</form>-->
 
-                <h3>Recent Posts</h3>
+                <h3 th:text="#{admin.menu}">Admin menu</h3>
                 <ul class="recent-posts">
-                    <!--<li><a href="/admin/city" th:text="#{lang.city}">Міста</a></li>-->
-                    <li><a href="/admin/citys" th:text="#{lang.city}">Міста</a></li>
-                    <!--<li><a href="/admin/cityCity">Міста2</a></li>-->
-                    <li><a href="/admin/subcategory" th:text="#{lang.category.subcategory}">Subcategory</a></li>
-                    <!--<li><a href="/admin/sub">Subcategory2</a></li>-->
-                    <!--<li><a href="/admin/category" th:text="#{lang.category.name}">Category</a></li>-->
-                    <li><a href="/admin/category_new" th:text="#{lang.category.name}">Category1</a></li>
                     <li class="dropdown">
-                        <!--<div ></div>-->
+
                         <a class=" dropdown-toggle"  data-toggle="dropdown" href="#" ><span th:text="#{lang.users}">Користувачі</span>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -101,39 +97,84 @@
                             <!--<li><a href="/admin/user/detalis"  >User</a></li>onclick="getSchedule()"-->
                             <!--<li><a href="/admin/user-advt">User advt</a></li>-->
                             <li><a href="/admin/user-detalis" th:text="#{users.detail}" >User detalis</a></li>
-                            <li><a href="/admin/user" th:text="#{users.ban}">Ban</a></li>
+                            <li><a href="/admin/user"  > <span th:text="#{users.ban}" ></span> / <span th:text="#{lang.btn.delete}"></span></a></li>
+                            <li><a href="/admin/user-role"  th:text="#{user.role}">Role</a></li>
                         </ul>
 
                     </li>
+                    <!--<li><a href="/admin/city" th:text="#{lang.city}">Міста</a></li>-->
+                    <li><a href="/admin/citys" th:text="#{lang.city}">Міста</a></li>
+                    <!--<li><a href="/admin/cityCity">Міста2</a></li>-->
+                    <li><a href="/admin/category_new" th:text="#{lang.category.name}">Category</a></li>
+                    <li><a href="/admin/subcategory" th:text="#{lang.category.subcategory}">Subcategory</a></li>
+                    <!--<li><a href="/admin/sub">Subcategory2</a></li>-->
+                    <!--<li><a href="/admin/category" th:text="#{lang.category.name}">Category</a></li>-->
 
 
 
-                    <li><a href="#">Quisque sollicitudin cursus felis</a></li>
+
+
+
                 </ul>
 
             </div>
             <!-- End Sidebar -->
 <!--Right-->
-            <div class="col-lg-8 col-sm-8 col-md-8">
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <div class="blog-post blog-single-post">
-                    <div class="single-post-title">
-                        <h3>Post Title</h3>
+                    <div th:if="${admin_start}">
+                    <div class="single-post-title" style="text-align: center;padding: 5px">
+                        <h3 th:text="#{admin.title}">Admin Title</h3>
                     </div>
 
+
+
+
+                    <div th:if="${user_count}"style="text-align: left">
+                        <h3 th:text="#{admin.title.user}">Пользователей  </h3>
+                        <input hidden="hidden" th:id="countUser" th:value="${user_count}" />
+                        <b><span id="usr" style="text-align: center ;color: #3e8f3e; font-size: 5rem"></span></b>
+                    </div>
+                    <div th:if="${advt_count}" style="text-align: center">
+                        <input hidden="hidden" th:id="countAdvt" th:value="${advt_count}" />
+                        <h3 th:text="#{admin.title.advt}">Обьявлений</h3>
+                        <b><span id="advt" style="color:#2aabd2;font-size: 5rem "></span></b>
+                    </div>
+                    <div th:if="${mes_count}" style="text-align:right">
+                       <h3 th:text="#{admin.title.message}">Сообщений   </h3>
+                        <input hidden="hidden" th:id="countMess" th:value="${mes_count}" />
+                        <b><span id="mes" style="text-align: center ;color: #985f0d; font-size: 5rem"></span></b>
+                    </div>
+                    </div>
                     <!--user-->
                     <!--<div class="col-lg-7 col-sm-7 col-md-7"></div>-->
                     <div th:if="${userList}">
+                        <div class="single-post-title" style="text-align: center;padding: 5px">
+                            <h3 th:text="#{users.title}">User Title</h3>
+                        </div>
                         <div th:insert="~{fragments/user.html :: user}"></div>
                     </div>
                     <div th:if="${user}">Not</div>
                     <!--End user-->
                     <div th:if="${subcategory}">
+                        <div class="single-post-title" style="text-align: center;padding: 5px">
+                            <h3 th:text="#{admin.subcategory}">Subcategory Title</h3>
+                        </div>
                         <div th:insert="~{fragments/subcategory.html :: subcategory}"></div>
                     </div>
                     <div th:if="${categoryList}">
+                        <div class="single-post-title" style="text-align: center;">
+                            <h3 th:text="#{lang.category.name}">Category Title</h3>
+
+                        <!--<div class="col-lg-6 col-sm-6 col-md-6"></div>-->
+
+                    </div>
                         <div th:insert="~{fragments/category-new.html :: category}"></div>
                     </div>
                     <div th:if="${cityList}">
+                        <div class="single-post-title" style="text-align: center;padding: 5px">
+                            <h3 th:text="#{admin.city}">City Title</h3>
+                        </div>
                         <div th:insert="~{fragments/city-new.html :: city}"></div>
                     </div>
             </div>

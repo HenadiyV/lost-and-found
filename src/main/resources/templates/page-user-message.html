@@ -36,7 +36,9 @@
         <div class="row">
             <div class="col-md-4 col-sm-4">
                 <h1 th:text="#{lang.messageUser.title}" >Messages</h1>
+                <div th:if="${usr}==1">
                 <a class="my_a" th:href="@{'/main/all_message'}"  th:text="#{lang.messageUser.message.all}"  >Показать все сообщения </a>
+                </div>
             </div>
             <!--<div class="col-md-4 col-sm-4 ">-->
                 <!---->

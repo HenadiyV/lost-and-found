@@ -9,8 +9,10 @@
 <div th:fragment="subcategory">
 
         <div class="container">
+            <label for="filter" th:text="#{lang.city.filter}">Filter</label>
+            <input type="text" name="filter" value="" id="filter" onkeyup="search()"/>
             <table   id="tableSub">
-                <caption th:text="#{lang.category.name}" >Category</caption>
+                <caption th:text="#{lang.category.subcategory}" >Category</caption>
                         <div th:each="cat:${category}">
                             <tr>
 

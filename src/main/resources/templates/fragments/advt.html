@@ -28,25 +28,31 @@
 
                             </div>
                             <div class="post-summary">
-                                <div>
+                                <p>
                                     <b> <span th:text="#{lang.in.city}">В місті :</span></b>
                                     <br/>
                                     <b><span class=" ml-5" style="color:blue " th:text="${adver.getCity().name}"></span></b>
 
-                                    <p>
+                                    </p>
 
                                         <a  th:onclick="'javascript:toggle_show(\''+'B'+${adver.getId()}+'\');'" th:text="#{lang.btn.read.more}">
                                             Докладніше
                                         </a>
                                     <div th:id="B+${adver.getId()}" style="display:none; width: 200px;">
+                                        <a  th:onclick="'javascript:toggle_show(\''+'ART'+${adver.getId()}+'\');'" th:text="#{advt.article}" >Art</a>
+                                        <div th:id="'ART'+${adver.getId()}" style="display:none;">
+
+                                            <p th:if="${adver.getArticle()}" th:text="${adver.getArticle()}">Ok</p>
+                                        </div>
                                         <div th:text="${adver.getDat().toString()}"></div>
                                         <div  th:text="${adver.getText()}" ></div>
 
                                     </div>
-                                    </p>
+
+
                                 </div>
                                 <div class="actions">
-                                    <div >
+                                    <div>
                                         <div class="row">
                                             <div class="col-md-6 col-sm-6">
                                                 <a class="btn btn-primary" id="bt" th:onclick="'javascript:myModalMessage(\''+${adver.getId()}+'\',\''+${adver.getUserId()}+'\');'" th:text="#{lang.send}">Повідомити</a>

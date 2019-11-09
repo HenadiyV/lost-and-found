@@ -13,19 +13,16 @@ var tex=document.getElementById(lab);
         $.ajax({
             type: "PUT",
             contentType: 'application/json; charset=utf-8',
-            url: '/category/'+Id,
+            url: 'category/'+Id,
             dataType: 'json',
             cache: false,
             data: JSON.stringify(sub),
             success: function (result) {
-              //  alert(lab);
-              //  console.dir(tex);
-              tex.innerText=sub.name;
-                //document.getElementById(label).innerText = sub.name;
 
-                // document.getElementById(label).innerText = n;
-                document.getElementById(t).value = "";
-                $('#Id').val('');
+              tex.innerText=sub.name;
+
+                // document.getElementById(t).value = "";
+                // $('#Id').val('');
             }
         });
 
@@ -36,61 +33,8 @@ function adminModal(Id){
      $("#idCat").val(Id);
 
 }
-function addCategory(Id){
-var id=Id;
-    var addCat={
-       // category :$('#idCat').val(),
-        name:$('#catNew').val()
-    }
 
-    if(addCat.name!=null&&addCat.name!=""){
-        $.ajax({
-            type: "POST",
-            contentType: 'application/json; charset=utf-8',
-            url: '/category',
-            dataType: 'json',
-            cache: false,
-
-            data:JSON.stringify(addCat),
-            success: function (result) {
-                var tempCat='TCat'+id;
-                var td=document.createElement("b");
-                td.append(addCat.name);
-                var div= document.getElementById(tempCat);
-                div.appendChild(td);
-                div.insertAdjacentHTML("beforeend", '<br/>');
-                $('#catNew').val('');
-            },error : function() {
-                alert('adding component failed with status');
-            }
-        });
-    }
-    else{
-        alert("Bad");
-    }
-
-}
-
-function deleteCategory(Id){
-    var tr='TRCat'+Id;
-    var id=Id;
-    $.ajax({
-        type: "DELETE",
-        contentType: 'application/json; charset=utf-8',
-        url: '/category/'+Id,
-        dataType: 'json',
-        cache: false,
-
-        data:JSON.stringify(id),
-        success: function (result) {
-
-alert("delete");
-document.getElementById(tr).hidden=true;
-        }
-
-    });
-}
-function getSubcategory(categoryId) {
+function getCategory(categoryId) {
     $.ajax({
         type: "GET",
         url: '/admin/category',
@@ -106,7 +50,7 @@ function getSubcategory(categoryId) {
                     trHTML += '<tr><td><label>' + response[i].name+ '</label></td>' +
 
                         '<td> <button  onclick="editSubcategory('+response[i].id,categoryId+')" >Edit</button></td>'+
-                    '<td> <button  onclick="deleteSubcategory('+response[i].id+')" >Delete</button></td>'+
+                    // '<td> <button  onclick="deleteSubcategory('+response[i].id+')" >Delete</button></td>'+
 
                     '</tr>';
 
@@ -116,3 +60,64 @@ function getSubcategory(categoryId) {
         ]
     });
 }
+/////////////////////////////////
+// function addCategory(Id){
+// var id=Id;
+//     var addCat={
+//        // category :$('#idCat').val(),
+//         name:$('#catNew').val()
+//     }
+//
+//     if(addCat.name!=null&&addCat.name!=""){
+//         $.ajax({
+//             type: "POST",
+//             contentType: 'application/json; charset=utf-8',
+//             url: '/category',
+//             dataType: 'json',
+//             cache: false,
+//
+//             data:JSON.stringify(addCat),
+//             success: function (result) {
+//                 var tempCat='TCat'+id;
+//                 var td=document.createElement("b");
+//                 td.append(addCat.name);
+//                 var div= document.getElementById(tempCat);
+//                 div.appendChild(td);
+//                 div.insertAdjacentHTML("beforeend", '<br/>');
+//                 $('#catNew').val('');
+//             },error : function() {
+//                 alert('adding component failed with status');
+//             }
+//         });
+//     }
+//     else{
+//         alert("Not action");
+//     }
+//
+// }
+
+// function deleteCategory(Id){
+//     var tr='TRCat'+Id;
+//     var id=Id;
+//     $.ajax({
+//         type: "DELETE",
+//         contentType: 'application/json; charset=utf-8',
+//         url: '/category/'+Id,
+//         dataType: 'json',
+//         cache: false,
+//
+//         data:JSON.stringify(id),
+//         success: function (result) {
+//
+// alert("delete");
+// document.getElementById(tr).hidden=true;
+//         }
+//
+//     });
+// }
+////////////////////////////////
+//  alert(lab);
+//  console.dir(tex);
+//document.getElementById(label).innerText = sub.name;
+
+// document.getElementById(label).innerText = n;

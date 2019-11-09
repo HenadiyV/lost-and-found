@@ -54,22 +54,4 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
 }
-//@Service
-//public class CustomUserDetailsService implements UserDetailsService {
-//    @Autowired
-//    UserRepository users;
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        UserDetails loadedUser;
-//
-//        try {
-//            User client = users.findByName(username);
-//            loadedUser = new org.springframework.security.core.userdetails.User(
-//                    client.getUsername(), client.getPassword(),
-//                    client.getRoles());
-//        } catch (Exception repositoryProblem) {
-//            throw new InternalAuthenticationServiceException(repositoryProblem.getMessage(), repositoryProblem);
-//        }
-//        return loadedUser;
-//    }
-//}
+

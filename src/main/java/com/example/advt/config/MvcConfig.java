@@ -34,10 +34,6 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:///"+uploadPath+"/");
         registry.addResourceHandler("/static/static/**")
                 .addResourceLocations("classpath:/static/static/");
-//        registry.setOrder(Integer.MIN_VALUE);
-//        registry.addResourceHandler("/favicon.ico")
-//                .addResourceLocations("/")
-//                .setCachePeriod(0);
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -53,46 +49,4 @@ public class MvcConfig implements WebMvcConfigurer {
     public LocaleChangeInterceptor localeChangeInterceptor() {
         return new LocaleChangeInterceptor();
     }
-
-    ///////////////////////////////
-//    @Bean
-//    public AuthenticationSuccessHandler successHandler() {
-//        SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler();
-//        handler.setUseReferer(true);
-//        return handler;
-//    }
-//    @Override
-//    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-//                                             Authentication authentication) throws ServletException, IOException {
-//        String userTargetUrl = "/welcome.xhtml";
-//        String adminTargetUrl = "/admin/welcome.xhtml";
-//        Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-//        if (roles.contains("ROLE_ADMIN")) {
-//            getRedirectStrategy().sendRedirect(request, response, adminTargetUrl);
-//        }
-//        else if(roles.contains("ROLE_USER")) {
-//            getRedirectStrategy().sendRedirect(request, response, userTargetUrl);
-//        }
-//        else {
-//            super.onAuthenticationSuccess(request, response, authentication);
-//            return;
-//        }
-//    }
-//
-//}
-
-//////////////////////////////////
-//    @Bean
-//    public LocaleResolver localeResolver() {
-//        SessionLocaleResolver slr = new SessionLocaleResolver();
-//      slr.setDefaultLocale(Locale.US);
-//        return slr;
-//    }
-//    @Bean
-//    public LocaleChangeInterceptor localeChangeInterceptor() {
-//        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-//        lci.setParamName("lang");
-//        return lci;
-//    G:\Java\1_1_Kursovoy\advt\src\main\resources\static\static\img}
 }
-

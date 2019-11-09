@@ -33,15 +33,7 @@ public class UserController {
     private MessageRepository messageRepository;
     @Autowired
     private AdminPostRepository adminPostRepository;
-//    @RequestMapping("/user")
-//    public User user(Principal principal) {
-//        User user =new User();
-//        if(principal != null){
-//            user = (User) userService.loadUserByUsername(principal.getName());
-//            return user;
-//        }
-//       return null;
-//    }
+
     @RequestMapping("/unauthenticated")
     public String unauthenticated() {
         return "redirect:/?error=true";
@@ -51,7 +43,7 @@ public class UserController {
         if(principal!=null){
             User userAuth=userRepository.findByName( principal.getName());
            List<MessageUser> messageUser=messageRepository.findByIdToUserAndActive(userAuth.getId(),true);
-           List<AdminPost> adminPosts=adminPostRepository.findAllById(userAuth.getId());
+           List<AdminPost> adminPosts=adminPostRepository.findByActive(true);
            String countMessage=String.valueOf(messageUser.size());
            String countPosts=String.valueOf(adminPosts.size());
            String userId=String.valueOf(userAuth.getId());

@@ -63,6 +63,11 @@
                }
             });
         }
+        function flag(){
+          //  alert(src);
+            $b("#flag").attr("src","/img/flags/us.png");
+
+		}
     </script>
 
  <!-- Navigation & Logo-->
@@ -73,9 +78,16 @@
 						<ul>
 							<li>
 								<div class="dropdown choose-country">
-									<a class="#" data-toggle="dropdown" href="#" ><img src="/img/flags/network_local_2674.png"  alt="World"></a>
+									<a class="#" data-toggle="dropdown" href="#" >
+										<span th:text="${#locale}" style="color:#e38d13;font-size: 2rem" ></span>
+
+											 <img  src="/img/flags/network_local_2674.png"  alt="World">
+
+
+
+									</a>
 									<ul class="dropdown-menu" role="menu">
-										<li role="menuitem"><a href="#" th:href="@{?locale=en}"><img src="/img/flags/us.png" alt="United States"> US</a></li>
+										<li role="menuitem"><a href="#" th:href="@{?locale=en}"><img src="/img/flags/us.png"  alt="United States"> US</a></li>
 										<li role="menuitem"><a href="#" th:href="@{?locale=ua}"><img src="/img/flags/ua.png" alt="Украина"> UA</a></li>
 										<li role="menuitem"><a href="#" th:href="@{?locale=ru}"><img src="/img/flags/ru.png" alt="Россия">RU</a></li>
 									</ul>
@@ -103,7 +115,7 @@
 											<div class="col-lg-8 col-md-8 col-sm-8" th:if="${adm}">
 												<div class="row">
 													<div class="col-lg-6 col-md-6 col-sm-6" >
-												<a href="/admin"  th:text="#{personal.admin}" style="color:blue"> Адмінка </a>
+												<a href="/admin/admin"  th:text="#{personal.admin}" style="color:blue"> Адмінка </a>
 													</div>
 													<div class="col-lg-6 col-md-6 col-sm-6" >
 												<a href="/admin/message"><i class="glyphicon glyphicon-envelope "><b><span id="countPosts" style="margin-left: 3px"></span></b></i></a>
@@ -159,8 +171,9 @@
 									<span class="caret" ></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="/faq" th:text="#{lang.futer.faq}">Frequently Asked Questions</a></li>
-									<li><a href="/about" th:text="#{lang.futer.about}">About Us</a></li>
 									<li><a href="/contact" th:text="#{lang.futer.contactus}">Contact Us</a></li>
+									<!--<li><a href="/about" th:text="#{lang.futer.about}">About Us</a></li>-->
+
 
 								</ul>
 

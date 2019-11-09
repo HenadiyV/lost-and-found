@@ -39,7 +39,9 @@ public class Advt {
     @Temporal(TemporalType.DATE)
 
     private Date dat;
- private  boolean found;
+    private  boolean found;
+    @Column(name="article")
+    private String article;
     @ManyToOne
     private Category category;
 
@@ -51,26 +53,6 @@ public class Advt {
         this.category = category;
     }
 
-//    @OneToMany(mappedBy="advt",targetEntity=MessageUser.class,cascade = CascadeType.ALL)
-//  private Set<MessageUser> mess;
-
-//    public Set<MessageUser> getMess() {
-//        return mess;
-//    }
-//
-//    public void setMess(Set<MessageUser> mess) {
-//        this.mess = mess;
-//    }
-//    @ManyToOne
-//    private User user;
-//
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
 
 
@@ -103,48 +85,10 @@ public class Advt {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-/**
-     *
-     */
-//    @ManyToOne
-//    private People people;
-//
-//    public People getPeople() {
-//        return people;
-//    }
-//
-//    public void setPeople(People people) {
-//        this.people = people;
-//    }
-
-//    @ManyToOne
-//    private Animal animal;
-//
-//    public Animal getAnimal() {
-//        return animal;
-//    }
-//
-//    public void setAnimal(Animal animal) {
-//        this.animal = animal;
-//    }
-
-//    @ManyToOne
-//    private Thing thing;
-//
-//    public Thing getThing() {
-//        return thing;
-//    }
-
-//    public void setThing(Thing thing) {
-//        this.thing = thing;
-//    }
-    /**
-     * Default constructor
-     */
     public Advt() {
     }
 
-    public Advt(String text, boolean activ, String photo, String status, String characters, Long userId, Date dat, boolean found, Category category, City city, Subcategory subcategory) {
+    public Advt(String text, boolean activ, String photo, String status, String characters, Long userId, Date dat, boolean found, String article, Category category, City city, Subcategory subcategory) {
         this.text = text;
         this.activ = activ;
         this.photo = photo;
@@ -153,6 +97,7 @@ public class Advt {
         this.userId = userId;
         this.dat = dat;
         this.found = found;
+        this.article = article;
         this.category = category;
         this.city = city;
         this.subcategory = subcategory;
@@ -245,6 +190,14 @@ public class Advt {
         this.dat = dat;
     }
 
+    public String getArticle() {
+        return article;
+    }
+
+    public void setArticle(String article) {
+        this.article = article;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -259,6 +212,7 @@ public class Advt {
                 Objects.equals(characters, advt.characters) &&
                 Objects.equals(userId, advt.userId) &&
                 Objects.equals(dat, advt.dat) &&
+                Objects.equals(article, advt.article) &&
                 Objects.equals(category, advt.category) &&
                 Objects.equals(city, advt.city) &&
                 Objects.equals(subcategory, advt.subcategory);
@@ -282,6 +236,7 @@ public class Advt {
                 ", userId=" + userId +
                 ", dat=" + dat +
                 ", found=" + found +
+                ", article='" + article + '\'' +
                 ", category=" + category +
                 ", city=" + city +
                 ", subcategory=" + subcategory +

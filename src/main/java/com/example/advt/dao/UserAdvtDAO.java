@@ -18,22 +18,23 @@ public class UserAdvtDAO {
     private boolean activ;
     private String photo;
     private String status;
+    private String article;
     private String characters;
     private Date dat;
 private String city;
 private String subcategory;
 
-    public UserAdvtDAO(Long idUser, Long idAdvt, String text, boolean activ, String photo, String status, String characters, Date dat, String city, String subcategory) {
+    public UserAdvtDAO(Long idUser, Long idAdvt, String text, boolean activ, String photo, String status, String article, String characters, Date dat, String city, String subcategory) {
         this.idUser = idUser;
         this.idAdvt = idAdvt;
         this.text = text;
         this.activ = activ;
         this.photo = photo;
         this.status = status;
+        this.article = article;
         this.characters = characters;
         this.dat = dat;
         this.city = city;
         this.subcategory = subcategory;
     }
-
 }

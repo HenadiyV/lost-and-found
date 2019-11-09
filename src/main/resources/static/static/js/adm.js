@@ -20,9 +20,9 @@ function deleteUser(Id,str,btnBan,btnUnban,btnDel){
 
         data:JSON.stringify(id),
         success: function (result) {
-            alert("ok");
-
-            getSchedule(ban, unban, del);
+            // alert("ok");
+            //
+             getSchedule(ban, unban, del);
         }
 
     });
@@ -73,6 +73,9 @@ function getSchedule(btnBan,btnUnban,btnDel) {
     ban=btnBan;
     unban=btnUnban;
     del=btnDel;
+    var activ='';
+    var yes=$('#yes').val();
+    var no=$('#no').val();
     $.ajax({
         type: "GET",
         url: '/admin/user/test',
@@ -83,14 +86,23 @@ function getSchedule(btnBan,btnUnban,btnDel) {
                 // console.log(response);
                 $("#tableBan").find("tr:not(:first)").remove();
                 var trHTML = '';
+                var phon='';
                 //var obj = $.parseJSON(response.responseText);
                 for (var i = 0; i < response.length; i++) {
+                    if(response[i].phone!=null){phon=response[i].phone}else{
+                        phon='';
+                    }
+                    if(response[i].active){
+                        activ=yes;
+                    }else{activ=no;}
                     trHTML += '<tr><td><label>' + response[i].name+ '</label></td>' +
                         // '<td>' +response[i].name + '</td>'+
                         '<td>' +response[i].email + '</td>'+
-                        '<td>' +response[i].phone + '</td>'+
+
+                        '<td>' +phon + '</td>'+
+
                         // '<td>' +response[i].nameSocial + '</td>'+
-                        '<td>' +response[i].active + '</td>' +
+                        '<td>' +activ + '</td>' +
                         '<td> <input type="button"  onclick="lockUser('+ response[i].id +', ban,unban , del)"  value='+ ban +'  > </input></td>'+
 
                         '<td> <input type="button"  onclick="unlockUser('+response[i].id+', ban,unban , del)" value='+ unban +' > </input></td>'+
@@ -108,18 +120,7 @@ function getSchedule(btnBan,btnUnban,btnDel) {
     });
 
 }
-function nameS(s)
-{
-    var links = document.getElementsByTagName('button');
-    for (var i = 0, _i = links.length; i < _i; i++) {
-        if (links[i].innerHTML == 'Pages') {
-            links[i].innerHTML = s;
-           // break;
-            console.log(links[i]);
-        }
-    }
 
-} ;
 function getDetalis() {
     $.ajax({
         type: "GET",
@@ -153,48 +154,6 @@ function getDetalis() {
     });
 }
 
-function mySearch(){
-    var name=$('#appendedInputButtons').val();
-
-
-    $.ajax({
-        type: "GET",
-        contentType: 'application/json; charset=utf-8',
-        url: '/admin/search-city',
-        dataType: 'text',
-        //cache: false,JSON.stringify
-
-        data: (name),
-        success: function (result) {
-            alert('ok');
-
-        },error : function() {
-            alert('adding component failed with status');
-        }
-
-    });
-}
-function advtUser(Id){
-
-var idUser=Id;
-
-    $.ajax({
-        type: "GET",
-        contentType: 'application/json; charset=utf-8',
-        url: '/admin/user-advt',
-        dataType: 'text',
-        //cache: false,JSON.stringify
-
-        data: (idUser),
-        success: function (result) {
-            alert('ok');
-
-        },error : function() {
-            alert('adding component failed with status');
-        }
-
-    });
-}
 function ConfirmDelete(mess)
 {
     var x = confirm(mess);
@@ -204,8 +163,118 @@ function ConfirmDelete(mess)
         return false;
 }
 
+function search(){
+    var v=$('#filter').val();
+    if (v.keyCode == 27 || v == '') {
+        //if esc is pressed we want to clear the value of search box
+        $('#filter').val('');
 
+        //we want each row to be visible because if nothing
+        //is entered then all rows are matched.
+        $('tbody tr').removeClass('visible').show().addClass('visible');
+    }
 
+    //if there is text, lets filter
+    else {
+        filter('tbody tr', v);
+    }
+}
+
+//filter results based on query
+function filter(selector, query) {
+    query	=	$.trim(query); //trim white space
+    query = query.replace(/ /gi, '|'); //add OR for regex
+
+    $(selector).each(function() {
+        ($(this).text().search(new RegExp(query, "i")) < 0) ? $(this).hide().removeClass('visible') : $(this).show().addClass('visible');
+    });
+}
+document.addEventListener("DOMContentLoaded", function() {
+   var user_count=$('#countUser').val();
+   var advt_count=$('#countAdvt').val();
+   var messag_count=$('#countMess').val();
+   console.log(messag_count);
+   if(user_count>0){
+    $('#usr').animate({ usr: user_count - 0.3/* - начало + '%'*/ }, {
+        duration: 5000,
+        step: function (usr){
+            this.innerHTML = (usr + 0.3).toFixed(0) ;
+        }
+    });
+   }
+   if(advt_count>0){
+    $('#advt').animate({ advt: advt_count - 0.3/* - начало + '%'*/ }, {
+        duration: 4000,
+        step: function (advt){
+            this.innerHTML = (advt + 0.3).toFixed(0) ;
+        }
+    });
+   }
+   if(messag_count>0){
+    $('#mes').animate({ mes: messag_count - 0.1/* - начало + '%'*/ }, {
+        duration: 5000,
+        step: function (mes){
+            this.innerHTML = (mes + 0.1).toFixed(0) ;
+        }
+    });
+   }
+
+});
+
+//function nameS(s)
+// // {
+// //     var links = document.getElementsByTagName('button');
+// //     for (var i = 0, _i = links.length; i < _i; i++) {
+// //         if (links[i].innerHTML == 'Pages') {
+// //             links[i].innerHTML = s;
+// //            // break;
+// //             console.log(links[i]);
+// //         }
+// //     }
+// //
+// // } ;
+//function advtUser(Id){
+//
+// var idUser=Id;
+//
+//     $.ajax({
+//         type: "GET",
+//         contentType: 'application/json; charset=utf-8',
+//         url: '/admin/user-advt',
+//         dataType: 'text',
+//         //cache: false,JSON.stringify
+//
+//         data: (idUser),
+//         success: function (result) {
+//             //alert('ok');
+//
+//         },error : function() {
+//             alert('errors');
+//         }
+//
+//     });
+// }
+//function mySearch(){
+//     var name=$('#appendedInputButtons').val();
+//
+//
+//     $.ajax({
+//         type: "GET",
+//         contentType: 'application/json; charset=utf-8',
+//         url: '/admin/search-city',
+//         dataType: 'text',
+//         //cache: false,JSON.stringify
+//
+//         data: (name),
+//         success: function (result) {
+//             alert('ok');
+//
+//         },error : function() {
+//             alert('adding component failed with status');
+//         }
+//
+//     });
+// }
 // function editSubcategory(Id,cotgoryId){
 // var t='I'+Id;
 //     var label='L'+Id;

@@ -31,7 +31,7 @@ public class AuthProvider implements AuthenticationProvider
     {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
-//
+
         User user = (User) userService.loadUserByUsername(username);
 
         if(user != null && (user.getEmail().equals(username) || user.getName().equals(username)||user.getUsername().equals(username)))
@@ -40,9 +40,9 @@ public class AuthProvider implements AuthenticationProvider
             {
                 throw new BadCredentialsException("Wrong password");
             }
-//
+
            Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-//
+
            return new UsernamePasswordAuthenticationToken(user, (String) authentication.getCredentials(), authorities);
         }
         else

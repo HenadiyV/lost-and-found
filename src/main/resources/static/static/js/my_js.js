@@ -44,7 +44,7 @@ $(document).ready(function () {
     });
 });
 
-function searchText() {
+function addMessage(str) {
     var search = {
         idAdver: $('#idAdver').val(),
         userId: $('#userId').val(),
@@ -59,12 +59,22 @@ function searchText() {
         cache: false,
         data: JSON.stringify(search), // Note it is important
         success: function (result) {
-                  $('#idAdver').val(""),
-                $('#userId').val(""),
-                $('#contact').val(""),
+                  $('#idAdver').val(" "),
+                $('#userId').val(" "),
+                $('#contact').val(" "),
             $('#textMessage').val("");
+            $('#capcha').attr('checked',false);
+            //cbx_chng("capcha");
+            alert(str);
         }
     });
+}
+function cbx_chng(cbx) {
+    if (document.getElementById(cbx).checked) {
+        document.getElementById(elem).checked = "false";
+    } else {
+        document.getElementById(elem).checked = "true";
+    }
 }
 
 $(function() {
@@ -81,9 +91,9 @@ $(function() {
     })
 });
 
-function chekMy(str) {
-    alert(str);
-}
+// function chekMy(str) {
+//     alert(str);
+// }
 
 function hideMess(idAdvt,idMess){
     $.ajax({

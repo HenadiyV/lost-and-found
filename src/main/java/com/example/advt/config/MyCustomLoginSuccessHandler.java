@@ -60,11 +60,5 @@ public class MyCustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessH
         logger.debug("Redirecting to DefaultSavedRequest Url: " + targetUrl);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//
-//        auth.userDetailsService(userService)
-//                .passwordEncoder(NoOpPasswordEncoder.getInstance());
-//
-//    }
+
 }

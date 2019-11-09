@@ -35,13 +35,7 @@ public class RegistrationController {
         return "login";
     }
 
-    //    @GetMapping("/page-register")
-////    User user
-//    public String registration()
-//    {
-//
-//        return "page-register";
-//    }
+
     @GetMapping("/password-reset")
     public String passwordReset() {
         return "page-password-reset";
@@ -53,8 +47,8 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String addUser(@Valid User user,BindingResult bindingResult,  Model model ) {
-//String username,String email,String password
+    public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
+
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errorMap);
@@ -64,14 +58,7 @@ public class RegistrationController {
             model.addAttribute("message", "User exists!");
             return "login";
         }
-//      User user=new User();
-//      user.setName(username);
-//       user.setEmail(email);
- //       user.setActive(true);
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//       user.setActive(true);
-//        user.setRoles(Collections.singleton(Role.USER));
-//userRepository.save(user);
+
         return "redirect:/login";
     }
 

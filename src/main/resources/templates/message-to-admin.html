@@ -48,17 +48,23 @@
                             </div>
                         </td>
                         <td class="event-venue hidden-xs" th:text="${post.getTopic()}"> </td>
-                        <td th:text="${post.getMessageUser()}">
-                            Pellentesque justo turpis, fringilla sit amet pulvinar ut, tincidunt nec leo.
+                        <td >
+                            <a class="btn btn-grey btn-sm event-more" th:onclick="'javascript:toggle_show_message(\''+'ART'+${post.getId()}+'\',\''+${post.getId()}+'\');'" th:text="#{lang.btn.read.more}" >Read more</a>
+                            <div th:id="'ART'+${post.getId()}" style="display:none;">
+                                <p th:text="${post.getMessageUser()}"></p>
+
+                            </div>
+
                         </td>
 
                         <!--<td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Samsung Arena</td>-->
                         <!--<td class="event-price hidden-xs">FREE</td>-->
-                        <td> <input  type="button" class="btn btn-grey btn-sm " th:id="${post.getId()}" value="Hidden"  th:onclick="'javascript:hiddenPost(\''+${post.getId()}+'\');'" ></input></td>
-                        <td> <input  type="button" class="btn btn-grey btn-sm " th:id="${post.getId()}" value="Delete"  th:onclick="'javascript:deletePost(\''+${post.getId()}+'\');'" ></input></td>
-
                         <!--<td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>-->
-                        <td><a href="#" class="btn btn-grey btn-sm ">Delete</a></td>
+                        <!--<td> <input  type="button" class="btn btn-grey btn-sm " th:id="${post.getId()}" value="Hidden"  th:onclick="'javascript:hiddenPost(\''+${post.getId()}+'\');'" /></td>-->
+                        <td> <input  type="button" class="btn btn-grey btn-sm " th:id="${post.getId()}" value="Delete"  th:onclick="'javascript:deletePost(\''+${post.getId()}+'\');'" /></td>
+
+
+                        <!--<td><a href="#" class="btn btn-grey btn-sm ">Delete</a></td>-->
                     </tr>
                         </div>
                     </div>

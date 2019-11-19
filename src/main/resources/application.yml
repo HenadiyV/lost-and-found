@@ -75,26 +75,37 @@ spring:
 #    mail:
 #
 #         host: smtp.gmail.com
-#         password: 84726751Vge
+#         username: henadiyv@gmail.com
+#         password: $84726751vge
 #         port: 587
-#
+#         protocol: smtps
 #         properties:
-#             mail:
-#                 smtp:
-#                     auth: true
-##                     connectiontimeout: 5000
-#                     starttls:
-#                         enable: true
-#                         required: true
-##                     timeout: 5000
-##                     writetimeout: 5000
-#         username: henadiyvognev@gmail.com
+#                    mail:
+#                      smtp:
+#                        auth: true
+#                        starttls:
+#                              enable: true
+#                              required: true
+#                        ssl:
+#                             enable: true
+
+
+#         scheduler:
+#                  persistence:
+#                            enabled: false
+#                             redis:
+#                                  embedded: false
+#                                  enabled: false
+
+#                     timeout: 5000
+#                     writetimeout: 5000
+
 
 #    mail:
 #            host: smtp.gmail.com
 #            username: henadiyvognev@gmail.com
 #            password: 84726751Vge
-#            port: 587
+#            port: 587 465
 #            protocol: smtp
 #            properties:
 #                mail:
@@ -102,9 +113,9 @@ spring:
 #                        auth: true
 #                        starttls:
 #                            enable: true
-
 #
-
+#
+#
 
 #                        connectiontimeout : 5000
 #                        timeout : 5000
@@ -114,9 +125,10 @@ spring:
 
 upload:
     path: g:/Java/1_1_Kursovoy/lost-and-found/src/uploads/
-
-animals:
-    path: g:/Java/1_1_Kursovoy/lost-and-found/src/uploads/animals
+uploadUs:
+    path: g:/Java/1_1_Kursovoy/lost-and-found/src/users/
+project:
+    path: g:/Java/1_1_Kursovoy/lost-and-found/src/tutorial-project/
 
 #cnixxsimmqrcfwpr
 #84726751vge

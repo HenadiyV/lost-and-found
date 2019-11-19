@@ -44,7 +44,7 @@ $(document).ready(function () {
     });
 });
 
-function addMessage(str) {
+function addMessage(str,err) {
     var search = {
         idAdver: $('#idAdver').val(),
         userId: $('#userId').val(),
@@ -59,6 +59,7 @@ function addMessage(str) {
         cache: false,
         data: JSON.stringify(search), // Note it is important
         success: function (result) {
+            if(result){
                   $('#idAdver').val(" "),
                 $('#userId').val(" "),
                 $('#contact').val(" "),
@@ -66,6 +67,9 @@ function addMessage(str) {
             $('#capcha').attr('checked',false);
             //cbx_chng("capcha");
             alert(str);
+            }else{alert(err);}
+        },error : function() {
+            alert("Not");
         }
     });
 }

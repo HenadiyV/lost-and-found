@@ -16,14 +16,26 @@ public class UserDAO   {
     UserRepository userRepository;
     private Long id;
     private String name;
-    private String password;
+    private String phone;
     private String email;
-    private User user;
-
+    private boolean active;
+    private String nameSocial;
+    //private User user;
+    private int advt_count;
     public User getUser(String name) {
        return userRepository.findByName(name);
     }
 
+    public UserDAO(Long id, String name, String phone, String email, boolean active, String nameSocial, int advt_count) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.active = active;
+        this.nameSocial = nameSocial;
+        this.advt_count = advt_count;
+    }
 
-
+    public UserDAO() {
+    }
 }

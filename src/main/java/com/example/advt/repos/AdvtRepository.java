@@ -4,9 +4,9 @@ import com.example.advt.domain.Advt;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdvtRepository extends JpaRepository<Advt,Long> {
     Page<Advt> findByCategory_Id(int category, Pageable pageable);
@@ -18,5 +18,6 @@ public interface AdvtRepository extends JpaRepository<Advt,Long> {
     List<Advt> findAll();
     List<Advt> findByUserId(Long id);
 List<Advt> findBySubcategory_Id(int id);
+Optional<Advt> findById(Long Id);
 
 }

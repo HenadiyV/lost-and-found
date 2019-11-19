@@ -4,6 +4,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Collection;
@@ -22,14 +24,15 @@ public class User implements UserDetails, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name", nullable = false)
-
+    @NotBlank(message= "UserName cannot be empty")
     private String name;
     private String username;
     @Column(name = "email", nullable = false)
-
+    @Email(message="Email not corect")
+    @NotBlank(message= "Email cannot be empty")
     private String email;
     @Column(name = "password", nullable = false)
-
+    @NotBlank(message= "Password cannot be empty")
     private String password;
     @Column(name = "phohe")
     private String phone;

@@ -2,16 +2,19 @@ package com.example.advt.config;
 
 import com.example.advt.repos.UserRepository;
 import com.example.advt.service.AuthProvider;
+import com.example.advt.service.LogFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.RegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +27,8 @@ import org.springframework.security.oauth2.client.token.grant.code.Authorization
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.filter.CompositeFilter;
 
 import javax.servlet.Filter;
@@ -97,6 +102,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
+//    @Bean
+//    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+//        StrictHttpFirewall fireWall = new StrictHttpFirewall();
+//        fireWall.setAllowUrlEncodedSlash(true);
+//        return fireWall;
+//    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//// add it
+//        web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
+//    }
+
+//    @Bean
+//    public FilterRegistrationBean someFilterRegistration() {
+//        FilterRegistrationBean registration = new FilterRegistrationBean();
+//        registration.setFilter(new LogFilter());
+//        registration.addUrlPatterns("/*");
+//        registration.setOrder(RegistrationBean.HIGHEST_PRECEDENCE); //Must has higher precedence than FilterChainProxy
+//        return registration;
+//    }
     @Bean
     @ConfigurationProperties("facebook")
     public ClientResources facebook() {
@@ -138,9 +163,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
 
                 .authorizeRequests()
-                .antMatchers("/about-project", "/testVue", "/*", "/login**", "/static/static/**", "/view/**"
+                .antMatchers("/about-project/**", "/*", "/login**", "/static/static/**", "/view/**"
                         , "/static/static/fonts", "/activate/*", "/sendSimpleEmail"
-                        , "/img/**", "/register", "/webjars/**", "/error**")
+                        , "/img/**", "/us-img/**", "/project/**", "/register", "/webjars/**", "/error**")
                 .permitAll().anyRequest()
                 .authenticated()
                 .and()
@@ -165,6 +190,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authProvider);
     }
-
+    ////////////////////////
+//    @Bean
+//    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+//        StrictHttpFirewall firewall = new StrictHttpFirewall();
+//        firewall.setAllowUrlEncodedSlash(true);
+//        return firewall;
+//    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        //@formatter:off
+//        super.configure(web);
+//        web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
+//
+//    }
 }
 

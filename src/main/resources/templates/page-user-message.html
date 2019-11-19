@@ -37,7 +37,7 @@
             <div class="col-md-4 col-sm-4">
                 <h1 th:text="#{lang.messageUser.title}" >Messages</h1>
                 <div th:if="${usr}==1">
-                <a class="my_a" th:href="@{'/main/all_message'}"  th:text="#{lang.messageUser.message.all}"  >Показать все сообщения </a>
+                <a class="my_a" th:href="@{'/main/all_message'+${idAdvt} }"  th:text="#{lang.messageUser.message.all}"  >Показать все сообщения </a>
                 </div>
             </div>
             <!--<div class="col-md-4 col-sm-4 ">-->
@@ -47,7 +47,7 @@
             <div class="col-md-4 col-sm-4 " th:if="${all}==0">
             <!--<div class="row"></div>-->
             <!--<div></div>-->
-                <a class="my_a" th:href="@{'/main/message_all'+${idAdvt} }"  th:text="#{lang.messageUser.advt.message.all}"  >Показать все сообщения </a><br/>
+                <a class="my_a" th:href="@{'/main/message_all_this_advt'+${idAdvt} }"  th:text="#{lang.messageUser.advt.message.all}"  >Показать все сообщения </a><br/>
                 <span class="myspan" th:text="${pasiv}"></span>  <a class="my_a" th:href="@{'/main/message_pasive'+${idAdvt} }" th:text="#{lang.messageUser.pasive}" >Показать неактивные сообщения </a>  <br/>
                 <span class="myspan" th:text="${activ}"></span>  <a class="my_a" th:href="@{'/main/message_active'+${idAdvt} }" th:text="#{lang.messageUser.active}" >Показать активные сообщения </a><br/>
 
@@ -70,16 +70,21 @@
 
                 <div class="col-md-4 col-sm-6" >
                     <div style="margin:1px;border: 3px solid #4F8DB3;border-radius: 5px ">
+                        <div class="title" >
+
+                            <h2 th:text="#{lang.messageUser.guest}"></h2>
+                                <div style="color: white;background: #3e8f3e;font-size: 1.5em;text-align:center"> <b> <p th:text="${mess.getContact()}"></p></b></div>
+                        </div>
                     <div class="portfolio-item">
+
                         <!--Title-->
                         <div class="title">
-                            <h2 th:text="#{lang.messageUser.guest}"></h2>
-                           <b> <h4 th:text="${mess.getContact()}"></h4></b>
                             <b> <span th:text="#{lang.messageUser.text}">Text :</span></b>
                             <br/>
                             <textarea class="form-control" rows="5" name="textAdvt" th:text="${mess.getTextMessage()}"></textarea>
                             <p th:text="${mess.getDatMessage().toString()}"></p>
                         </div>
+
                                      <div class="portfolio-info-fade">
                                             <ul>
                                                 <li class="portfolio-project-name" th:text="${mess.getSubcategoryAdvt()}">Project Name</li>

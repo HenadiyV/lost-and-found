@@ -2,6 +2,7 @@ package com.example.advt.controller;
 
 import com.example.advt.dao.AdvtViewDAO;
 import com.example.advt.dao.CityDAO;
+import com.example.advt.dao.UserDAO;
 import com.example.advt.domain.*;
 import com.example.advt.dto.CategoryDto;
 import com.example.advt.dto.CityDto;
@@ -165,6 +166,8 @@ public class AdminController {
     boolean deleteAdminPost(@RequestBody Long id) throws NoEntityException {
         if (id != 0) {
             AdminPost adminPost = adminPostRepository.findById(id).get();
+
+            adminPostRepository.delete(adminPost);
             return true;
 //            .orElseThrow(() -> new NoEntityException(id))
         }
@@ -310,7 +313,15 @@ String user=userRepository.findById(us).get().getName();
     @GetMapping(value = "user-detalis")
     public String detalisUser(Map<String, Object> model) {
         List<User> userList = userRepository.findAll();
-        model.put("userList", userList);
+        List <UserDAO> userDAOList=new ArrayList<>();
+        for(User us:userList){
+        List<Advt>advtList=advtRepository.findByUserId(us.getId());
+            UserDAO userDAO=new UserDAO(us.getId(),us.getName(),us.getPhone(),us.getEmail(),us.isActive(),us.getNameSocial(),advtList.size());
+            userDAOList.add(userDAO);
+
+        }
+
+        model.put("userList", userDAOList);
 
         model.put("adm", 1);
         model.put("detalis", true);

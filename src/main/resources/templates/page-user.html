@@ -111,7 +111,7 @@
             <!-- End Post Info -->
             <!-- Post Image -->
             <div class="imgMy">
-                <img   th:src="@{'/img/'+${viewM.getPhoto()}}" alt="Card image cap"  />
+                <img   th:src="@{'/us-img/'+${viewM.getPhoto()}}" alt="Card image cap"  />
             </div>
             <!-- End Post Image -->
             <!-- Post Title & Summary -->
@@ -126,10 +126,15 @@
                         <br/>
                     <b><span class=" ml-5" style="color:blue " th:text="${viewM.getCity()}"></span></b>
                     <p>
-                        <a  th:onclick="'javascript:toggle_show(\''+'B'+${viewM.AdvtId}+'\');'" th:text="#{lang.btn.read.more}">
+                        <a  th:onclick="'javascript:toggle_show(\''+'B'+${viewM.getAdvtId()}+'\');'" th:text="#{lang.btn.read.more}">
                         Докладніше
                         </a>
                         <div th:id="B+${viewM.AdvtId}" style="display:none; width: 200px;">
+                            <a  th:onclick="'javascript:toggle_show(\''+'ART'+${viewM.getAdvtId()}+'\');'" th:text="#{advt.article}" >Art</a>
+                            <div th:id="'ART'+${viewM.getAdvtId()}" style="display:none;">
+
+                <p th:if="${viewM.getArticle()}" th:text="${viewM.getArticle()}">Ok</p>
+            </div>
                             <div th:text="${viewM.getDataS().toString()}"></div>
                             <div  th:text="${viewM.getTextAdvt()}" ></div>
 

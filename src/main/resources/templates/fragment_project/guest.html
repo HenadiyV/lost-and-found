@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="guest">
+    <a href="/about-project/diagram#guest">
+
+<h3>Гость </h3></a>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse11">
+                   Главная страница
+                </a>
+            </div>
+            <div id="collapse11" class="accordion-body collapse">
+                <div class="accordion-inner col-lg-6 col-sm-9 col-md-9 col-xs-12">
+                    <img src="/project/img-project/index_img.png" class="imgMy"  alt="Index page"/>
+
+                </div>
+            </div>
+        </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse12">
+                Мультиязычность
+            </a>
+        </div>
+        <div id="collapse12" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <!--<div class="answer">Answer:</div>-->
+                <!--<img src="/img/img-project/multilanguage_img.png" alt="Multilanguage"/>-->
+                <video width="900" height="300" controls="controls" poster="/project/img-project/multilanguage_img.png">
+                    <source src="/project/video/multilanguage.mp4" type='video/mp4'>
+                </video>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse13">
+                Дать возможность незарегистрированному пользователю отправить сообщение на определёное обьявление
+            </a>
+        </div>
+        <div id="collapse13" class="accordion-body collapse">
+            <div class="accordion-inner">
+
+                <video width="920" height="550" controls="controls" poster="/project/img-project/advt_message.png">
+                    <source src="/project/video/advt_message.mp4" type='video/mp4'>
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="panel panel-default">-->
+        <!--<div class="panel-heading">-->
+            <!--<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse13">-->
+                <!--Дать возможность незарегистрированному пользователю отправить сообщение на определёное обьявление-->
+            <!--</a>-->
+        <!--</div>-->
+        <!--<div id="collapse13" class="accordion-body collapse">-->
+            <!--<div class="accordion-inner">-->
+
+                <!--<video width="920" height="550" controls="controls" poster="/img/img-project/advt_message.png">-->
+                    <!--<source src="/img/video/advt_message.mp4" type='video/mp4'>-->
+                <!--</video>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse14">
+                Отправлять сообщения Админу
+            </a>
+        </div>
+        <div id="collapse14" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <video width="920" height="550" controls="controls" >
+                    <source src="/project/video/message_to_admin.mp4" type='video/mp4'>
+                </video>
+            </div>
+        </div>
+</div>
+</div>
+</body>
+</html>

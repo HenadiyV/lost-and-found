@@ -14,6 +14,7 @@ import java.util.List;
 public class UserAdvtDTO {
     private UserAdvtDAO userAdvtDAO;
     private Advt adv;
+
     List<Advt> advtList=new ArrayList<>();
     List<UserAdvtDAO> advtDaoList=new ArrayList<>();
     public UserAdvtDTO(List<Advt> advtList) {
@@ -22,6 +23,7 @@ public class UserAdvtDTO {
               UserAdvtDAO usDao =new UserAdvtDAO(adv.getUserId(),adv.getId(),adv.getText(),adv.isActive()
                       ,adv.getPhoto(),adv.getStatus(),adv.getArticle(),adv.getCharacters(),adv.getDat(),adv.getCity().getName(),adv.getSubcategory().getName());
               advtDaoList.add(usDao);
+
           }
        }
 

@@ -9,7 +9,7 @@ var tex=document.getElementById(lab);
         $.ajax({
             type: "PUT",
             contentType: 'application/json; charset=utf-8',
-            url: '/city/'+Id,
+            url: '/admin/city/'+Id,
             dataType: 'json',
             cache: false,
             data: JSON.stringify(sub),
@@ -42,7 +42,7 @@ var id=Id;
         $.ajax({
             type: "POST",
             contentType: 'application/json; charset=utf-8',
-            url: '/city',
+            url: '/admin/city',
             dataType: 'json',
             cache: false,
 
@@ -76,7 +76,7 @@ function deleteCity(Id,del,deleting,error){
     $.ajax({
         type: "DELETE",
         contentType: 'application/json; charset=utf-8',
-        url: '/city/'+Id,
+        url: '/admin/city/'+Id,
         dataType: 'json',
         cache: false,
 

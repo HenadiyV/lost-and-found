@@ -107,8 +107,9 @@
                     <th th:text="#{admin.user.phone}">phone</th>
                     <th th:text="#{admin.user.social}">social name</th>
                     <th th:text="#{admin.user.active}">active</th>
+                    <th >advt</th>
                     <th th:text="#{admin.user.advt}">advt</th>
-
+                    <!--th:text="#{admin.user.advt_count}"-->
 
 
 
@@ -121,6 +122,7 @@
                         <td th:text="${usr.getEmail()}"></td>
                         <td th:text="${usr.getPhone()}"></td>
                         <td><p th:text="${usr.getNameSocial()}"></p></td>
+                        <td th:text="${usr.getAdvt_count()}"></td>
                         <div th:if="${usr.isActive()}"><td th:text="#{lang.yes}">Da</td></div>
 
                         <div th:unless="${usr.isActive()}"><td th:text="#{lang.no}">no</td></div>

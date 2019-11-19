@@ -1,6 +1,8 @@
 package com.example.advt.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -17,7 +19,7 @@ public class Advt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotEmpty
     @Column(name="text")
     private String text;
 
@@ -35,7 +37,7 @@ public class Advt {
 
     @Column(name="userId")
     private Long userId;
-
+    @NotNull
     @Temporal(TemporalType.DATE)
 
     private Date dat;

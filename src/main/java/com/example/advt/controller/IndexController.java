@@ -74,16 +74,17 @@ private AdminPostRepository adminPostRepository;
             model.mergeAttributes(errorMap);
             if (adminPost.getName().isEmpty()) {
                 model.addAttribute("nameError", "Не вказано имя");
-            }
+            }else {model.addAttribute("name",adminPost.getName());}
             if (adminPost.getEmail().isEmpty()) {
                 model.addAttribute("emailError", "Не вказано email");
-            }
-            if (!adminPost.getTopic().equals("General")||adminPost.getTopic().equals("Services")||adminPost.getTopic().equals("Orders")) {
+            }else{model.addAttribute("email",adminPost.getEmail());}
+            //!adminPost.getTopic().equals("General")||!adminPost.getTopic().equals("Services")||!adminPost.getTopic().equals("Orders")
+            if (adminPost.getTopic().isEmpty()) {
                 model.addAttribute("topicError", "Не вказано тему");
-            }
+            }else{model.addAttribute("topic",adminPost.getTopic());}
             if (adminPost.getMessageUser().isEmpty()) {
                 model.addAttribute("contactMessageUserError", "Не вказано текст");
-            }
+            }else{model.addAttribute("messageUser",adminPost.getMessageUser());}
 
         }else{
             model.addAttribute("sendMessage", "Ваше повідомленя відправлено");
@@ -134,7 +135,7 @@ private AdminPostRepository adminPostRepository;
         return "redirect:/";
     }
     @GetMapping("/faq")
-    public String coming(){
+    public String faq(){
 
         return "page-faq";
     }
@@ -150,6 +151,23 @@ private AdminPostRepository adminPostRepository;
 
         return "page-password-reset";
     }
+//    @RequestMapping(value = "/user/resetPassword",
+//            method = RequestMethod.POST)
+//    @ResponseBody
+//    public GenericResponse resetPassword(HttpServletRequest request,
+//                                         @RequestParam("email") String userEmail) {
+//        User user = userService.findUserByEmail(userEmail);
+//        if (user == null) {
+//            throw new UserNotFoundException();
+//        }
+//        String token = UUID.randomUUID().toString();
+//        userService.createPasswordResetTokenForUser(user, token);
+//        mailSender.send(constructResetTokenEmail(getAppUrl(request),
+//                request.getLocale(), token, user));
+//        return new GenericResponse(
+//                messages.getMessage("message.resetPasswordEmail", null,
+//                        request.getLocale()));
+//    }
 //    @GetMapping("/homepage-sample")
 //    public String homepageSample(){
 //

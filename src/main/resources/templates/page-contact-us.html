@@ -96,7 +96,7 @@
 									<div class="col-sm-9">
 										<div class="error" th:if="${topicError}" th:text="#{contact.topic.error}">Name Error</div>
 										<select class="form-control" id="topic" name="topic">
-											<option th:text="#{lang.contactUs.selectTopic.please}">Please select topic...</option>
+											<option value="" th:text="#{lang.contactUs.selectTopic.please}">Please select topic...</option>
 											<option  th:value="General" th:text="#{lang.contactUs.selectTopic.general}">General</option>
 											<option th:value="Services" th:text="#{lang.contactUs.selectTopic.services}">Services</option>
 											<option th:value="Orders" th:text="#{lang.contactUs.selectTopic.orders}">Orders</option>

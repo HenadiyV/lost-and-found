@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+//import org.springframework.mail.MailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +20,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -37,6 +37,8 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     @Value("${upload.path}")
     private String uploadPath;
+    @Value("${uploadUs.path}")
+    private String uploadUsPath;
 //    @Autowired
 //    private MailSender mailSender;
     @Autowired
@@ -102,17 +104,17 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepository.save(user);
+// отправка кода активации
+//        if (!StringUtils.isEmpty(user.getEmail())) {
+//            String message = String.format(
+//                    "Hello, %s! \n" +
+//                            "Welcome. Please, visit next link: http://localhost:8080/activate/%s",
+//                    user.getUsername(),
+//                    user.getactivationCode()
+//            );
 
-        if (!StringUtils.isEmpty(user.getEmail())) {
-            String message = String.format(
-                    "Hello, %s! \n" +
-                            "Welcome. Please, visit next link: http://localhost:8080/activate/%s",
-                    user.getUsername(),
-                    user.getactivationCode()
-            );
-
-          //  mailSender.send(user.getEmail(), "Activation code", message);
-        }
+           // mailSender.send(user.getEmail(), "Activation code", message);
+      //  }
 
         return true;
     }
@@ -144,9 +146,34 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
     // удаляем файл
     public void deleteMyFile(String fileName) throws IOException {
         //FileUtils.touch(new File("src/test/resources/fileToDelete.txt"));
-        if(!fileName.equals("noimage.png")){
-        String nam=uploadPath+"\\"+fileName;
-        FileUtils.forceDelete(FileUtils.getFile(nam));
+
+        boolean del=true;
+        switch (fileName){
+            case "noimage.png":del=false;break;
+            case "Cat.png":del=false;break;
+            case "Dog.png":del=false;break;
+            case "Farret.png":del=false;break;
+            case "Parrot.png":del=false;break;
+            case "Baby.png":del=false;break;
+            case "Document.png":del=false;break;
+            case "Gloves.png":del=false;break;
+            case "Group.png":del=false;break;
+            case "Hat.png":del=false;break;
+            case "Key.png":del=false;break;
+            case "Men.png":del=false;break;
+            case "Phone.png":del=false;break;
+            case "Purse.png":del=false;break;
+            case "Raf.png":del=false;break;
+            case "Umbrella.png":del=false;break;
+            case "Woman.png":del=false;break;
+        }
+        if(del){
+        String nam=uploadUsPath+fileName; try{
+      FileUtils.forceDelete(FileUtils.getFile(nam));
+
+        }catch (Exception e){
+
+        }
         }
     }
     // делим на страницы

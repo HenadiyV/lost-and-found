@@ -35,12 +35,6 @@ public class RegistrationController {
         return "login";
     }
 
-
-    @GetMapping("/password-reset")
-    public String passwordReset() {
-        return "page-password-reset";
-    }
-
     @GetMapping("/register")
     public String register(User user) {
         return "page-register";
@@ -49,9 +43,20 @@ public class RegistrationController {
     @PostMapping("/register")
     public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
 
+        model.addAttribute("user",user);
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errorMap);
+            if(user.getName().isEmpty()){
+                model.addAttribute("userError","Поле имя неможе бути пустим!");
+            }
+            if(user.getEmail().isEmpty()){
+                model.addAttribute("emailError","Поле email неможе бути пустим!");
+            }
+
+            if(user.getPassword().isEmpty()){
+                model.addAttribute("passwordError","Поле пароль неможе бути пустим!");
+            }
             return "page-register";
         }
         if (!userService.addUser(user)) {
@@ -62,16 +67,20 @@ public class RegistrationController {
         return "redirect:/login";
     }
 
-    @GetMapping("/activate/{code}")
-    public String activate(Model model, @PathVariable String code) {
-        boolean isActivated = userService.activateUser(code);
-
-        if (isActivated) {
-            model.addAttribute("message", "User successfully activated");
-        } else {
-            model.addAttribute("message", "Activation code is not found!");
-        }
-
-        return "login";
-    }
+//    @GetMapping("/activate/{code}")
+//    public String activate(Model model, @PathVariable String code) {
+//        boolean isActivated = userService.activateUser(code);
+//
+//        if (isActivated) {
+//            model.addAttribute("message", "User successfully activated");
+//        } else {
+//            model.addAttribute("message", "Activation code is not found!");
+//        }
+//
+//        return "login";
+//    }
+// @GetMapping("/password-reset")
+////    public String passwordReset() {
+////        return "page-password-reset";
+////    }
 }

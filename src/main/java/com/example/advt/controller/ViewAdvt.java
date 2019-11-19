@@ -11,6 +11,7 @@ import com.example.advt.repos.AdvtRepository;
 import com.example.advt.repos.CityRepository;
 import com.example.advt.repos.MessageRepository;
 import com.example.advt.repos.SubcategoryRepository;
+import com.example.advt.service.AdvtService;
 import com.example.advt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,6 +44,8 @@ public class ViewAdvt {
     @Autowired
     private UserService userService;
     @Autowired
+    private AdvtService advtService;
+    @Autowired
     private MessageRepository messageRepository;
 
     @RequestMapping(value = "city", method = RequestMethod.GET)
@@ -71,8 +74,16 @@ public class ViewAdvt {
         model.put("category", 1);
         model.put("us", rl);
         model.put("url", "people-lost");
+       // model.put("status_found", "Знайденно");
         model.put("status", "Розшукується");
         Page<Advt> adverList = advtRepository.findByCategory_IdAndFound(1, false, pageable);
+        for(Advt adv:adverList){
+            if(adv.getArticle()==null){
+                String art=advtService.articl(adv.getId(),adv.getCategory().getName(),adv.getSubcategory().getName(),adv.getUserId(),adv.getCity().getId());
+                adv.setArticle(art);
+                advtRepository.save(adv);
+            }
+        }
         model.put("listAdver", adverList);
         model.put("num", adverList.getTotalElements());
         model.put("categorySearch", 1);
@@ -90,8 +101,16 @@ public class ViewAdvt {
         model.put("category", 1);
         model.put("us", rl);
         model.put("url", "people-found");
-        model.put("status", "Знайденно");
+        //model.put("status_found", "Знайденно");
+        model.put("status", "Розшукується");
         Page<Advt> adverList = advtRepository.findByCategory_IdAndFound(1, true, pageable);
+        for(Advt adv:adverList){
+            if(adv.getArticle()==null){
+                String art=advtService.articl(adv.getId(),adv.getCategory().getName(),adv.getSubcategory().getName(),adv.getUserId(),adv.getCity().getId());
+                adv.setArticle(art);
+                advtRepository.save(adv);
+            }
+        }
         model.put("listAdver", adverList);
         model.put("num", adverList.getTotalElements());
         model.put("categorySearch", 1);
@@ -109,8 +128,16 @@ public class ViewAdvt {
         model.put("url", "animal-lost");
         model.put("category", 2);
         model.put("us", rl);
+        //model.put("status_found", "Знайденно");
         model.put("status", "Зник");
         Page<Advt> adverList = advtRepository.findByCategory_IdAndFound(2, false, pageable);
+        for(Advt adv:adverList){
+            if(adv.getArticle()==null){
+                String art=advtService.articl(adv.getId(),adv.getCategory().getName(),adv.getSubcategory().getName(),adv.getUserId(),adv.getCity().getId());
+                adv.setArticle(art);
+                advtRepository.save(adv);
+            }
+        }
         model.put("listAdver", adverList);
         model.put("categorySearch", 2);
         model.put("found", 0);
@@ -125,12 +152,19 @@ public class ViewAdvt {
                                   @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         int rl = userService.roleUser(principal);
         model.put("url", "animal-found");
-        model.put("category", 2)
-        ;
+        model.put("category", 2);
         model.put("categorySearch", 2);
         model.put("us", rl);
-        model.put("status", "Знайденно");
+       // model.put("status_found", "Знайденно");
+        model.put("status", "Зник");
         Page<Advt> adverList = advtRepository.findByCategory_IdAndFound(2, true, pageable);
+        for(Advt adv:adverList){
+            if(adv.getArticle()==null){
+                String art=advtService.articl(adv.getId(),adv.getCategory().getName(),adv.getSubcategory().getName(),adv.getUserId(),adv.getCity().getId());
+                adv.setArticle(art);
+                advtRepository.save(adv);
+            }
+        }
         model.put("listAdver", adverList);
         model.put("found", 1);
         model.put("urlSearch", "page-animal");
@@ -148,11 +182,19 @@ public class ViewAdvt {
         model.put("url", "thing-lost");
         model.put("category", 3);
         model.put("us", rl);
+       // model.put("status_found", "Знайденно");
         model.put("status", "Загубленно");
         model.put("categorySearch", 3);
         model.put("found", 0);
         model.put("urlSearch", "page-thing");
         Page<Advt> adverList = advtRepository.findByCategory_IdAndFound(3, false, pageable);
+        for(Advt adv:adverList){
+            if(adv.getArticle()==null){
+                String art=advtService.articl(adv.getId(),adv.getCategory().getName(),adv.getSubcategory().getName(),adv.getUserId(),adv.getCity().getId());
+                adv.setArticle(art);
+                advtRepository.save(adv);
+            }
+        }
         model.put("listAdver", adverList);
         model.put("num", adverList.getTotalElements());
         return "page-thing";
@@ -167,11 +209,19 @@ public class ViewAdvt {
         model.put("url", "thing-found");
         model.put("category", 3);
         model.put("us", rl);
-        model.put("status", "Знайденно");
+       // model.put("status_found", "Знайденно");
+        model.put("status", "Загубленно");
         model.put("categorySearch", 3);
         model.put("found", 1);
         model.put("urlSearch", "page-thing");
         Page<Advt> adverList = advtRepository.findByCategory_IdAndFound(3, true, pageable);
+        for(Advt adv:adverList){
+            if(adv.getArticle()==null){
+                String art=advtService.articl(adv.getId(),adv.getCategory().getName(),adv.getSubcategory().getName(),adv.getUserId(),adv.getCity().getId());
+                adv.setArticle(art);
+                advtRepository.save(adv);
+            }
+        }
         model.put("listAdver", adverList);
         model.put("num", adverList.getTotalElements());
         return "page-thing";
@@ -276,7 +326,9 @@ public class ViewAdvt {
     boolean getSearchUserProfiles(@RequestBody GuestMessageDAO guestMessageDAO) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         Date createDate = dateFormat.parse(dateFormat.format(new Date()));
+        int c = guestMessageDAO.getContact().length();
         int l = guestMessageDAO.getTextMessage().length();
+        if(l<101&&c<30){
         String contact = "";
         if (guestMessageDAO.getContact().isEmpty()) {
             contact = "Відсутній";
@@ -287,6 +339,8 @@ public class ViewAdvt {
 
         messageRepository.save(mess);
         return true;
+        }
+        return false;
     }
 
     @RequestMapping(value = "/advt", method = RequestMethod.GET)

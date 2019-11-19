@@ -64,7 +64,7 @@
 
                             <div class="col-sm-9">
                                 <div class="error" th:if="${nameError}" th:text="#{contact.name.error}">Name Error</div>
-                                <input class="form-control" id="name" name="name" type="text" th:value="${name}">
+                                <input  id="name" name="name" type="text" th:value="${name}" readonly/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -73,7 +73,7 @@
                             <div class="col-sm-9">
                                 <div class="error" th:if="${emailError}" th:text="#{contact.email.error}">Name Error
                                 </div>
-                                <input class="form-control" id="email" name="email" type="text" th:value="${email}">
+                                <input  id="email" name="email" type="text" th:value="${email}" readonly/>
                             </div>
                         </div>
                         <div class="form-group">

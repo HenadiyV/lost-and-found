@@ -20,9 +20,9 @@
 
 
 <!-- Navigation & Logo-->
-<!--<div class="conteiner" >-->
-<!--<div th:insert="~{fragments/heder::heder}"></div>-->
-<!--</div>-->
+<div class="conteiner" >
+<div th:insert="~{fragments/heder::heder}"></div>
+</div>
 <!--End Navigation & Logo-->
 
 <!-- Page Title -->
@@ -30,7 +30,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 th:text="#{lang401}">Page Not Found...</h1>
+                <h1 th:text="#{errorServerPage401}">Page 401...</h1>
             </div>
         </div>
     </div>
@@ -41,8 +41,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="error-page-wrapper">
-                    <p th:text="#{lang401}">Sorry, the page you are looking for is not here or never was...</p>
-                    <p th:text="#{lang401}">Why don't you try the</p> <a href="/" th:text="#{lang404home}"></a>
+                    <p th:text="#{errorServerPage.error}">Sorry, the page you are looking for is not here or never was...</p>
+                    <p th:text="#{lang404B}">Why don't you try the</p> <a href="/" th:text="#{lang404home}"></a>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
 </div>
 
 <!-- Footer -->
-<!--<div th:insert="~{fragments/footer.html :: footer}"></div>-->
+<div th:insert="~{fragments/footer.html :: footer}"></div>
 <!--End Footer -->
 
 <!-- Javascripts -->

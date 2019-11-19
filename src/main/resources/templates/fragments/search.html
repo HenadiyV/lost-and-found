@@ -6,10 +6,28 @@
 </head>
 <body>
 <div th:fragment="search">
+    <!--<style>-->
+        <!--.tolTip-->
+        <!--{-->
+            <!--display:block;-->
+            <!--visibility: hidden;-->
+        <!--}-->
+        <!--.myText{-->
+            <!--position: absolute;-->
+        <!--}-->
+        <!--.myclass{-->
+            <!--position:relative;-->
+            <!--visibility: visible;-->
+            <!--/* //border: 1px solid; */-->
+
+        <!--}-->
+       <!---->
+    <!--</style>-->
     <div class="row">
         <form action="/view/search" method="GET">
             <div class="col-lg-5 col-sm-6 col-md-6 col-xs-8">
-                <select class="form-control" id="subcategory" name="subcategory">
+
+                <select class="form-control " id="subcategory" name="subcategory">
                     <option value="" th:text="#{lang.select.category}">Виберіть категорію</option>
                     <option th:each="subcategory : ${subcategoryList}"
 
@@ -22,9 +40,12 @@
                 <input  hidden="hidden" name="urlSearch" th:value="${urlSearch}"/>
             </div>
             <div class="col-lg-5 col-sm-6 col-md-6 col-xs-8">
-                <div class="ui-widget">
-                    <input class="form-control" id="lang1"  value="" th:placeholder="#{lang.city.insert}"/>
+                <div class="ui-widget" th:data-tip="#{toltip.city}">
+
+                     <input class="form-control" id="lang1"  value="" th:placeholder="#{lang.city.insert}"/>
+
                     <!--<div id="listCity" style=";"></div>-->
+
                     <select  id="City" name="city" onclick="cityIdInput()" style="height: 30px;display:none">
                         <option th:text="#{lang.city}" value="">City</option>
                     </select>
@@ -38,6 +59,18 @@
             </div>
         </form>
     </div>
+    <!--<script>-->
+        <!--var t=document.getElementsByClassName('tolTip');-->
+        <!--var m=document.getElementById('lang1');-->
+        <!--var child=m.querySelector('.tolTip');-->
+        <!--m.addEventListener("mouseenter",my);-->
+        <!--m.addEventListener("mouseleave",my);-->
+        <!--function my()-->
+        <!--{-->
+            <!--child.classList.toggle('myclass');-->
+
+        <!--}-->
+    <!--</script>-->
     <script src="/static/static/js/advt.js"></script>
 </div>
 </body>

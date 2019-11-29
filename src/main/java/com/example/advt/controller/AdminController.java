@@ -52,19 +52,20 @@ public class AdminController {
     private UserService userService;
     @Autowired
     private AdvtService advtService;
+
     @GetMapping("admin")
     public String adminPage(Map<String, Object> model) {
         if (userService.userAdmin()) {
             model.put("adm", 1);
 
         }
-    int user_count=userService.userCount();
-        model.put("user_count",user_count);
-        int advt_count=advtService.advtCount();
-        model.put("advt_count",advt_count);
-        int message_count=advtService.messagCount();
-        model.put("mes_count",message_count);
-        model.put("admin_start","admin");
+        int user_count = userService.userCount();
+        model.put("user_count", user_count);
+        int advt_count = advtService.advtCount();
+        model.put("advt_count", advt_count);
+        int message_count = advtService.messagCount();
+        model.put("mes_count", message_count);
+        model.put("admin_start", "admin");
 
         return "admin-page";
     }
@@ -72,7 +73,7 @@ public class AdminController {
     @RequestMapping("city1")
     public String getCityView(Principal principal) {
 
-        if (principal != null && userService.userAdmin()||userService.baseAdmin(principal)) {
+        if (principal != null && userService.userAdmin() || userService.baseAdmin(principal)) {
             return "city";
         }
         return "admin-page";
@@ -81,7 +82,7 @@ public class AdminController {
     @GetMapping("citys")
     public String getCityViewNew(Principal principal, Map<String, Object> model) {
 
-        if (principal != null && userService.userAdmin()||userService.baseAdmin(principal)) {
+        if (principal != null && userService.userAdmin() || userService.baseAdmin(principal)) {
             CityDto cityList = new CityDto((List<City>) cityRepository.findAll());
             List<City> cityListNew = cityList.getListCitys();
             model.put("cityList", cityListNew);
@@ -95,7 +96,7 @@ public class AdminController {
     @RequestMapping("category")
     public String getCategoryView(Principal principal) {
 
-        if (principal != null && userService.userAdmin()||userService.baseAdmin(principal)) {
+        if (principal != null && userService.userAdmin() || userService.baseAdmin(principal)) {
             return "category";
         }
         return "admin-page";
@@ -104,7 +105,7 @@ public class AdminController {
     @RequestMapping("subcategory")
     public String getCategoryView(Principal principal, Map<String, Object> model) {
 
-        if (principal != null && userService.userAdmin()||userService.baseAdmin(principal)) {
+        if (principal != null && userService.userAdmin() || userService.baseAdmin(principal)) {
             List<Category> categoryList = categoryRepository.findAll();
             List<Subcategory> list = subcategoryRepository.findAll();
             model.put("subcategory", list);
@@ -117,7 +118,7 @@ public class AdminController {
 
     @RequestMapping("category_new")
     public String categoryTest(Principal principal, Map<String, Object> model) {
-        if (principal != null && userService.userAdmin()||userService.baseAdmin(principal)) {
+        if (principal != null && userService.userAdmin() || userService.baseAdmin(principal)) {
             List<Category> categoryList = categoryRepository.findAll();
 
             model.put("categoryList", categoryList);
@@ -139,7 +140,7 @@ public class AdminController {
     @RequestMapping("advt")
     public String getAdvtView(Principal principal, Map<String, Object> model) {
 
-        if (principal != null && userService.userAdmin()||userService.baseAdmin(principal)) {
+        if (principal != null && userService.userAdmin() || userService.baseAdmin(principal)) {
             List<Advt> advtList = advtRepository.findAll();
 
             model.put("advtList", advtList);
@@ -151,8 +152,11 @@ public class AdminController {
 
     @GetMapping("message")
     public String messageAdmin(Principal principal, Map<String, Object> model) {
-        if (principal != null && userService.userAdmin()||userService.baseAdmin(principal)) {
+        if (principal != null && userService.userAdmin() || userService.baseAdmin(principal)) {
+            AdminPost ap = new AdminPost();
             List<AdminPost> adminPostList = adminPostRepository.findAll();
+            Collections.sort(adminPostList);
+
             model.put("postList", adminPostList);
             model.put("adm", 1);
             return "message-to-admin";
@@ -160,6 +164,7 @@ public class AdminController {
         return "index";
 
     }
+
 
     @RequestMapping(value = "message/delete", method = RequestMethod.POST)
     public @ResponseBody
@@ -169,7 +174,6 @@ public class AdminController {
 
             adminPostRepository.delete(adminPost);
             return true;
-//            .orElseThrow(() -> new NoEntityException(id))
         }
         return false;
     }
@@ -178,10 +182,10 @@ public class AdminController {
     public @ResponseBody
     boolean hiddenAdminPost(@RequestBody Long id) {
         if (id != 0) {
-           AdminPost adminPost=adminPostRepository.findById(id).get();
-            if(adminPost!=null) {
+            AdminPost adminPost = adminPostRepository.findById(id).get();
+            if (adminPost != null) {
                 adminPost.setActive(false);
-               adminPostRepository.save(adminPost);
+                adminPostRepository.save(adminPost);
             }
             return true;
         }
@@ -198,38 +202,40 @@ public class AdminController {
     }
 
     @GetMapping("user-advt")
-    public String userAdvtList(Principal principal,Map<String, Object> model,
+    public String userAdvtList(Principal principal, Map<String, Object> model,
                                @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
 
-if(us>0){
+        if (us > 0) {
 
 
-String user=userRepository.findById(us).get().getName();
-        List<AdvtViewDAO> viewMessage = advtService.advtAndMessage(us);
+            String user = userRepository.findById(us).get().getName();
+            List<AdvtViewDAO> viewMessage = advtService.advtAndMessage(us);
 
 
+            if (userService.userAdmin() || userService.baseAdmin(principal)) {
+                model.put("adm", 1);
+            }
 
-        if (userService.userAdmin()||userService.baseAdmin(principal)) {
-            model.put("adm", 1);
+            Page<AdvtViewDAO> pviewMessage = userService.searchUserPage(viewMessage, pageable);
+            if (viewMessage.size() == 0) {
+                model.put("listEmpty", true);
+            }
+            model.put("url", "/admin/user-advt");
+            model.put("viewMessage", pviewMessage);
+            model.put("us", 2);
+            model.put("user", user);
+            model.put("usr", 0);
+
+            return "page-user";
         }
-
-        Page<AdvtViewDAO> pviewMessage = userService.searchUserPage(viewMessage, pageable);
-        model.put("url", "/admin/user-advt");
-        model.put("viewMessage", pviewMessage);
-        model.put("us", 2);
-        model.put("user",user );
-    model.put("usr",0 );
-
-        return "page-user";
-}
         return "index";
     }
 
     @GetMapping("user")
     public String userList(Principal principal, Map<String, Object> model) {
-        if (principal != null && userService.userAdmin()||userService.baseAdmin(principal)) {
-            List<User> userListTemp =userService.userList();
+        if (principal != null && userService.userAdmin() || userService.baseAdmin(principal)) {
+            List<User> userListTemp = userService.userList();
             if (userListTemp.size() > 0) {
                 model.put("userList", userListTemp);
                 model.put("ban", true);
@@ -251,17 +257,17 @@ String user=userRepository.findById(us).get().getName();
             User us = user.get();
             if (us != null) {
                 us.getRoles().clear();
-                List<Advt> advtList=advtRepository.findByUserId(id);
-                List<MessageUser> messageUsersList=messageRepository.findAll();
-                for(Advt advt:advtList){
-                    for(MessageUser messageUser:messageUsersList){
-                    if(messageUser.getIdAdvt()== advt.getId()){
-                        messageRepository.delete(messageUser);
-                    }
+                List<Advt> advtList = advtRepository.findByUserId(id);
+                List<MessageUser> messageUsersList = messageRepository.findAll();
+                for (Advt advt : advtList) {
+                    for (MessageUser messageUser : messageUsersList) {
+                        if (messageUser.getIdAdvt() == advt.getId()) {
+                            messageRepository.delete(messageUser);
+                        }
                     }
                     advtRepository.delete(advt);
                 }
-               userRepository.delete(us);
+                userRepository.delete(us);
             }
             return true;
         }
@@ -304,7 +310,7 @@ String user=userRepository.findById(us).get().getName();
     @RequestMapping(value = "user/test", method = RequestMethod.GET)
     public @ResponseBody
     List<User> testUser(Map<String, Object> model) {
-        List<User> userList =userService.userList();
+        List<User> userList = userService.userList();
         model.put("ban", true);
         return userList;
 
@@ -313,10 +319,10 @@ String user=userRepository.findById(us).get().getName();
     @GetMapping(value = "user-detalis")
     public String detalisUser(Map<String, Object> model) {
         List<User> userList = userRepository.findAll();
-        List <UserDAO> userDAOList=new ArrayList<>();
-        for(User us:userList){
-        List<Advt>advtList=advtRepository.findByUserId(us.getId());
-            UserDAO userDAO=new UserDAO(us.getId(),us.getName(),us.getPhone(),us.getEmail(),us.isActive(),us.getNameSocial(),advtList.size());
+        List<UserDAO> userDAOList = new ArrayList<>();
+        for (User us : userList) {
+            List<Advt> advtList = advtRepository.findByUserId(us.getId());
+            UserDAO userDAO = new UserDAO(us.getId(), us.getName(), us.getPhone(), us.getEmail(), us.isActive(), us.getNameSocial(), advtList.size());
             userDAOList.add(userDAO);
 
         }
@@ -328,36 +334,43 @@ String user=userRepository.findById(us).get().getName();
         return "admin-page";
 
     }
+
     @GetMapping(value = "user-role")
     public String roleUser(Map<String, Object> model) {
         List<User> userList = userRepository.findAll();
-        List<UserRolyDTO> userRolList=new ArrayList<>();
-        boolean adm=false;
-        boolean usR=false;
-        boolean mod=false;
-        for(User us:userList){
-            for(Role rl:us.getRoles())
-            {
-              if(rl.name().equals(("ADMIN"))){adm=true;}
-              if(rl.name().equals(("USER"))){usR=true;}
-              if(rl.name().equals(("MODERATOR"))){mod=true;}
+        List<UserRolyDTO> userRolList = new ArrayList<>();
+        boolean adm = false;
+        boolean usR = false;
+        boolean mod = false;
+        for (User us : userList) {
+            for (Role rl : us.getRoles()) {
+                if (rl.name().equals(("ADMIN"))) {
+                    adm = true;
+                }
+                if (rl.name().equals(("USER"))) {
+                    usR = true;
+                }
+                if (rl.name().equals(("MODERATOR"))) {
+                    mod = true;
+                }
             }
-            UserRolyDTO usRl=new UserRolyDTO(us.getId(),us.getEmail(),us.getName(),us.isActive(),usR,adm,mod);
+            UserRolyDTO usRl = new UserRolyDTO(us.getId(), us.getEmail(), us.getName(), us.isActive(), usR, adm, mod);
             userRolList.add(usRl);
 
-            adm=false;
-            usR=false;
-            mod=false;
+            adm = false;
+            usR = false;
+            mod = false;
         }
         model.put("userList", userRolList);
 
         model.put("adm", 1);
         model.put("role", true);
 
-        model.put("roles",Role.values());
+        model.put("roles", Role.values());
         return "admin-page";
 
     }
+
     @PostMapping(value = "user-role")
     public String userSave(
             @RequestParam Map<String, String> form,
@@ -368,7 +381,7 @@ String user=userRepository.findById(us).get().getName();
                 .map(Role::name)
                 .collect(Collectors.toSet());
 
-       user.getRoles().clear();
+        user.getRoles().clear();
         for (String key : form.keySet()) {
             if (roles.contains(key)) {
                 user.getRoles().add(Role.valueOf(key));

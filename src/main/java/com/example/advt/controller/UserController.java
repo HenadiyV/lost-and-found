@@ -38,25 +38,25 @@ public class UserController {
     public String unauthenticated() {
         return "redirect:/?error=true";
     }
-    @RequestMapping({ "/user", "/me" })
-    public Map<String, String> user(Principal principal) {
-        if(principal!=null){
-            User userAuth=userRepository.findByName( principal.getName());
-           List<MessageUser> messageUser=messageRepository.findByIdToUserAndActive(userAuth.getId(),true);
-           List<AdminPost> adminPosts=adminPostRepository.findByActive(true);
-           String countMessage=String.valueOf(messageUser.size());
-           String countPosts=String.valueOf(adminPosts.size());
-           String userId=String.valueOf(userAuth.getId());
 
-        Map<String, String> map = new LinkedHashMap<>();
-        if(userService.userAdmin()){
+    @RequestMapping({"/user", "/me"})
+    public Map<String, String> user(Principal principal) {
+        if (principal != null) {
+            User userAuth = userRepository.findByName(principal.getName());
+            List<MessageUser> messageUser = messageRepository.findByIdToUserAndActive(userAuth.getId(), true);
+            List<AdminPost> adminPosts = adminPostRepository.findByActive(true);
+            String countMessage = String.valueOf(messageUser.size());
+            String countPosts = String.valueOf(adminPosts.size());
+            String userId = String.valueOf(userAuth.getId());
+            Map<String, String> map = new LinkedHashMap<>();
+            if (userService.userAdmin()) {
                 map.put("adm", "1");
             }
-        map.put("name", principal.getName());
+            map.put("name", principal.getName());
             map.put("countMessage", countMessage);
             map.put("countPosts", countPosts);
             map.put("userId", userId);
-        return map;
+            return map;
         } else return null;
     }
 }

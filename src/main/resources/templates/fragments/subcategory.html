@@ -7,7 +7,6 @@
 </head>
 <body>
 <div th:fragment="subcategory">
-
         <div class="container">
             <label for="filter" th:text="#{lang.city.filter}">Filter</label>
             <input type="text" name="filter" value="" id="filter" onkeyup="search()"/>
@@ -15,12 +14,10 @@
                 <caption th:text="#{lang.category.subcategory}" >Category</caption>
                         <div th:each="cat:${category}">
                             <tr>
-
                                 <td><input hidden="hidden" th:value="${cat.getName()}" th:id="'C'+${cat.getId()}"/></td>
                                 <td>
                                     <p th:text="${cat.getName()}" style="color: green"></p>
                                   </td>
-
                             </tr>
                             <tr>
                                 <td></td>
@@ -33,12 +30,9 @@
                                         <td><input type="text"   th:id="'I'+${sub.getId()}" th:value="${sub.getName()}"/></td>
                                         <td> <input  type="button"  th:id="'E'+${sub.getId()}" th:value="#{admin.user.edit}"   th:onclick="'javascript:editSubcategory(\''+${sub.getId()}+'\',\''+${sub.getCategory().getId()}+'\');'" /></td>
                                         <td> <input  type="button"  th:id="'D'+${sub.getId()}" th:value="#{admin.user.delete}"  th:onclick="'javascript:deleteSubcategory(\''+${sub.getId()}+'\');'" /></td>
-
                                     </tr>
-
                                 </div>
                             </div>
-
                             <tr>
                                 <td ></td><td></td>
                                 <td><input  type="button"  th:value="#{admin.user.add}"   th:onclick="'javascript:adminModal(\''+${cat.getId()}+'\');'"/></td>
@@ -49,7 +43,5 @@
                 </div>
     <script src="/static/static/js/subcategory.js"></script>
 </div>
-<!--border="1"<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>-->
 </body>
 </html>

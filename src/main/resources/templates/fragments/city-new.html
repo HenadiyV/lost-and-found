@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,59 +7,50 @@
 </head>
 <body>
 <div th:fragment="city">
-<style>
-    td.hovered {
-        background-color: lightblue;
-        color: #666;
-    }
-    /*#filter { display: none; }*/
-</style>
+
+    <style>
+        td.hovered {
+            background-color: lightblue;
+            color: #666;
+        }
+
+        /*#filter { display: none; }*/
+    </style>
     <script>
         var $ = jQuery.noConflict();
         // alert($b.fn.jquery);
     </script>
-
-        <div class="container">
-            <!--<div class="row"></div>-->
-            <!--<div id="search" class="col-lg-4 col-sm-4 col=md-6  col-xs-12"></div> -->
-            <!--<div class="col-lg-4 col-sm-8 col=md-6 col-xs-12"></div>-->
-                <label for="filter" th:text="#{lang.city.filter}">Filter</label>
-                <input type="text" name="filter" value="" id="filter" onkeyup="search()"></input>
-
-
-                <input type="text" th:id="cityNew" th:placeholder="#{lang.city.insert}"/>
-               <input  type="button"  th:value="#{admin.user.add}"   th:onclick="'javascript:addCity(\''+${max}+'\',\''+#{lang.city.insert}+'\')'">
-
-
-          <table   id="tableCity">
-                <caption th:text="#{lang.city}" >City</caption>
-                <!--<tr>-->
-                    <!--<td></td>-->
-                    <!--<td> <input type="text" th:id="cityNew" th:placeholder="#{lang.city.insert}"/></td>-->
-                    <!--<td> <input  type="button"  th:value="#{admin.user.add}"   th:onclick="'javascript:addCity(\''+${max}+'\',\''+#{lang.city.insert}+'\')'"></td>-->
-                <!--</tr>-->
-                <tr>
+    <div class="container">
+        <label for="filter" th:text="#{lang.city.filter}">Filter</label>
+        <input type="text" name="filter" value="" id="filter" onkeyup="search()"></input>
+        <input type="text" th:id="cityNew" th:placeholder="#{lang.city.insert}"/>
+        <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+        <input type="button" th:value="#{admin.user.add}"
+               th:onclick="'javascript:addCity(\''+${max}+'\',\''+#{lang.city.insert}+'\')'">
+        <table id="tableCity">
+            <caption th:text="#{lang.city}">City</caption>
+            <tr>
                 <td></td>
-                <td> <div th:id="'TCity'+${max}"></div></td>
+                <td>
+                    <div th:id="'TCity'+${max}"></div>
+                </td>
             </tr>
-                        <div th:each="city:${cityList}">
-                            <tr th:id="'TRCity'+${city.getId()}" class="visible">
-                                <!--style="color: green"-->
-                                <td> <b><p th:id="'LCity'+${city.getId()}" th:text="${city.getName()}" ></p></b> </td>
-
-                                <td><input type="text"   th:id="'ICity'+${city.getId()}" th:value="${city.getName()}" /></td>
-                                <td> <button  type="button"  th:id="'ECity'+${city.getId()}" th:text="#{admin.user.edit}"   th:onclick="'javascript:editCity(\''+${city.getId()}+'\',\''+#{lang.city.insert}+'\');'" ></button></td>
-                                <td> <button  type="button"  th:id="'DCity'+${city.getId()}" th:text="#{admin.user.delete}"  th:onclick="'javascript:deleteCity(\''+${city.getId()}+'\',\''+#{delete.message}+'\',\''+#{delete.delete}+'\',\''+#{delete.error}+'\');'" ></button></td>
-
-                            </tr>
-
-
-
-                        </div>
-
-                    </table>
-
-                </div>
+            <div th:each="city:${cityList}">
+                <tr th:id="'TRCity'+${city.getId()}" class="visible">
+                    <td><b><p th:id="'LCity'+${city.getId()}" th:text="${city.getName()}"></p></b></td>
+                    <td><input type="text" th:id="'ICity'+${city.getId()}" th:value="${city.getName()}"/></td>
+                    <td>
+                        <button type="button" th:id="'ECity'+${city.getId()}" th:text="#{admin.user.edit}"
+                                th:onclick="'javascript:editCity(\''+${city.getId()}+'\',\''+#{lang.city.insert}+'\');'"></button>
+                    </td>
+                    <td>
+                        <button type="button" th:id="'DCity'+${city.getId()}" th:text="#{admin.user.delete}"
+                                th:onclick="'javascript:deleteCity(\''+${city.getId()}+'\',\''+#{delete.message}+'\',\''+#{delete.delete}+'\',\''+#{delete.error}+'\');'"></button>
+                    </td>
+                </tr>
+            </div>
+        </table>
+    </div>
     <script src="/static/static/js/city_new.js"></script>
 </div>
 

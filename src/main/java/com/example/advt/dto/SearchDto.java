@@ -17,13 +17,15 @@ public class SearchDto {
     private Subcategory subcategory;
   private int found;
   private String urlSearch;
+  private String statusSearch;
   private int categorySearch;
 
-    public SearchDto(City city, Subcategory subcategory, int found, String urlSearch, int categorySearch) {
+    public SearchDto(City city, Subcategory subcategory, int found, String urlSearch,String statusSearch,int categorySearch) {
         this.city = city;
         this.subcategory = subcategory;
         this.found = found;
         this.urlSearch = urlSearch;
+        this.statusSearch = statusSearch;
         this.categorySearch = categorySearch;
     }
 

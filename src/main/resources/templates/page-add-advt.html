@@ -19,19 +19,7 @@
     <meta name="viewport" content="width=device-width">
     <div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
     <link rel="stylesheet" href="/static/static/my.css">
-    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"-->
-            <!--integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"-->
-            <!--crossorigin="anonymous"></script>-->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"-->
-            <!--integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"-->
-            <!--crossorigin="anonymous"></script>-->
-    <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"-->
-            <!--integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"-->
-            <!--crossorigin="anonymous"></script>-->
 
-    <!--<script>-->
-        <!--var $ = jQuery.noConflict();-->
-    <!--</script>-->
 
 </head>
 <body>
@@ -63,23 +51,16 @@
 <!--End Page Title -->
 <div class="section">
     <div class="container">
-        <!--<div class="row"class="col-sm-6">-->
-            <!--<div style="text-align: center">-->
-                <!--<h3 th:text="#{lang.contactUs.messageUser}">Send Us a Message</h3>-->
-            <!--</div>-->
                 <form action="/advt/add-advt" method="post"
                       enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                             <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12" style="text-align: center">
                                 <div class="form-group">
-
-                                        <div ><h3 th:text="${status}"><b>Status</b></h3></div>
-
+                                    <div ><h3 th:text="${status}"><b>Status</b></h3></div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                        <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
                             <div class="form-group">
@@ -88,7 +69,7 @@
                                 </div></div>
                                 <label for="subcategory" th:text="#{lang.category}"><b>Category</b> </label><br/>
                                 <select class="form-control" id="subcategory" name="subcategory">
-                                    <option value="" th:text="#{lang.select.category}">Виберіть категорію</option>
+                                    <option  value="" th:text="#{lang.select.category}">Виберіть категорію</option>
                                     <option th:each="subcategory : ${categoryList}"
                                             th:if="${subcategory.name}!='Not name'"
                                             th:value="${subcategory.id}"
@@ -98,7 +79,6 @@
                                 <br/>
                             </div>
                         </div>
-
                        <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
                             <div class="form-group">
                                 <div style="margin-bottom:-15px;height: 30px">
@@ -106,23 +86,14 @@
                                 </div>
                                 <label for="City" th:text="#{lang.city.insert}"><b>City</b> </label><br/>
                                 <div class="ui-widget" th:data-tip="#{toltip.city}">
-                                    <!--style="width: 100px;height: 25px"-->
-                                    <input class="form-control" id="lang1"/>
-                                    <!--<div id="listCity" style=""></div>-->
-
+                                    <input   class="form-control" id="lang1"/>
                                     <select class="form-control" id="City" name="city" onclick="clearInput()" style="height: 30px;display:none;" >
                                         <option th:text="#{lang.city}">City</option>
                                     </select>
-
-                                    <!--<div id="langsList">-->
-
-                                    <!--</div>-->
-
                                 </div>
                             </div>
                         </div>
                     </div>
-                        <!--<br/>-->
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
                             <div class="form-group">
@@ -134,7 +105,6 @@
                                 </div>
                             </div>
                         </div>
-
                        <div class="col-lg-6 col-sm-8 col-md-6 col-xs-12">
                            <div class="col-lg-4 col-sm-6 col-md-6 col-xs-8" style="margin-left:-10px">
                                 <div class="form-group">
@@ -164,7 +134,6 @@
 
                             </div>
                         </div>
-                        <!--style="margin-top:-10%"-->
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                             <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12" >
                                 <div class="form-group">
@@ -173,55 +142,34 @@
                                 </div>
                             </div>
                          </div>
-
-
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                        <div class="col-lg-8 col-sm-8 col-md-8 col-xs-8" style="text-align: center">
                             <div class="form-group">
                                 <input hidden="hidden" type="text" name="url" id="url" th:value="${url}">
                                 <input hidden="hidden" type="text" name="status" id="status" th:value="${status}">
                                 <input hidden="hidden" type="text" name="category" id="category" th:value="${category}">
+                                <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
                                 <button class="btn-red" type="submit" id="submit1" th:text="#{lang.btn.send}">
                                     Відправити
                                 </button>
                             </div>
-                            <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+
                         </div>
                         </div>
 
                     </div>
                 </form>
             </div>
-
-
-
-        <!--<div class="col-sm-6">-->
-
-        <!--</div>-->
-
     </div>
-<!--</div>--><!--</div>-->
-
     <!-- Footer -->
     <div th:insert="~{fragments/footer.html :: footer}"></div>
-
     <!--End Footer -->
-
     <!-- Javascripts -->
     <div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
-
 
 <script src="/static/static/js/my_js.js"></script>
 <script src="/static/static/js/advt.js"></script>
 
-    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
-    <!--<script src="/static/static/js/bootstrap.min.js"></script>-->
-    <!--<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>-->
-    <!--<script src="/static/static/js/jquery.fitvids.js"></script>-->
-    <!--<script src="/static/static/js/jquery.sequence-min.js"></script>-->
-    <!--<script src="/static/static/js/jquery.bxslider.js"></script>-->
-    <!--<script src="/static/static/js/main-menu.js"></script>-->
-    <!--<script src="/static/static/js/template.js"></script>-->
 </body>
 </html>
 

@@ -41,7 +41,7 @@ public class MessageUser implements Serializable {
 
     @Column(name="active")
     private boolean active;
-    //
+
     public Long getIdAdvt() {
         return idAdvt;
     }
@@ -97,9 +97,6 @@ public class MessageUser implements Serializable {
     public void setIdToUser(Long idToUser) {
         this.idToUser = idToUser;
     }
-
-
-
 
     public MessageUser(String contact, String text, Long idToUser, Long idAdvt, Date dat, boolean active) {
         this.contact = contact;

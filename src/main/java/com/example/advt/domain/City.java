@@ -13,22 +13,13 @@ import java.util.Set;
 @Table(name = "city")
 public class City {
 
-    /**
-     * Default constructor
-     */
     public City() {
     }
 
-    /**
-     *
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
 
-    /**
-     *
-     */
     @Column(name = "name", nullable = false)
     public String name;
 

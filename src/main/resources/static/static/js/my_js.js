@@ -54,15 +54,16 @@ function addMessage(str,err) {
     $.ajax({
         type: "POST",
         contentType: 'application/json; charset=utf-8',
-        url: 'add_message',
+        url: '/view/add_message',
         dataType: 'json',
         cache: false,
         data: JSON.stringify(search), // Note it is important
         success: function (result) {
+            console.log(result)
             if(result){
-                  $('#idAdver').val(" "),
-                $('#userId').val(" "),
-                $('#contact').val(" "),
+                  $('#idAdver').val(""),
+                $('#userId').val(""),
+                $('#contact').val(""),
             $('#textMessage').val("");
             $('#capcha').attr('checked',false);
             //cbx_chng("capcha");
@@ -116,60 +117,3 @@ function ConfirmDelete(mess)
     else
         return false;
 }
-//$(document).ready(function(){});
-// jQuery.noConflict();
-// (function( $ ) {
-//     $(function() {
-//         // More code using $ as alias to jQuery
-//         $('button').click(function(){
-//             $('#modalID').modal('show');
-//         });
-//     });
-// })(jQuery);
-//document.getElementById('btn_msg').style.display = document.getElementById('btn_msg').style.disabled == 'true' ? 'false' : 'true';
-/////////////////////
-// function doMess() {
-//     // var mes={
-//     // idAdver:$('#idAdver').val(),
-//     // userId:$('#userId').val(),
-//     // contact:$('#contact').val(),
-//     // textMessage:$('#textMessage').val(),
-//     // url:$('#url').val()}
-//    var idAdver=$('#idAdver').val();
-//    var userId=$('#userId').val();
-//     var contact=$('#contact').val();
-//     var textMessage=$('#textMessage').val();
-//     var url=$('#url').val();
-//     $.ajax({
-//
-//         // dataType: 'json',
-//         // contentType: 'application/json',
-//         url : 'add_message',
-//         data:{"par1":idAdver,"par2":userId,"contact":contact,"textMessage":textMessage,"url":url },//JSON.stringify(mes),
-//         type: "POST",
-//         success:function (data) {
-//
-// alert("ok!");
-//         }, error : function(xhr, status, errorThrown) {
-//             alert('adding component failed with status: ' + status + ". "
-//                 + errorThrown);
-//         }
-//     });
-// }
-//////////////////////////
-
-// function submitForm() {
-//
-//     var idAdver= $('#idAdver').val();
-//     var userId= $('#userId').val();
-//     var contact= $('#contact').val();
-//     var  textMessage= $('#textMessage').val();
-//
-//     var object = {idAdver:idAdver,userId:userId,contact:contact,textMessage:textMessage};
-//
-//     $.ajax("/view/add_message",
-//         {
-//             type:"POST",
-//             data:JSON.stringify(object)
-//         });
-// }

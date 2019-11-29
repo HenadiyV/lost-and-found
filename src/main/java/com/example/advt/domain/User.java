@@ -82,15 +82,10 @@ public class User implements UserDetails, Serializable {
         this.roles = roles;
     }
 
-    //================================
 
-    /**
-     * Default constructor
-     */
     public User() {
     }
 
-    // getter and setter
     public Long getId() {
         return id;
     }

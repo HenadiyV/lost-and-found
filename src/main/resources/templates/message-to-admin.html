@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
@@ -15,10 +19,12 @@
 </head>
 <body>
 <!--[if lt IE 7]>
-<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to
+    improve your experience.</p>
 <![endif]-->
 <!-- Navigation & Logo-->
-<div class="conteiner" >
+<div class="conteiner">
     <div th:insert="~{fragments/heder::heder}"></div>
 </div>
 <!--End Navigation & Logo-->
@@ -36,34 +42,30 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <table class="events-list" >
+                <table class="events-list">
                     <div th:each="post:${postList}">
                         <div>
-                    <tr th:id="${post.getId()}">
+                            <tr th:id="${post.getId()}">
 
-                        <td>
-                            <div class="event-date">
-                                <div class="event-day"th:text="${post.getDateMessage().toString()}">17</div>
-                                <!--<div class="event-month" th:text="${post.getDateMessage().getMonth()}">SEP</div>-->
-                            </div>
-                        </td>
-                        <td class="event-venue hidden-xs" th:text="${post.getTopic()}"> </td>
-                        <td >
-                            <a class="btn btn-grey btn-sm event-more" th:onclick="'javascript:toggle_show_message(\''+'ART'+${post.getId()}+'\',\''+${post.getId()}+'\');'" th:text="#{lang.btn.read.more}" >Read more</a>
-                            <div th:id="'ART'+${post.getId()}" style="display:none;">
-                                <p th:text="${post.getMessageUser()}"></p>
-
-                            </div>
-
-                        </td>
-
-
-                        <!--<td> <input  type="button" class="btn btn-grey btn-sm " th:id="${post.getId()}" value="Hidden"  th:onclick="'javascript:hiddenPost(\''+${post.getId()}+'\');'" /></td>-->
-                        <td> <input  type="button" class="btn btn-grey btn-sm " th:id="${post.getId()}" value="Delete"  th:onclick="'javascript:deletePost(\''+${post.getId()}+'\');'" /></td>
-
-
-                        <!--<td><a href="#" class="btn btn-grey btn-sm ">Delete</a></td>-->
-                    </tr>
+                                <td>
+                                    <div class="event-date">
+                                        <div class="event-day" th:text="${post.getDateMessage().toString()}">17</div>
+                                        <!--<div class="event-month" th:text="${post.getDateMessage().getMonth()}">SEP</div>-->
+                                    </div>
+                                </td>
+                                <td class="event-venue hidden-xs" th:text="${post.getTopic()}"></td>
+                                <td>
+                                    <a class="btn btn-grey btn-sm event-more"
+                                       th:onclick="'javascript:toggle_show_message(\''+'ART'+${post.getId()}+'\',\''+${post.getId()}+'\');'"
+                                       th:text="#{lang.btn.read.more}">Read more</a>
+                                    <div th:id="'ART'+${post.getId()}" style="display:none;">
+                                        <p th:text="${post.getMessageUser()}"></p>
+                                    </div>
+                                </td>
+                                <td><input type="button" class="btn btn-grey btn-sm " th:id="${post.getId()}"
+                                           value="Delete"
+                                           th:onclick="'javascript:deletePost(\''+${post.getId()}+'\');'"/></td>
+                            </tr>
                         </div>
                     </div>
                 </table>

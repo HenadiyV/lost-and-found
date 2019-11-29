@@ -61,31 +61,30 @@ private AdminPostRepository adminPostRepository;
         return "page-about-us";
     }
     @GetMapping("contact")
-    public String contact(AdminPostDAO adminPost,Map<String, Object> model){
-
+    public String contact(AdminPostDAO adminPost,Model model){
+        model.addAttribute("adminPost", adminPost);
         return "page-contact-us";
     }
 
     @PostMapping("contact")
     public String addPost(@Valid AdminPostDAO adminPost, BindingResult bindingResult, Model model) throws ParseException {
-
+        model.addAttribute("adminPost", adminPost);
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errorMap);
             if (adminPost.getName().isEmpty()) {
                 model.addAttribute("nameError", "Не вказано имя");
-            }else {model.addAttribute("name",adminPost.getName());}
+            }
             if (adminPost.getEmail().isEmpty()) {
                 model.addAttribute("emailError", "Не вказано email");
-            }else{model.addAttribute("email",adminPost.getEmail());}
-            //!adminPost.getTopic().equals("General")||!adminPost.getTopic().equals("Services")||!adminPost.getTopic().equals("Orders")
+            }
             if (adminPost.getTopic().isEmpty()) {
                 model.addAttribute("topicError", "Не вказано тему");
-            }else{model.addAttribute("topic",adminPost.getTopic());}
+            }
             if (adminPost.getMessageUser().isEmpty()) {
                 model.addAttribute("contactMessageUserError", "Не вказано текст");
-            }else{model.addAttribute("messageUser",adminPost.getMessageUser());}
-
+            }
+            return "page-contact-us";
         }else{
             model.addAttribute("sendMessage", "Ваше повідомленя відправлено");
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -93,10 +92,8 @@ private AdminPostRepository adminPostRepository;
             AdminPost adminPost1=new AdminPost(adminPost.getName(),adminPost.getEmail(),adminPost.getMessageUser(),adminPost.getTopic(),true,sendDate);
             adminPostRepository.save(adminPost1);
         }
+              return "redirect:/";
 
-
-        return "page-contact-us";
-        //return "redirect:/@RequestParam User us",;
     }
     @GetMapping("blocked{id}")
     public String blocked(@PathVariable(value = "id")User us, Model model){
@@ -117,11 +114,9 @@ private AdminPostRepository adminPostRepository;
             if (adminPost.getEmail().isEmpty()) {
                 model.addAttribute("emailError", "Не вказано email");
             }
-
             if (adminPost.getMessageUser().isEmpty()) {
                 model.addAttribute("contactMessageUserError", "Не вказано текст");
             }
-
         }else{
             model.addAttribute("sendMessage", "Ваше повідомленя відправлено");
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -129,70 +124,21 @@ private AdminPostRepository adminPostRepository;
             AdminPost adminPost1=new AdminPost(adminPost.getName(),adminPost.getEmail(),adminPost.getMessageUser(),adminPost.getTopic(),true,sendDate);
             adminPostRepository.save(adminPost1);
         }
-
-
-
         return "redirect:/";
     }
-    @GetMapping("/faq")
+    @GetMapping("faq")
     public String faq(){
 
         return "page-faq";
     }
+    @GetMapping("terms-privacy")
+    public String terms(){
 
-//    @GetMapping("/about-project")
-//    public String aboutProject(){
-//
-//        return "page-faq-project";
-//    }
-    @GetMapping("/reset-password")
-    public String resetPassword(@AuthenticationPrincipal User user,Model model){
-
-
-        return "page-password-reset";
+        return "page-terms-privacy";
     }
-//    @RequestMapping(value = "/user/resetPassword",
-//            method = RequestMethod.POST)
-//    @ResponseBody
-//    public GenericResponse resetPassword(HttpServletRequest request,
-//                                         @RequestParam("email") String userEmail) {
-//        User user = userService.findUserByEmail(userEmail);
-//        if (user == null) {
-//            throw new UserNotFoundException();
-//        }
-//        String token = UUID.randomUUID().toString();
-//        userService.createPasswordResetTokenForUser(user, token);
-//        mailSender.send(constructResetTokenEmail(getAppUrl(request),
-//                request.getLocale(), token, user));
-//        return new GenericResponse(
-//                messages.getMessage("message.resetPasswordEmail", null,
-//                        request.getLocale()));
-//    }
-//    @GetMapping("/homepage-sample")
-//    public String homepageSample(){
-//
-//        return "page-homepage-sample";
-//    }
-//
-//    @GetMapping("/product-details")
-//    public String productDetails(Model model){
-//
-//        return "page-product-details";
-//    }
-//
-//    @GetMapping("/terms-privacy")
-//    public String termsPrivacy(Model model){
-//
-//        return "page-terms-privacy";
-//    }
-//
-//    @GetMapping("/piople")
-//    public String piople(Model model){
-//
-//        return "page-people";
-//    }
 
-
-
-
+//    @GetMapping("/reset-password")
+////    public String resetPassword(@AuthenticationPrincipal User user,Model model){
+////        return "page-password-reset";
+////    }
 }

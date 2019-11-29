@@ -16,7 +16,8 @@ import java.util.List;
  *23.09.2019
  */
 @Data
-public class AdvtViewDAO {
+public class
+AdvtViewDAO {
     public String category;
    public String subcategory;
     public String city;

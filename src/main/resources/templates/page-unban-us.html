@@ -14,10 +14,7 @@
     <title>Contact</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-
-
     <div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
-
 </head>
 <body>
 <!--[if lt IE 7]>
@@ -25,14 +22,11 @@
     your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to
     improve your experience.</p>
 <![endif]-->
-
-
 <!-- Navigation & Logo-->
 <div class="conteiner">
     <div th:insert="~{fragments/heder::heder}"></div>
 </div>
 <!--End Navigation & Logo-->
-
 <!-- Page Title -->
 <div class="section section-breadcrumbs">
     <div class="container">
@@ -43,28 +37,24 @@
         </div>
     </div>
 </div>
-
 <div class="section">
     <div align="center">
-        <h3 th:text="#{admin.user.ban}"> <b>Отправка сообщений запрещена.Свяжитесь с администратором.</b></h3>
-</div>
+        <h3 th:text="#{admin.user.ban}"><b>Отправка сообщений запрещена.Свяжитесь с администратором.</b></h3>
+    </div>
     <div class="container">
-
         <div class="row">
             <div class="col-sm-7">
-
                 <!-- Contact Form id="contactForm" -->
-               <h3 > <b th:text="#{lang.contactUs.messageUser}">Send Us a Message</b></h3>
-                <div class="info" th:if="${sendMessage}"   th:text="#{contact.sendMessage}"></div>
+                <h3><b th:text="#{lang.contactUs.messageUser}">Send Us a Message</b></h3>
+                <div class="info" th:if="${sendMessage}" th:text="#{contact.sendMessage}"></div>
                 <div class="contact-form-wrapper">
                     <form class="form-horizontal" role="form" action="/blocked" method="post">
                         <div class="form-group">
                             <label for="name" class="col-sm-3 control-label"><b th:text="#{lang.your.name}">Your
                                 name</b></label>
-
                             <div class="col-sm-9">
                                 <div class="error" th:if="${nameError}" th:text="#{contact.name.error}">Name Error</div>
-                                <input  id="name" name="name" type="text" th:value="${name}" readonly/>
+                                <input id="name" name="name" type="text" th:value="${name}" readonly/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -73,12 +63,12 @@
                             <div class="col-sm-9">
                                 <div class="error" th:if="${emailError}" th:text="#{contact.email.error}">Name Error
                                 </div>
-                                <input  id="email" name="email" type="text" th:value="${email}" readonly/>
+                                <input id="email" name="email" type="text" th:value="${email}" readonly/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="topic" class="col-sm-3 control-label" th:text="#{lang.contactUs.selectTopic}">
-                                </label>
+                            </label>
                             <div class="col-sm-9">
                                 <input type="text" id="topic" name="topic" value="Blocked" readonly/>
 
@@ -95,6 +85,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
+                                <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
                                 <button type="submit" class="btn pull-right" th:text="#{lang.btn.send}">Send</button>
                             </div>
                         </div>
@@ -103,22 +94,16 @@
                 <!-- End Contact Info -->
             </div>
 
-            </div>
-            <div class="col-sm-5">
-
+        </div>
+        <div class="col-sm-5">
         </div>
     </div>
 </div>
-
 <!-- Footer -->
 <div th:insert="~{fragments/footer.html :: footer}"></div>
 <!--End Footer -->
-
-
-
 <!-- Javascripts -->
 <div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
 <script src="/static/static/js/template.js"></script>
-
 </body>
 </html>

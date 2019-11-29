@@ -2,7 +2,7 @@ package com.example.advt.config;
 
 import com.example.advt.repos.UserRepository;
 import com.example.advt.service.AuthProvider;
-import com.example.advt.service.LogFilter;
+//import com.example.advt.service.LogFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -58,11 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserRepository userRepo;
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder;
-    }
+
 
     @Bean
     public AuthenticationSuccessHandler successHandler() {
@@ -101,27 +97,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         tokenServices.setPasswordEncoder(passwordEncoder);
         return filter;
     }
-
-//    @Bean
-//    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
-//        StrictHttpFirewall fireWall = new StrictHttpFirewall();
-//        fireWall.setAllowUrlEncodedSlash(true);
-//        return fireWall;
-//    }
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//// add it
-//        web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
-//    }
-
-//    @Bean
-//    public FilterRegistrationBean someFilterRegistration() {
-//        FilterRegistrationBean registration = new FilterRegistrationBean();
-//        registration.setFilter(new LogFilter());
-//        registration.addUrlPatterns("/*");
-//        registration.setOrder(RegistrationBean.HIGHEST_PRECEDENCE); //Must has higher precedence than FilterChainProxy
-//        return registration;
-//    }
     @Bean
     @ConfigurationProperties("facebook")
     public ClientResources facebook() {
@@ -179,9 +154,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
-                .csrf()
-                .disable();
-//.and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                .csrf().disable();
         http
                 .addFilterBefore(ssoFilter(), UsernamePasswordAuthenticationFilter.class);
     }
@@ -190,19 +163,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authProvider);
     }
-    ////////////////////////
-//    @Bean
-//    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
-//        StrictHttpFirewall firewall = new StrictHttpFirewall();
-//        firewall.setAllowUrlEncodedSlash(true);
-//        return firewall;
-//    }
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        //@formatter:off
-//        super.configure(web);
-//        web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
-//
-//    }
 }
-

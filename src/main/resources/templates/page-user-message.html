@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
@@ -13,20 +17,22 @@
     <div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <style>
-        .mya{
+        .mya {
             color: #fafafa;
         }
-        .mya:hover{
+
+        .mya:hover {
             color: #5cb85c;
         }
-        .myspan{
+
+        .myspan {
             color: white;
         }
     </style>
 </head>
 <body>
 <!-- Navigation & Logo-->
-<div class="conteiner" >
+<div class="conteiner">
     <div th:insert="~{fragments/heder::heder}"></div>
 </div>
 <!--End Navigation & Logo-->
@@ -35,101 +41,99 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-sm-4">
-                <h1 th:text="#{lang.messageUser.title}" >Messages</h1>
+                <h1 th:text="#{lang.messageUser.title}">Messages</h1>
                 <div th:if="${usr}==1">
-                <a class="my_a" th:href="@{'/main/all_message'+${idAdvt} }"  th:text="#{lang.messageUser.message.all}"  >Показать все сообщения </a>
+                    <a class="my_a" th:href="@{'/main/all_message'+${idAdvt} }"
+                       th:text="#{lang.messageUser.message.all}">Показать все сообщения </a>
                 </div>
             </div>
-            <!--<div class="col-md-4 col-sm-4 ">-->
-                <!---->
-        <!--</div>-->
-
             <div class="col-md-4 col-sm-4 " th:if="${all}==0">
-            <!--<div class="row"></div>-->
-            <!--<div></div>-->
-                <a class="my_a" th:href="@{'/main/message_all_this_advt'+${idAdvt} }"  th:text="#{lang.messageUser.advt.message.all}"  >Показать все сообщения </a><br/>
-                <span class="myspan" th:text="${pasiv}"></span>  <a class="my_a" th:href="@{'/main/message_pasive'+${idAdvt} }" th:text="#{lang.messageUser.pasive}" >Показать неактивные сообщения </a>  <br/>
-                <span class="myspan" th:text="${activ}"></span>  <a class="my_a" th:href="@{'/main/message_active'+${idAdvt} }" th:text="#{lang.messageUser.active}" >Показать активные сообщения </a><br/>
-
+                <a class="my_a" th:href="@{'/main/message_all_this_advt'+${idAdvt} }"
+                   th:text="#{lang.messageUser.advt.message.all}">Показать все сообщения </a><br/>
+                <span class="myspan" th:text="${pasiv}"></span> <a class="my_a"
+                                                                   th:href="@{'/main/message_pasive'+${idAdvt} }"
+                                                                   th:text="#{lang.messageUser.pasive}">Показать
+                неактивные сообщения </a> <br/>
+                <span class="myspan" th:text="${activ}"></span> <a class="my_a"
+                                                                   th:href="@{'/main/message_active'+${idAdvt} }"
+                                                                   th:text="#{lang.messageUser.active}">Показать
+                активные сообщения </a><br/>
             </div>
-
-
         </div>
-
     </div>
 </div>
 <!--End Page Title -->
-
-
 <!--Advt List-->
 <div class="eshop-section section">
+    <div th:if="${listEmpty}" th:text="#{list.emty}" style="text-align: center; font-size: 4rem"></div>
     <div class="container">
         <div class="row">
-            <!---->
-            <div  th:each="mess:${listMessage}">
-
-                <div class="col-md-4 col-sm-6" >
+            <div th:each="mess:${listMessage}">
+                <div class="col-md-4 col-sm-6">
                     <div style="margin:1px;border: 3px solid #4F8DB3;border-radius: 5px ">
-                        <div class="title" >
-
-                            <h2 th:text="#{lang.messageUser.guest}"></h2>
-                                <div style="color: white;background: #3e8f3e;font-size: 1.5em;text-align:center"> <b> <p th:text="${mess.getContact()}"></p></b></div>
-                        </div>
-                    <div class="portfolio-item">
-
-                        <!--Title-->
                         <div class="title">
-                            <b> <span th:text="#{lang.messageUser.text}">Text :</span></b>
-                            <br/>
-                            <textarea class="form-control" rows="5" name="textAdvt" th:text="${mess.getTextMessage()}"></textarea>
-                            <p th:text="${mess.getDatMessage().toString()}"></p>
+                            <h2 th:text="#{lang.messageUser.guest}"></h2>
+                            <div style="color: white;background: #3e8f3e;font-size: 1.5em;text-align:center"><b><p
+                                    th:text="${mess.getContact()}"></p></b></div>
                         </div>
-
-                                     <div class="portfolio-info-fade">
-                                            <ul>
-                                                <li class="portfolio-project-name" th:text="${mess.getSubcategoryAdvt()}">Project Name</li>
-                                                <li th:text="${mess.getStatusAdvt()}">Client: Some Client LTD</li>
-                                                <li th:text="${mess.getDatAdvt().toString()}">Website design & Development</li>
-                                                <li th:text="${mess.getCityAdvt()}">Client: Some Client LTD</li>
-                                                <li th:text="${mess.getTextAdvt()}">Client: Some Client LTD</li>
-
-                                           </ul>
-                                      </div>
-                    </div>
+                        <div class="portfolio-item">
+                            <!--Title-->
+                            <div class="title">
+                                <b> <span th:text="#{lang.messageUser.text}">Text :</span></b>
+                                <br/>
+                                <textarea class="form-control" rows="5" name="textAdvt"
+                                          th:text="${mess.getTextMessage()}"></textarea>
+                                <p th:text="${mess.getDatMessage().toString()}"></p>
+                            </div>
+                            <div class="portfolio-info-fade">
+                                <ul>
+                                    <li >№<span th:text="${mess.getArticle()}"></span></li>
+                                    <li class="portfolio-project-name" th:text="${mess.getSubcategoryAdvt()}">Project
+                                        Name
+                                    </li>
+                                    <li th:text="${mess.getStatusAdvt()}">Client: Some Client LTD</li>
+                                    <li th:text="${mess.getDatAdvt().toString()}">Website design & Development</li>
+                                    <li th:text="${mess.getCityAdvt()}">Client: Some Client LTD</li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="row">
-                    <div th:if="${mess.isActive()}" class="col-md-6 col-sm-6">
-                        <div >
-                            <form action="/main/hide"  method="get">
-                                <input hidden="hidden"  name="idMess" th:value="${mess.getIdMessage()}"/>
-                                <input hidden="hidden"  name="idAdvt" th:value="${mess.getIdAdvt()}"/>
-                                <button class="btn btn-primary" type="submit" th:text="#{lang.messageUser.hide}">Приховати</button>
-                            </form>
+                            <div th:if="${mess.isActive()}" class="col-md-6 col-sm-6">
+                                <div>
+                                    <form action="/main/hide" method="get">
+                                        <input hidden="hidden" name="idMess" th:value="${mess.getIdMessage()}"/>
+                                        <input hidden="hidden" name="idAdvt" th:value="${mess.getIdAdvt()}"/>
+                                        <button class="btn btn-primary" type="submit"
+                                                th:text="#{lang.messageUser.hide}">Приховати
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div th:unless="${mess.isActive()}" class="col-md-6 col-sm-6">
+                                <form action="/main/unhide" method="get">
+                                    <input hidden="hidden" name="idMess" th:value="${mess.getIdMessage()}"/>
+                                    <input hidden="hidden" name="idAdvt" th:value="${mess.getIdAdvt()}"/>
+                                    <button class="btn btn-primary" type="submit" th:text="#{lang.messageUser.unhide }">
+                                        Активировать
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-md-6 col-sm-6" style="text-align: right">
+                                <form action="/main/delete" method="get">
+                                    <input hidden="hidden" name="idMess" th:value="${mess.getIdMessage()}"/>
+                                    <input hidden="hidden" name="idAdvt" th:value="${mess.getIdAdvt()}"/>
+                                    <button class="btn btn-primary" type="submit" th:text="#{lang.messageUser.delete}">
+                                        Видалити
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-
-                    <div th:unless="${mess.isActive()}" class="col-md-6 col-sm-6">
-                        <form action="/main/unhide"  method="get">
-                            <input hidden="hidden"  name="idMess" th:value="${mess.getIdMessage()}"/>
-                            <input hidden="hidden"  name="idAdvt" th:value="${mess.getIdAdvt()}"/>
-                            <button class="btn btn-primary" type="submit" th:text="#{lang.messageUser.unhide }">Активировать</button>
-                        </form>
-                    </div>
-                        <div class="col-md-6 col-sm-6" style="text-align: right">
-                            <form action="/main/delete"  method="get">
-                                <input hidden="hidden"  name="idMess" th:value="${mess.getIdMessage()}"/>
-                                <input hidden="hidden"  name="idAdvt" th:value="${mess.getIdAdvt()}"/>
-                                <button class="btn btn-primary" type="submit" th:text="#{lang.messageUser.delete}">Видалити</button>
-                            </form>
-                        </div>
-                        </div>
                 </div>
-                </div>
-             </div>
+            </div>
         </div>
-     </div>
+    </div>
 </div>
-                            <!--Advt List-->
-
 <!-- Footer -->
 <div th:insert="~{fragments/footer.html :: footer}"></div>
 <!--End Footer -->
@@ -139,177 +143,3 @@
 <div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
 </body>
 </html>
-
-<!--modal-->
-<!--<div class="container">-->
-    <!--<div class="container">-->
-
-        <!--<div class="modal fade" id="userMessageModal" role="dialog">-->
-            <!--<div class="modal-dialog">-->
-
-                <!--&lt;!&ndash; Modal &ndash;&gt;-->
-                <!--<div class="modal-content">-->
-
-                    <!--<div class="modal-header" >-->
-                        <!--<h4 th:text="#{lang.messageUser}"><span class="glyphicon glyphicon-lock"></span> Повідомлення </h4>-->
-                        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-
-                    <!--</div>-->
-
-
-                    <!--<div class="modal-body" style="padding:40px 50px;">-->
-                        <!--<div>-->
-                            <!--<input  type="text" th:name="idMess1"  />-->
-                            <!--<label id="datMess"></label>-->
-                            <!--<label id="textMess"></label>-->
-
-                        <!--</div>-->
-                    <!--</div >-->
-
-
-                <!--</div>-->
-
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-<!--/modal-->
-<!--<div class="portfolio-image">-->
-<!--<a href="page-portfolio-item.html"><img src="img/portfolio2.jpg" alt="Project Name"></a>-->
-<!--</div>-->
-
-<!--<li th:text="${mess.getTextAdvt()}">Client: Some Client LTD</li>-->
-<!--<li class="read-more"><a href="page-portfolio-item.html" class="btn">Read more</a></li>-->
-
-<!--<a class="btn btn-primary" id="bt"  th:text="#{lang.send}">Повідомити</a>-->
-<!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />class="col-md-6 col-sm-6"-->
-<!--<div class="col-sm-3 ">-->
-
-<!--</div>-->
-<!--<div class="col-sm-3 ">-->
-
-<!--</div>-->
-<!--</div>-->
-<!--<div class="col-md-4">-->
-<!--&lt;!&ndash;<div class="col-sm-4 col-md-4  m-3"></div>&ndash;&gt;-->
-<!--<form action="/main/message"  method="get">-->
-<!--<input hidden="hidden" name="messageAll" th:value="2"/>-->
-<!--<input hidden="hidden" name="idAdvt" th:value="${idAdvt}"/>-->
-<!--<button class="btn-blue " style="width: 100%; text-align: center" type="submit"  th:text="#{lang.btn.message.pasive}">Показать неактивные сообщения </button>-->
-<!--</form>-->
-<!--</div>-->
-<!--<div class="col-md-3 col-sm-6">-->
-<!--&lt;!&ndash; Adver &ndash;&gt;-->
-<!--<div class="shop-item">-->
-
-<!--&lt;!&ndash; Adver Title &ndash;&gt;-->
-<!--<div class="title">-->
-<!--<h2 th:text="#{lang.messageUser.guest}"></h2>-->
-<!--<h4 th:text="${mess.contact}"></h4>-->
-<!--<h4 th:text="${adver.getSubcategory().name}"></h4>-->
-<!--</div>-->
-<!-- class="card-text"Adver bodyclass="btn btn-primary"style=""-->
-<!--<div>-->
-<!--<b> <span th:text="#{lang.messageUser.text}">Text :</span></b>-->
-<!--<br/>-->
-<!--<b><span class=" ml-1" style="color:blue " th:text="${adver.getCity().name}"></span></b>th:placeholder="#{lang.ad.text}"-->
-<!--<textarea class="form-control" rows="5" name="textAdvt" th:text="${mess.getText()}"></textarea>-->
-<!--<p th:text="${mess.getDat().toString()}"></p>-->
-<!--th:text="#{lang.send}"-->
-
-<!--<input  type="text" th:name="idMess" id="idMess" th:value="${mess.getIdAdvt()}"/>-->
-<!---->
-<!--&lt;!&ndash;<a  th:onclick="'javascript:viewAdvt(\''+${mess.getIdAdvt()}+'\');'" >View</a>&ndash;&gt;-->
-
-<!--&lt;!&ndash;class="btn btn-primary" id="bt"<a  th:onclick="'javascript:toggle_show(\''+'B'+${adver.getId()}+'\');'" th:text="#{lang.btn.read.more}">&ndash;&gt;-->
-<!--&lt;!&ndash;Докладніше&ndash;&gt;-->
-<!--&lt;!&ndash;</a>&ndash;&gt;-->
-<!--&lt;!&ndash;<div th:id="B+${adver.getId()}" style="display:none; width: 200px;">&ndash;&gt;-->
-<!--&lt;!&ndash;<div th:text="${adver.getDat().toString()}"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div  th:text="${adver.getText()}" ></div>&ndash;&gt;-->
-
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-<!--</div>-->
-
-<!--&lt;!&ndash; Adver Button &ndash;&gt;-->
-<!--<div class="actions">-->
-<!--<div class="card-footer">-->
-<!--<div class="row">-->
-<!--<div class="col-md-6 col-sm-6">-->
-<!--&lt;!&ndash;<a class="btn btn-primary" id="bt" th:onclick="'javascript:myModalMessage(\''+${adver.getId()}+'\',\''+${adver.getUserId()}+'\');'" th:text="#{lang.send}">Повідомити</a>&ndash;&gt;-->
-<!--&lt;!&ndash;<input type="text" th:text="${mess.getId()}"/>&ndash;&gt;-->
-<!--&lt;!&ndash;<button class="btn btn-primary" type="submit" th:text="#{lang.btn.delete}">Видалити</button>&ndash;&gt;-->
-<!--</div>-->
-<!--<div th:if="${mess.isActive()}">-->
-<!--<div class="col-md-6 col-sm-6" >-->
-<!--<form action="/main/hide"  method="get">-->
-<!--<input hidden="hidden"  name="idMess" th:value="${mess.getId()}"/>-->
-<!--<input hidden="hidden"  name="idAdvt" th:value="${mess.getIdAdvt()}"/>-->
-<!--&lt;!&ndash;th:if="${us}==2"&ndash;&gt;-->
-
-<!--&lt;!&ndash;th:text="#{lang.btn.delete}"&ndash;&gt;-->
-<!--<button class="btn btn-primary" type="submit" th:text="#{lang.messageUser.hide}">Приховати</button>-->
-<!--</form>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div th:unless="${mess.isActive()}">-->
-<!--<form action="/main/unhide"  method="get">-->
-<!--<input hidden="hidden"  name="idMess" th:value="${mess.getId()}"/>-->
-<!--<input hidden="hidden"  name="idAdvt" th:value="${mess.getIdAdvt()}"/>-->
-<!--&lt;!&ndash;th:if="${us}==2"&ndash;&gt;-->
-
-<!--&lt;!&ndash;th:text="#{lang.btn.delete}"&ndash;&gt;-->
-<!--<button class="btn btn-primary" type="submit" th:text="#{lang.messageUser.unhide }">Активировать</button>-->
-<!--</form>-->
-<!--</div>-->
-<!--&lt;!&ndash;<a class="btn btn-primary" id="bt"  th:text="#{lang.send}">Повідомити</a>&ndash;&gt;-->
-<!--&lt;!&ndash;<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />&ndash;&gt;-->
-
-
-<!--</div>-->
-<!--&lt;!&ndash;&ndash;&gt;-->
-<!--&lt;!&ndash;class="m-1"class="m-1"&ndash;&gt;-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash; End Adver &ndash;&gt;-->
-<!--</div>-->
-
-
-<!--<div class="col-sm-3">-->
-    <!--<div class="dropdown">-->
-    <!--<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" th:text="#{lang.messageUser.show}">Отобразить сообщения-->
-    <!--<span class="caret"></span></button>-->
-    <!--<input hidden="hidden" name="idAdvt" th:value="${idAdvt}"/>-->
-    <!--<ul class="dropdown-menu">-->
-    <!--<li>-->
-
-
-    <!--<a th:href="@{'/main/message_all'+${idAdvt} }"  th:text="#{lang.messageUser.all}"  >Показать все сообщения </a>-->
-
-    <!--</li>-->
-    <!--<li><a th:href="@{'/main/message_pasive'+${idAdvt} }" th:text="#{lang.messageUser.pasive}" >Показать неактивные сообщения  </a></li>-->
-    <!--<li><a th:href="@{'/main/message_active'+${idAdvt} }" th:text="#{lang.messageUser.activeShow}" >Показать активные сообщения  </a></li>-->
-    <!--</ul>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<h2 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]</h2>-->
-    <!--<div class="col-md-4"> col-sm-4 m-3-->
-    <!--<div class=" col-sm-3 ">-->
-    <!--<a class="btn btn-blue " th:href="@{'/main/message_all'+${idAdvt} }" th:text="#{lang.messageUser.all}"  >Показать все сообщения </a>-->
-    <!--<form action="/main/message_all"  method="get">-->
-
-    <!--<input hidden="hidden" name="idAdvt" th:value=""/>-->
-    <!--<button  style="width: 100%; text-align: center " type="submit"  th:text="#{lang.btn.found}">Показать все сообщения </button>-->
-    <!--</form> col-sm-4 m-3-->
-    <!--</div>--> <!--<form action="/main/message"  method="get">-->
-    <!--<input hidden="hidden" name="messageAll" th:value="2"/>-->
-    <!--<input hidden="hidden" name="idAdvt" th:value="${idAdvt}"/>-->
-    <!--<button class=" btn-blue " style="width: 100%; text-align: center " type="submit"  th:text="#{lang.btn.found}">Показать все сообщения </button>-->
-    <!--</form>-->
-
-    <!-- Product Image -->
-    <!--<div class="shop-item-image">-->
-    <!--&lt;!&ndash;<img   th:src="@{'/img/'+${adver.getPhoto()}}" alt="Card image cap"  />&ndash;&gt;-->
-    <!--</div>-->

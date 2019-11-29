@@ -16,134 +16,94 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
-
-
-    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"-->
-            <!--integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"-->
-            <!--crossorigin="anonymous"></script>-->
-
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"-->
-            <!--integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"-->
-            <!--crossorigin="anonymous"></script>-->
-
 </head>
 <body>
 <!-- Navigation & Logo-->
-
-
 <div th:insert="~{fragments/heder::heder}"></div>
 <!--End Navigation & Logo-->
-
 <!-- Page Title -->
 <div class="section section-breadcrumbs">
     <div class="container">
         <div class="row">
             <div style="width: 100%; text-align: center ;color:white ">
                 <h1 th:text="#{thing}">Thing Listing</h1>
-                    <span th:if="${found}" th:text="#{lang.btn.foundName}"></span>
-                    <span th:unless="${found}" th:text="#{lang.btn.lostName}"></span>
+                <span th:if="${found}" th:text="#{lang.btn.foundName}"></span>
+                <span th:unless="${found}" th:text="#{lang.btn.lostName}"></span>
 
             </div>
-    </div>
+        </div>
         <div class="container">
-            <a href="#" class="my_a" onclick="toggle_show('sear')"  th:text="#{lang.search}">Search</a>
+            <a href="#" class="my_a" onclick="toggle_show('sear')" th:text="#{lang.search}">Search</a>
             <div id="sear" style="display:none;">
-                <div th:insert="~{fragments/search::search}"></div><br/>
+                <div th:insert="~{fragments/search::search}"></div>
+                <br/>
             </div>
         </div>
         <div class="container">
-            <!--<br/>-->
-            <!--<div class="col-6 col-lg-4 col-sm-6 col-md-6 col-xs-6">-->
             <a href="#" class="my_a" data-toggle="collapse" data-target="#demo" th:text="#{lang.title.add}">Add
-                    advt</a>
-
-                <div id="demo" class="collapse row">
-                    <div class="col-lg-4 col-sm-6 col-md-6 col-xs-6">
-                        <form action="/advt/add-advt" method="get">
-                            <input hidden="hidden" type="text" name="status" value="Знайденно"/>
-                            <input hidden="hidden" type="text" name="url" value="/view/thing-found"/>
-                            <input hidden="hidden" type="text" name="category" th:value="${category}"/>
-                            <button class=" btn-green " style="width: 100%; text-align: left " type="submit"
-                                    href="/add-advt" th:text="#{lang.btn.found}">Повідомити про Знайденно
-                            </button>
-                        </form>
-                    </div>
-                    <div class="col-6 col-lg-4 col-sm-6 col-md-6 col-xs-6">
-                        <form action="/advt/add-advt" method="get">
-                            <input hidden="hidden" type="text" name="url" value="/view/thing-lost"/>
-                            <input hidden="hidden" type="text" name="status" th:value="${status}"/>
-                            <input hidden="hidden" type="text" id="category" name="category" th:value="${category}"/>
-                            <button class="btn-red " style="width: 100%; text-align: center" type="submit"
-                                    href="/add-advt" th:text="#{lang.btn.lost}">Повідомити про втрату
-                            </button>
-                        </form>
-                    </div>
+                advt</a>
+            <div id="demo" class="collapse row">
+                <div class="col-lg-4 col-sm-6 col-md-6 col-xs-6">
+                    <form action="/advt/add-advt" method="get">
+                        <input hidden="hidden" type="text" name="status" value="Знайденно"/>
+                        <input hidden="hidden" type="text" name="url" value="/view/thing-found"/>
+                        <input hidden="hidden" type="text" name="category" th:value="${category}"/>
+                        <button class=" btn-green " style="width: 100%; text-align: left " type="submit"
+                                href="/add-advt" th:text="#{lang.btn.found}">Повідомити про Знайденно
+                        </button>
+                    </form>
                 </div>
-                <br/>
-            <!--</div>-->
-
+                <div class="col-6 col-lg-4 col-sm-6 col-md-6 col-xs-6">
+                    <form action="/advt/add-advt" method="get">
+                        <input hidden="hidden" type="text" name="url" value="/view/thing-lost"/>
+                        <input hidden="hidden" type="text" name="status" th:value="${status}"/>
+                        <input hidden="hidden" type="text" id="category" name="category" th:value="${category}"/>
+                        <button class="btn-red " style="width: 100%; text-align: center" type="submit"
+                                href="/add-advt" th:text="#{lang.btn.lost}">Повідомити про втрату
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <br/>
         </div>
     </div>
-
 </div>
-
-<div class="container" >
+<div class="container">
     <div th:insert="~{fragments/modal::modal}"></div>
 </div>
-
 <h3 th:if="${searchMessage}" th:text="#{searchMessage}" style="text-align: center; font-size: 4rem"></h3>
 <div class="container">
     <div th:insert="~{fragments/advt::adver}"></div>
 </div>
 <div class=" pagination-wraper">
     <div th:if="${listAdver.getTotalElements()}>0">
-
-
-        <!--class="page-link"class="page-item " page-item"class="page-link"class="page-link" page-item -->
-        <!--<div class="row"> </div>-->
         <ul class="pagination pagination-lg" th:each="i:${#numbers.sequence(1,listAdver.getTotalPages())}">
-            <li th:if="${i-1==0}" class="page-item disabled" >
+            <li th:if="${i-1==0}" class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true" th:text="#{lang.page}">Сторінки</a>
             </li>
-
-            <li th:if="${i-1 ==listAdver.getNumber()}" class="page-item active" >
+            <li th:if="${i-1 ==listAdver.getNumber()}" class="page-item active">
                 <a href="#" th:text="${i}" class="page-link"></a>
             </li>
-
-
-            <li th:unless="${i-1 ==listAdver.getNumber()}" class="page-item " >
-                <a th:href="@{${url}(page=${i-1},size=${listAdver.getSize()})}" th:text="${i}" class="page-link" ></a>
+            <li th:unless="${i-1 ==listAdver.getNumber()}" class="page-item ">
+                <a th:href="@{${url}(page=${i-1},size=${listAdver.getSize()})}" th:text="${i}" class="page-link"></a>
             </li>
-
-
-
         </ul>
-
-
-
         <div th:if="${listAdver.getTotalElements()}>${listAdver.getSize()}">
             <ul class="pagination " th:each="c:${#numbers.sequence(10,listAdver.getTotalElements(),10)}">
                 <li th:if="${c==10}" class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true" th:text="#{lang.page.size}">Кількість відображаємих елементів</a>
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true" th:text="#{lang.page.size}">Кількість
+                        відображаємих елементів</a>
                 </li>
-
-
-
-                <li th:if="${c==listAdver.getSize()}" class="page-item active" >
+                <li th:if="${c==listAdver.getSize()}" class="page-item active">
                     <a href="#" th:text="${c}" class="page-link"></a>
                 </li>
-
-                <li th:unless="${c==listAdver.getSize()}" class="page-item " >
-                    <a th:href="@{${url}(page=${listAdver.getNumber()},size=${c})}" th:text="${c}" class="page-link"></a>
+                <li th:unless="${c==listAdver.getSize()}" class="page-item ">
+                    <a th:href="@{${url}(page=${listAdver.getNumber()},size=${c})}" th:text="${c}"
+                       class="page-link"></a>
                 </li>
-
-
-
             </ul>
         </div>
     </div>
-
-
 </div>
 <!-- Footer -->
 <div th:insert="~{fragments/footer.html :: footer}"></div>

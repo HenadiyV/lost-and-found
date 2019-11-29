@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
 
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
@@ -12,7 +16,7 @@
     <title th:text="#{personal.admin}">Lost-and-Found</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-
+    <!---->
 
     <div th:insert="~{fragments/resursCSS.html :: rescss}"></div>
 
@@ -25,11 +29,13 @@
 
 <body>
 <!--[if lt IE 7]>
-<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to
+    improve your experience.</p>
 <![endif]-->
 
 <!-- Navigation & Logo-->
-<div class="conteiner" >
+<div class="conteiner">
     <div th:insert="~{fragments/heder::heder}"></div>
 </div>
 
@@ -55,13 +61,15 @@
                 </div>
                 <div class="modal-body">
                     <div style="text-align: center">
-
-                        <input  hidden="hidden" th:name="idCat" id="idCat"/>
-                        <input type="text" name="subcategory" id="subcategory" th:placeholder="#{lang.category.subcategory}"/>
+                        <input hidden="hidden" th:name="idCat" id="idCat"/>
+                        <input type="text" name="subcategory" id="subcategory"
+                               th:placeholder="#{lang.category.subcategory}"/>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-default" id="btn_admin" type="submit" th:onclick="'javascript:addSubCategory();'" data-dismiss="modal" th:text="#{lang.btn.add}"> </button>
+                    <button class="btn btn-default" id="btn_admin" type="submit"
+                            th:onclick="'javascript:addSubCategory();'" data-dismiss="modal"
+                            th:text="#{lang.btn.add}"></button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -75,79 +83,49 @@
         <div class="row">
             <!-- Sidebar -->
             <div class="col-lg-3 col-sm-4 col-md-4 col-xs-12  blog-sidebar">
-            <!--<-->
-                <!--<h3>Search our Blog</h3>-->
-                <!--<form>-->
-                    <!--<div class="input-group">-->
-                        <!--<input class="form-control input-md" id="appendedInputButtons" type="text" onkeyup="mySearch()">-->
-                        <!--<span class="input-group-btn">-->
-									<!--<button class="btn btn-md" type="button">Search</button>-->
-								<!--</span>-->
-                    <!--</div>-->
-                <!--</form>-->
-
                 <h3 th:text="#{admin.menu}">Admin menu</h3>
                 <ul class="recent-posts">
                     <li class="dropdown">
-
-                        <a class=" dropdown-toggle"  data-toggle="dropdown" href="#" ><span th:text="#{lang.users}">Користувачі</span>
+                        <a class=" dropdown-toggle" data-toggle="dropdown" href="#"><span th:text="#{lang.users}">Користувачі</span>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <!--<li><a href="/admin/user/test">Ban</a></li>-->
-                            <!--<li><a href="/admin/user/detalis"  >User</a></li>onclick="getSchedule()"-->
-                            <!--<li><a href="/admin/user-advt">User advt</a></li>-->
-                            <li><a href="/admin/user-detalis" th:text="#{users.detail}" >User detalis</a></li>
-                            <li><a href="/admin/user"  > <span th:text="#{users.ban}" ></span> / <span th:text="#{lang.btn.delete}"></span></a></li>
-                            <li><a href="/admin/user-role"  th:text="#{user.role}">Role</a></li>
+                            <li><a href="/admin/user-detalis" th:text="#{users.detail}">User detalis</a></li>
+                            <li><a href="/admin/user"> <span th:text="#{users.ban}"></span> / <span
+                                    th:text="#{lang.btn.delete}"></span></a></li>
+                            <li><a href="/admin/user-role" th:text="#{user.role}">Role</a></li>
                         </ul>
-
                     </li>
-                    <!--<li><a href="/admin/city" th:text="#{lang.city}">Міста</a></li>-->
                     <li><a href="/admin/citys" th:text="#{lang.city}">Міста</a></li>
-                    <!--<li><a href="/admin/cityCity">Міста2</a></li>-->
+
                     <li><a href="/admin/category_new" th:text="#{lang.category.name}">Category</a></li>
                     <li><a href="/admin/subcategory" th:text="#{lang.category.subcategory}">Subcategory</a></li>
-                    <!--<li><a href="/admin/sub">Subcategory2</a></li>-->
-                    <!--<li><a href="/admin/category" th:text="#{lang.category.name}">Category</a></li>-->
-
-
-
-
-
-
                 </ul>
-
             </div>
             <!-- End Sidebar -->
-<!--Right-->
+            <!--Right-->
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <div class="blog-post blog-single-post">
                     <div th:if="${admin_start}">
-                    <div class="single-post-title" style="text-align: center;padding: 5px">
-                        <h3 th:text="#{admin.title}">Admin Title</h3>
+                        <div class="single-post-title" style="text-align: center;padding: 5px">
+                            <h3 th:text="#{admin.title}">Admin Title</h3>
+                        </div>
+                        <div th:if="${user_count}" style="text-align: left">
+                            <h3 th:text="#{admin.title.user}">Пользователей </h3>
+                            <input hidden="hidden" th:id="countUser" th:value="${user_count}"/>
+                            <b><span id="usr" style="text-align: center ;color: #3e8f3e; font-size: 5rem"></span></b>
+                        </div>
+                        <div th:if="${advt_count}" style="text-align: center">
+                            <input hidden="hidden" th:id="countAdvt" th:value="${advt_count}"/>
+                            <h3 th:text="#{admin.title.advt}">Обьявлений</h3>
+                            <b><span id="advt" style="color:#2aabd2;font-size: 5rem "></span></b>
+                        </div>
+                        <div th:if="${mes_count}" style="text-align:right">
+                            <h3 th:text="#{admin.title.message}">Сообщений </h3>
+                            <input hidden="hidden" th:id="countMess" th:value="${mes_count}"/>
+                            <b><span id="mes" style="text-align: center ;color: #985f0d; font-size: 5rem"></span></b>
+                        </div>
                     </div>
 
-
-
-
-                    <div th:if="${user_count}"style="text-align: left">
-                        <h3 th:text="#{admin.title.user}">Пользователей  </h3>
-                        <input hidden="hidden" th:id="countUser" th:value="${user_count}" />
-                        <b><span id="usr" style="text-align: center ;color: #3e8f3e; font-size: 5rem"></span></b>
-                    </div>
-                    <div th:if="${advt_count}" style="text-align: center">
-                        <input hidden="hidden" th:id="countAdvt" th:value="${advt_count}" />
-                        <h3 th:text="#{admin.title.advt}">Обьявлений</h3>
-                        <b><span id="advt" style="color:#2aabd2;font-size: 5rem "></span></b>
-                    </div>
-                    <div th:if="${mes_count}" style="text-align:right">
-                       <h3 th:text="#{admin.title.message}">Сообщений   </h3>
-                        <input hidden="hidden" th:id="countMess" th:value="${mes_count}" />
-                        <b><span id="mes" style="text-align: center ;color: #985f0d; font-size: 5rem"></span></b>
-                    </div>
-                    </div>
-                    <!--user-->
-                    <!--<div class="col-lg-7 col-sm-7 col-md-7"></div>-->
                     <div th:if="${userList}">
                         <div class="single-post-title" style="text-align: center;padding: 5px">
                             <h3 th:text="#{users.title}">User Title</h3>
@@ -165,10 +143,7 @@
                     <div th:if="${categoryList}">
                         <div class="single-post-title" style="text-align: center;">
                             <h3 th:text="#{lang.category.name}">Category Title</h3>
-
-                        <!--<div class="col-lg-6 col-sm-6 col-md-6"></div>-->
-
-                    </div>
+                        </div>
                         <div th:insert="~{fragments/category-new.html :: category}"></div>
                     </div>
                     <div th:if="${cityList}">
@@ -177,133 +152,19 @@
                         </div>
                         <div th:insert="~{fragments/city-new.html :: city}"></div>
                     </div>
-            </div>
-                 </div> <!-- End Comment Form -->
-                <!--<div id="app"></div>-->
-            </div>
-                    <!-- End Comments -->
+                </div>
+            </div> <!-- End Comment Form -->
+
         </div>
+        <!-- End Comments -->
     </div>
-            <!-- End Blog Post -->
-
-
-
+</div>
+<!-- End Blog Post -->
 <!-- Footer -->
 <div th:insert="~{fragments/footer.html :: footer}"></div>
-
 <!--End Footer -->
-
 <!-- Javascripts -->
-
 <script src="../static/static/js/adm.js"></script>
-
-<!--<script src="../static/static/js/myUser.js"></script>-->
 <div th:insert="~{fragments/resursJS.html :: resursJS}"></div>
-<!--<script src="/static/static/js/city.js"></script>-->
-<!--<script src="/static/static/js/subcategory.js"></script>-->
-
-
-
-
 </body>
 </html>
-
-
-
-<!--subcategory-->
-<!--<div class="container">-->
-<!--<table >-->
-
-<!--<div th:each="cat:${category}">-->
-<!--<tr>-->
-<!--<td>-->
-<!--<p th:text="${cat.getName()}" style="color: green"></p>-->
-<!--<tr>-->
-
-<!--<td> <div th:id="'T'+${cat.getId()}"></div></td>-->
-<!--&lt;!&ndash;<td></td>&ndash;&gt;-->
-<!--</tr>-->
-<!--</td>-->
-<!--</tr>-->
-<!--<div th:each="sub:${subcategory}">-->
-<!--<div th:if="${cat.getId()} == ${sub.getCategory().getId()}">-->
-<!--<tr th:id="'TR'+${sub.getId()}">-->
-<!--&lt;!&ndash;<td>&ndash;&gt;-->
-<!--&lt;!&ndash;<input type="text" name="name" th:value="${sub.getId()}"/>&ndash;&gt;-->
-<!--&lt;!&ndash;</td>&ndash;&gt;-->
-<!--&lt;!&ndash;<td>th:id="${sub.getId()}"</td>&ndash;&gt;-->
-
-<!--&lt;!&ndash;th:value=&ndash;&gt;-->
-<!--&lt;!&ndash;<form action="/admin/subcategory" method="post"></form>&ndash;&gt;-->
-<!--<td><b><p th:id="'L'+${sub.getId()}" th:text="${sub.getName()}"></p></b></td>-->
-<!--<td><input type="text"   th:id="'I'+${sub.getId()}" ></input></td>-->
-<!--<td> <input  type="button"  th:id="'E'+${sub.getId()}" value="Змінити"   th:onclick="'javascript:editSubcategory(\''+${sub.getId()}+'\',\''+${sub.getCategory().getId()}+'\');'" ></input></td>-->
-<!--<td> <input  type="button"  th:id="'D'+${sub.getId()}" value="delete"  th:onclick="'javascript:deleteSubcategory(\''+${sub.getId()}+'\');'" ></input></td>-->
-
-<!--</tr>-->
-
-<!--</div>-->
-<!--</div>-->
-
-<!--<tr>-->
-<!--<td></td>-->
-<!--<td></td>-->
-<!--<td><input  type="button"  value="Add "   th:onclick="'javascript:adminModal(\''+${cat.getId()}+'\');'"></td>-->
-
-<!--</tr>-->
-
-<!--</div>-->
-<!--</table>-->
-<!--&lt;!&ndash;<div th:if="${subcategory.}"> </div>&ndash;&gt;-->
-<!--</div>-->
-<!--End subcategory-->
-<!--subcategory2-->
-
-<!--<div class="conteiner" >-->
-<!--<div th:insert="~{fragments/subcategory::subcategory}"></div>-->
-<!--</div>-->
-
-<!--End subcategory2-->
-
-<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
-<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
-
-<!--<script>window.jQuery || document.write('<script src="/static/static/js/jquery-1.9.1.min.js"><\/script>')</script>-->
-<!--<script src="/static/static/js/bootstrap.min.js"></script>-->
-<!--<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>-->
-<!--<script src="/static/static/js/jquery.fitvids.js"></script>-->
-<!--<script src="/static/static/js/jquery.sequence-min.js"></script>-->
-<!--<script src="/static/static/js/jquery.bxslider.js"></script>-->
-<!--<script src="/static/static/js/main-menu.js"></script>-->
-<!--<script src="/static/static/js/template.js"></script>-->
-
-
-<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
-<!--<link rel="stylesheet" href="/static/static/bootstrap.min.css">-->
-<!--<link rel="stylesheet" href="/static/static/icomoon-social.css">-->
-<!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>-->
-
-<!--<link rel="stylesheet" href="/static/static/leaflet.css" />-->
-<!--&lt;!&ndash;[if lte IE 8]>-->
-<!--<link rel="stylesheet" href="/static/static/leaflet.ie.css" />-->
-<!--<![endif]&ndash;&gt;-->
-<!--<link rel="stylesheet" href="/static/static/main.css">-->
-<!--<script src="../static/static/js/jquery-1.9.1.min.js"></script>-->
-
-
-<!--<script src="/static/static/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
-<!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">-->
-<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>-->
-<!--&lt;!&ndash; Compiled and minified CSS &ndash;&gt;-->
-<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
-<!--&lt;!&ndash; Compiled and minified JavaScript &ndash;&gt;-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
-
-<!--<script src="../static/static/js/jquery-1.9.1.min.js"></script>-->
-<!--Let browser know website is optimized for mobile-->
-
-<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>-->

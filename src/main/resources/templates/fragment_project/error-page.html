@@ -19,16 +19,16 @@
         -->
         <div class="row">
             <div class="col-sm-2 ">
-                <div class="imgMy1" >
+                <div class="imgMy1">
 
-                <img 	class="crop-img"
-                        src="/project/err/page_400.png"
-                        alt="Page-400"/>
+                    <img class="crop-img"
+                         src="/project/err/page_400.png"
+                         alt="Page-400"/>
                 </div>
             </div>
             <div class="col-sm-2 imgMy1">
 
-                  <img class="crop-img"
+                <img class="crop-img"
                      src="/project/err/page_401.png"
                      alt="Page-401"/>
             </div>
@@ -37,45 +37,28 @@
                      src="/project/err/page_404.png"
                      alt="Page-404"/>
             </div>
-        <!--</div>-->
-
-        <!--<div class="row">-->
-            <!--<div class="col-sm-2 imgMy1" >-->
-            <!--<img 	class="crop-img"-->
-                    <!--src="/project/err/page_405.png"-->
-                    <!--alt="City night"/>-->
-        <!--</div>-->
-
-        <div class="col-sm-2 imgMy1" >
-                <img 	class="crop-img"
-                        src="/project/err/page_415.png"
-                        alt="Page-415"/>
+            <div class="col-sm-2 imgMy1">
+                <img class="crop-img"
+                     src="/project/err/page_415.png"
+                     alt="Page-415"/>
             </div>
-        <div class="col-sm-2 imgMy1">
-            <img 	class="crop-img"
-                    src="/project/err/page_500.png"
-                    alt="Page-500"/>
+            <div class="col-sm-2 imgMy1">
+                <img class="crop-img"
+                     src="/project/err/page_500.png"
+                     alt="Page-500"/>
+            </div>
         </div>
-        </div>
-
-        <!-- style="width: 100%;padding: 5px"
-            this is the large image which is
-            on a row of its own.
-            I will change it source in the
-            javascript
-        -->
         <div class="row">
             <div style="padding: 15px">
-            <div class="col-md-10 imgMy2">
-                <img id="bigImage"
-                     class="large-img"
-                     src="/project/err/page_404.png"
-                     alt="Big img"/>
-            </div>
+                <div class="col-md-10 imgMy2">
+                    <img id="bigImage"
+                         class="large-img"
+                         src="/project/err/page_404.png"
+                         alt="Big img"/>
+                </div>
             </div>
         </div>
     </div>
-
     <script>
         var thumbs = document.querySelectorAll('.crop-img');
         console.log(thumbs[0]);
@@ -84,31 +67,13 @@
             var targetSrc = this.getAttribute('src');
             var newIm;
             console.log(targetSrc);
-
             document.querySelector('.large-img').src = targetSrc;
             console.log(newIm);
-
         }
 
         for (let i = 0; i < thumbs.length; i++) {
             thumbs[i].addEventListener('click', clickThumb)
         }
-
-
-        // when we click on the thumbnail we set the src attribute of the
-        // bit image to be the same as the src of the image we have clicked on
-        // ("this"). This loads the same image file into the big image
-        //$(".crop-img").click(function(){
-        //	$("#bigImage").attr('src',
-        //		$(this).attr('src'));
-        //});
-
-        // $(".crop-img").click(function(){
-        // 	$("#bigImage").attr({
-        // 		'src' : $(this).attr('src'),
-        // 		'alt' : $(this).attr('alt'),
-        // 		});
-        // });
     </script>
 </div>
 

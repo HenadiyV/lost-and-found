@@ -19,25 +19,28 @@ import java.util.List;
 @RequestMapping("user-advt")
 public class UserAdvtController {
     private final UserAdvtRepository userAdvtRepository;
+
     @Autowired
-    public UserAdvtController(UserAdvtRepository userAdvtRepository){
-        this.userAdvtRepository=userAdvtRepository;
+    public UserAdvtController(UserAdvtRepository userAdvtRepository) {
+        this.userAdvtRepository = userAdvtRepository;
     }
+
     @GetMapping
     //@JsonView(Views.IdName.class)
-    public List<UserAdvtDAO> listSubcategory(@RequestParam(value="userId")Long id){
-        UserAdvtDTO userAdvtDTOList=new UserAdvtDTO((List<Advt>)userAdvtRepository.findByUserId(id));
-        List<UserAdvtDAO> advtDAOList=new ArrayList<>();
+    public List<UserAdvtDAO> listSubcategory(@RequestParam(value = "userId") Long id) {
+        UserAdvtDTO userAdvtDTOList = new UserAdvtDTO((List<Advt>) userAdvtRepository.findByUserId(id));
+        List<UserAdvtDAO> advtDAOList = new ArrayList<>();
 
         return userAdvtDTOList.getAdvtDaoList();
 
     }
+
     @GetMapping("{id}")
-//   List<UserAdvtDAO> @JsonView(Views.FullMessage.class)
+// @JsonView(Views.FullMessage.class)
     public UserAdvtDAO getOne(@PathVariable("id") Advt idAdvt) {
 
-       Advt adv= userAdvtRepository.getOne(idAdvt.getId());
-        UserAdvtDTO userAdvtDto=new UserAdvtDTO(adv);
+        Advt adv = userAdvtRepository.getOne(idAdvt.getId());
+        UserAdvtDTO userAdvtDto = new UserAdvtDTO(adv);
         return userAdvtDto.getUserAdvtDAO();
     }
 }

@@ -1,191 +1,182 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<title></title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
 <body>
 <div th:fragment="heder">
-    <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
-    <!--<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>-->
-	<!--<script src="../static/static/js/jquery-1.9.1.min.js"></script>-->
-
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-	<script src="http://code.jquery.com/ui/1.8.22/jquery-ui.min.js" type="text/javascript"></script>
-
-	<script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/ui/1.8.22/jquery-ui.min.js" type="text/javascript"></script>
+    <script>
         var $b = jQuery.noConflict();
-       // alert($b.fn.jquery);
-	</script>
+        // alert($b.fn.jquery);
+    </script>
     <script type="text/javascript">
         $b.ajax({
-            url : "/user",
-            success : function(data) {
-                if(data.name){
-                $b(".unauthenticated").hide();
-               $b("#user").html("Hello "+data.name);
-                     $b("#countMessage").html(data.countMessage);
-                     $b("#countPosts").html(data.countPosts);
-                     $b("#userId").val(data.userId);
-                $b(".authenticated").show();}
+            url: "/user",
+            success: function (data) {
+                if (data.name) {
+                    $b(".unauthenticated").hide();
+                    $b("#user").html("Hello " + data.name);
+                    $b("#countMessage").html(data.countMessage);
+                    $b("#countPosts").html(data.countPosts);
+                    $b("#userId").val(data.userId);
+                    $b(".authenticated").show();
+                }
 
             },
-            error : function(data) {
+            error: function (data) {
                 $b("#user").html('');
                 $b(".unauthenticated").show();
                 $b(".authenticated").hide();
-                if (location.href.indexOf("error=true")>=0) {
+                if (location.href.indexOf("error=true") >= 0) {
                     $b(".error").show();
                 }
             }
         });
 
-        var logout = function() {
-        $b.post("/logout", function() {
-        $b("#user").html('');
-        $b(".unauthenticated").show();
-        $b(".authenticated").hide();
-        })
-        return true;
+        var logout = function () {
+            $b.post("/logout", function () {
+                $b("#user").html('');
+                $b(".unauthenticated").show();
+                $b(".authenticated").hide();
+            })
+            return true;
         }
-        function userMessage(){
-            var idUs=$b("#userId").val();
-           $b.ajax ({
-               type : "GET",
-               url : "/message/all-message",
-               dataType: 'json',
-               cache: false,
 
-               data: JSON.stringify(idUs),
+        function userMessage() {
+            var idUs = $b("#userId").val();
+            $b.ajax({
+                type: "GET",
+                url: "/message/all-message",
+                dataType: 'json',
+                cache: false,
 
-               success : function() {
+                data: JSON.stringify(idUs),
 
-               }
+                success: function () {
+
+                }
             });
         }
-        function flag(){
-          //  alert(src);
-            $b("#flag").attr("src","/img/flags/us.png");
 
-		}
+        function flag() {
+            $b("#flag").attr("src", "/img/flags/us.png");
+
+        }
     </script>
+    <!-- Navigation & Logo-->
+    <div class="mainmenu-wrapper">
+        <div class="container">
+            <div class="menuextras">
+                <div class="extras">
+                    <ul>
+                        <li>
+                            <div class="dropdown choose-country">
+                                <a class="#" data-toggle="dropdown" href="#">
+                                    <span th:text="${#locale}" style="color:#e38d13;font-size: 2rem"></span>
+                                    <img src="/img/flags/network_local_2674.png" alt="World">
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li role="menuitem"><a href="#" th:href="@{?locale=en}"><img src="/img/flags/us.png"
+                                                                                                 alt="United States"> US</a>
+                                    </li>
+                                    <li role="menuitem"><a href="#" th:href="@{?locale=ua}"><img src="/img/flags/ua.png"
+                                                                                                 alt="Украина"> UA</a>
+                                    </li>
+                                    <li role="menuitem"><a href="#" th:href="@{?locale=ru}"><img src="/img/flags/ru.png"
+                                                                                                 alt="Россия">RU</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="unauthenticated">
+                                <a class="btn btn-primary" href="/login" th:text="#{lang.btn.login}">Sing in</a>
+                            </div>
+                            <div class="authenticated" style="display:none">
+                                <!--<h5 th:inline="text">[[${#httpServletRequest.remoteUser}]]</h5>-->
+                                <div>
+                                    <b id="user"></b>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <input hidden="hidden" type="text" name="userId" id="userId" value=""/>
+                                        <a href="/main/all_message_active"
+                                           th:onclick="'javascript:userMessage();'"><b><span id="countMessage"
+                                                                                             style="margin-right: 3px"></span></b><i
+                                                class="glyphicon glyphicon-comment"></i></a>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8" th:if="${adm}">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a href="/admin/admin" th:text="#{personal.admin}" style="color:blue">
+                                                    Адмінка </a>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a href="/admin/message"><i
+                                                        class="glyphicon glyphicon-envelope "><b><span id="countPosts"
+                                                                                                       style="margin-left: 3px"></span></b></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
- <!-- Navigation & Logo-->
-        <div class="mainmenu-wrapper">
-	        <div class="container">
-	        	<div class="menuextras">
-					<div class="extras">
-						<ul>
-							<li>
-								<div class="dropdown choose-country">
-									<a class="#" data-toggle="dropdown" href="#" >
-										<span th:text="${#locale}" style="color:#e38d13;font-size: 2rem" ></span>
+                                <a href="/main" class="btn btn-primary" style="color:white"
+                                   th:text="#{lang.personal.office}"> кабинет </a>
+                                <a href="/logout">
+                                    <button onClick="logout()" class="btn btn-primary" th:text="#{lang.btn.logout}">Sing
+                                        out
+                                    </button>
+                                </a>
 
-											 <img  src="/img/flags/network_local_2674.png"  alt="World">
-
-
-
-									</a>
-									<ul class="dropdown-menu" role="menu">
-										<li role="menuitem"><a href="#" th:href="@{?locale=en}"><img src="/img/flags/us.png"  alt="United States"> US</a></li>
-										<li role="menuitem"><a href="#" th:href="@{?locale=ua}"><img src="/img/flags/ua.png" alt="Украина"> UA</a></li>
-										<li role="menuitem"><a href="#" th:href="@{?locale=ru}"><img src="/img/flags/ru.png" alt="Россия">RU</a></li>
-									</ul>
-								</div>
-							</li>
-			        		<li>
-								<div class="unauthenticated">
-									<a class="btn btn-primary" href="/login" th:text="#{lang.btn.login}">Sing in</a>
-								</div>
-								<div class="authenticated" style="display:none">
-									<!--class="col-lg-4 col-md-4 col-sm-4"class="btn btn-primary" style="color:white"-->
-									<!--<h5 th:inline="text">[[${#httpServletRequest.remoteUser}]]</h5>-->
-
-									<div >
-										<b id="user"></b>
-									</div>
-									<div class="row">
-
-										<div class="col-lg-4 col-md-4 col-sm-4" >
-										<!--<form action="/main/all_message" method="get"></form>-->
-									<input hidden="hidden" type="text" name="userId" id="userId" value=""	/>
-												<a href="/main/all_message_active" th:onclick="'javascript:userMessage();'"><b><span id="countMessage" style="margin-right: 3px"></span></b><i class="glyphicon glyphicon-comment" ></i></a>
-
-										</div>
-											<div class="col-lg-8 col-md-8 col-sm-8" th:if="${adm}">
-												<div class="row">
-													<div class="col-lg-6 col-md-6 col-sm-6" >
-												<a href="/admin/admin"  th:text="#{personal.admin}" style="color:blue"> Адмінка </a>
-													</div>
-													<div class="col-lg-6 col-md-6 col-sm-6" >
-												<a href="/admin/message"><i class="glyphicon glyphicon-envelope "><b><span id="countPosts" style="margin-left: 3px"></span></b></i></a>
-													</div>
-											</div>
-												</div>
-									</div>
-									<!--<div th:if="${adm}">-->
-									<!---->
-								<!--</div>-->
-										<!--<div class="col-md-4 col-sm-4"></div>-->
-										<a href="/main" class="btn btn-primary" style="color:white" th:text="#{lang.personal.office}"> кабинет </a>
-									<a href="/logout"><button onClick="logout()" class="btn btn-primary" th:text="#{lang.btn.logout}">Sing out</button></a>
-
-								</div>
-							</li>
-			        	</ul>
-					</div>
-		        </div>
-		        <nav id="mainmenu" class="mainmenu">
-					<ul>
-						<li class="logo-wrapper"><a href="/"><img src="/img/logo/LostAndFound-logo.png" alt="Multipurpose Twitter Bootstrap Template"></a></li>
-						<li class="active">
-							<a href="/" th:text="#{lang.index}">Home</a>
-						</li>
-						<li class="dropdown">
-							<!--<div class="dropdown">-->
-								<!--<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" th:text="#{lang.btn.lostName}">-->
-									<!--<span class="caret" ></span></button>-->
-							<a class="dropdown-toggle " data-toggle="dropdown" href="#" ><span th:text="#{lang.btn.lostName}">Разыскиваеться</span>
-								<span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="/view/people-lost" th:text="#{people.header.title}">Люди</a></li>
-									<li><a href="/view/animal-lost" th:text="#{animal.header.title}">животные</a></li>
-									<li><a href="/view/thing-lost" th:text="#{thing}">вещи</a></li>
-								</ul>
-							<!--</div>-->
-						</li>
-						<li class="dropdown">
-							<!--<div ></div>-->
-								<a class=" dropdown-toggle"  data-toggle="dropdown" href="#" ><span th:text="#{lang.btn.foundName}">Найдено</span>
-									<span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="/view/people-found" th:text="#{people.header.title}">Люди</a></li>
-									<li><a href="/view/animal-found" th:text="#{animal.header.title}">животные</a></li>
-									<li><a href="/view/thing-found" th:text="#{thing}">вещи</a></li>
-								</ul>
-
-						</li>
-						<li class="dropdown">
-							<!--<div ></div>-->
-								<a class=" dropdown-toggle"  data-toggle="dropdown" href="#" ><span th:text="#{lang.futer.contactus}">About</span>
-									<span class="caret" ></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="/faq" th:text="#{lang.futer.faq}">Frequently Asked Questions</a></li>
-									<li><a href="/contact" th:text="#{lang.futer.contactus}">Contact Us</a></li>
-									<!--<li><a href="/about" th:text="#{lang.futer.about}">About Us</a></li>-->
-
-
-								</ul>
-
-
-						</li>
-					</ul>
-				</nav>
-			</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <nav id="mainmenu" class="mainmenu">
+                <ul>
+                    <li class="logo-wrapper"><a href="/"><img src="/img/logo/LostAndFound-logo.png"
+                                                              alt="Multipurpose Twitter Bootstrap Template"></a></li>
+                    <li class="active">
+                        <a href="/" th:text="#{lang.index}">Home</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle " data-toggle="dropdown" href="#"><span
+                                th:text="#{lang.btn.lostName}">Разыскиваеться</span>
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/view/people-lost" th:text="#{people.header.title}">Люди</a></li>
+                            <li><a href="/view/animal-lost" th:text="#{animal.header.title}">животные</a></li>
+                            <li><a href="/view/thing-lost" th:text="#{thing}">вещи</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class=" dropdown-toggle" data-toggle="dropdown" href="#"><span
+                                th:text="#{lang.btn.foundName}">Найдено</span>
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/view/people-found" th:text="#{people.header.title}">Люди</a></li>
+                            <li><a href="/view/animal-found" th:text="#{animal.header.title}">животные</a></li>
+                            <li><a href="/view/thing-found" th:text="#{thing}">вещи</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class=" dropdown-toggle" data-toggle="dropdown" href="#"><span
+                                th:text="#{lang.futer.contactus}">About</span>
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/faq" th:text="#{lang.futer.faq}">Frequently Asked Questions</a></li>
+                            <li><a href="/contact" th:text="#{lang.futer.contactus}">Contact Us</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <!--End Navigation & Logo-->
-
-	<!--<script src="/static/static/js/auth_user.js"></script>-->
+    </div>
+    <!--End Navigation & Logo<<form  mehtod="get">/form>-->
 </div>
 </body>
 </html>

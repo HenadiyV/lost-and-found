@@ -2,15 +2,22 @@ package com.example.advt.service;
 
 import com.example.advt.dao.AdvtViewDAO;
 import com.example.advt.domain.Advt;
+import com.example.advt.domain.City;
 import com.example.advt.domain.MessageUser;
 import com.example.advt.repos.AdvtRepository;
+import com.example.advt.repos.CityRepository;
 import com.example.advt.repos.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /*
  *@autor Hennadiy Voroboiv
@@ -23,6 +30,10 @@ public class AdvtService {
     private AdvtRepository advtRepository;
     @Autowired
     private MessageRepository messageRepository;
+    @Autowired
+    private CityRepository cityRepository;
+    @Value("${uploadUs.path}")
+    private String uploadPath;
 
     public List<AdvtViewDAO> advtAndMessage(Long us){
         List<AdvtViewDAO> viewMessage = new ArrayList<>();
@@ -154,5 +165,32 @@ public class AdvtService {
             fileName="noimage.png";
         }
         return fileName;
+    }
+
+    public String fileName( MultipartFile file) throws IOException {
+        String photo="";
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
+        }
+        String uuid = UUID.randomUUID().toString();
+        String fileName = file.getOriginalFilename();
+        int startIndex =fileName.lastIndexOf("."); //fileName.replaceAll("\\\\", "/").lastIndexOf("/");
+        fileName = fileName.substring(startIndex);
+        photo = uuid + fileName;
+        file.transferTo(new File(uploadPath + "/" + photo));
+        return photo;
+    }
+
+    public boolean corectCity(String nameCity){
+        Iterable<City> cityList = cityRepository.findAll();
+
+        for(City cit:cityList){
+            if(cit.getName().equals(nameCity))
+            {
+               return true;
+            }
+        }
+        return false;
     }
 }

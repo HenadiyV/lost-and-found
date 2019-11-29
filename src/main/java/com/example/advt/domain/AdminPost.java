@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @Table(name = "posts")
 @Data
-public class AdminPost {
+public class AdminPost implements Comparable<AdminPost>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,5 +47,17 @@ public class AdminPost {
         this.topic = topic;
         this.active = active;
         this.dateMessage = dateMessage;
+    }
+
+    @Override
+    public int compareTo(AdminPost o) {
+       if(this.getDateMessage().before(o.getDateMessage())){
+        return 1;
+        }else
+        if(this.getDateMessage().after(o.getDateMessage())){
+        return -1;
+        }else {
+            return 0;
+        }
     }
 }

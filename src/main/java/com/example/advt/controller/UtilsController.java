@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
  */
 public class UtilsController {
     static Map<String,String> getErrors(BindingResult bindingResult){
-
         Collector<FieldError,?,Map<String,String>> collector=Collectors.toMap(
                 fieldError->fieldError.getField()+"Error",
                 FieldError::getDefaultMessage

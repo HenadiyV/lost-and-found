@@ -1,17 +1,17 @@
 package com.example.advt.controller;
 
-        import com.example.advt.dao.SubCategoryDAO;
-        import com.example.advt.domain.Advt;
-        import com.example.advt.domain.Category;
-        import com.example.advt.domain.Subcategory;
-        import com.example.advt.repos.AdvtRepository;
-        import com.example.advt.repos.CategoryRepository;
-        import com.example.advt.repos.SubcategoryRepository;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Controller;
-        import org.springframework.web.bind.annotation.*;
+import com.example.advt.dao.SubCategoryDAO;
+import com.example.advt.domain.Advt;
+import com.example.advt.domain.Category;
+import com.example.advt.domain.Subcategory;
+import com.example.advt.repos.AdvtRepository;
+import com.example.advt.repos.CategoryRepository;
+import com.example.advt.repos.SubcategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-        import java.util.List;
+import java.util.List;
 
 /*
  *@autor Hennadiy Voroboiv
@@ -19,7 +19,7 @@ package com.example.advt.controller;
  *30.09.2019
  */
 @Controller
-@RequestMapping("subcategory")
+@RequestMapping("admin/subcategory")
 public class SubCategoryController {
     @Autowired
     private SubcategoryRepository subcategoryRepository;
@@ -63,7 +63,6 @@ public class SubCategoryController {
             Subcategory oldSubcategory = subcategoryRepository.findById(id);
             if (!oldSubcategory.getName().equals("Not name")) {
                 List<Advt> sdvtList = advtRepository.findBySubcategory_Id(id);
-
                 Subcategory subcategory = subcategoryRepository.findByCategoryIdAndName(oldSubcategory.getCategory().getId(), "Not name");
                 if (sdvtList.size() > 0) {
                     for (Advt advt : sdvtList) {
@@ -74,12 +73,9 @@ public class SubCategoryController {
                 }
                 subcategoryRepository.delete(oldSubcategory);
                 return true;
-
             }
-
             return false;
         }
         return false;
     }
-
 }

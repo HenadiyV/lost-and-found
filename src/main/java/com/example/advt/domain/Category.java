@@ -12,10 +12,6 @@ import java.util.Set;
 @Table(name = "category")
 public class Category {
 
-    /**
-     * Default constructor
-     */
-
     public Category() {
     }
 

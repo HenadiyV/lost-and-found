@@ -13,14 +13,12 @@
                 <!-- Modal -->
                 <div class="modal-content">
                     <div  class="modal-header">
-                        <!--<h4 th:text="#{lang.messageUser}"><span class="glyphicon glyphicon-lock"></span> Повідомлення </h4>-->
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <p th:text="#{lang.messageUser.warning}"></p>
                     </div>
                     <div class="modal-body" >
                         <div>
-                            <!--style="padding:10px 10px;"-->
-                            <form id="mess-form" method="post">
+                            <form id="mess-form" method="POST">
                                 <div class="form-group">
                                     <div >
                                         <input hidden="hidden"  th:name="idAdver" id="idAdver"/>
@@ -33,10 +31,8 @@
                                     </div>
                                     <input name="capcha" id="capcha" type="checkbox" onclick="doMessage()"><b><span th:text="#{lang.capcha}" >Я не робот.</span></b></input>
                                 </div>
-                                <button class="btn-info " id="btn_msg" type="submit"  value="submit" th:text="#{lang.btn.send}"  th:onclick="'javascript:addMessage(\''+#{lang.messageUser.go}+'\',\''+#{lang.messageUser.error.bigmessage}+'\');'" data-dismiss="modal"  disabled>Відправити</button>
-                                <!--<a href="#" onclick="addMessage()"></a>-->
                                 <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-
+                                <button class="btn-info " id="btn_msg" type="submit"  value="submit" th:text="#{lang.btn.send}"  th:onclick="'javascript:addMessage(\''+#{lang.messageUser.go}+'\',\''+#{lang.messageUser.error.bigmessage}+'\');'" data-dismiss="modal"  disabled>Відправити</button>
                             </form>
                         </div>
                     </div >

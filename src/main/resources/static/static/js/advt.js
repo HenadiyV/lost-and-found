@@ -2,7 +2,7 @@ $b(function () {
 
     $b('input#lang1').autocomplete({
         source: function (request, response) {
-            // data()
+
             $b.getJSON('/view/city', {filter: $b('input#lang1').val()}, function (data) {
                 var e = document.getElementById('City');
                 while (e.firstChild) {
@@ -105,107 +105,17 @@ function subcategoryList(){
 
     });
 
-    // слушатель
-// $b('#contract').change(function() {
-//     if(!this.checked){
-//     $b('submit').disabled=true;}
-//     console.log("ok");
-// });
-// function mycontract(){
-//     $('#submit').disabled=true;
-//     console.log("ok");
-// }
-// $i(function () {
-//
-//     $i('input#lang1').autocomplete({
-//         source: function (request, response) {
-//             // data()
-//             $i.getJSON('/view/city', {filter: $i('input#lang1').val()}, function (data) {
-//                 var e = document.getElementById('City');
-//                 while (e.firstChild) {
-//                     e.removeChild(e.firstChild);
-//                 }
-//                 var suggestions = []; // массив для хранения результатов
-//                 $i.each(data, function (key, val) {
-//                     //console.log(data);
-//                     //  suggestions.push(); // добавляем все элементы
-//                     //console.log(val.idCity);
-//                     var option = document.createElement('option');
-//
-//                     option.value = val.idCity;
-//                     option.text = val.nameCity;
-//                     option.className = "City";
-//                     e.appendChild(option);
-//                     //suggestions.push(val.idCity, val.nameCity); // добавляем все элементы
-//                 });
-//                 // mySelect(suggestions);
-//             });
-//         }
-//     });
-//
-//
-// });
-//
-// function clearInput() {
-//     // var i= document.getElementById('#lang1').val("");
-//     var city=document.getElementById('City');
-//     var name=city.options[city.selectedIndex].text;
-//     // alert(name);
-//     $i('#lang1').val(name);
-//
-// }
-// function cityIdInput() {
-//     // var i= document.getElementById('#lang1').val("");
-//     var city=document.getElementById('City');
-//     var id=city.options[city.selectedIndex].value;
-//     var name=city.options[city.selectedIndex].text;
-//     // alert(name);
-//     $i('#lang1 ').val(name);
-//
-// }
-// // слушатель
-// $('#clear').click(() => {
-//     $('select').prop('selectedIndex',0);
-// });
-//
-// function clearElement() {
-//
-//     var city=document.getElementById('City');
-//    city.options[city.selectedIndex]=0;
-//
-//     $i('#lang1 ').val('');
-//     var subcategory=document.getElementById('subcategory');
-//     subcategory.options[subcategory.selectedIndex]=0;
-// }
 
-
-    // $.getJSON('/view/subcategory', {id: $('#category').val()}, function (data) {
-    //     console.log(data);
-    //     // var e = document.getElementById('subcategory');
-    //     // while (e.firstChild) {
-    //     //     e.removeChild(e.firstChild);
-    //     // }
-    //     // var suggestions = []; // массив для хранения результатов
-    //     // $.each(data, function (key, val) {
-    //     //     console.log(data);
-    //     //     //  suggestions.push(); // добавляем все элементы
-    //     //     //console.log(val.idCity);
-    //     //     var option = document.createElement('option');
-    //     //
-    //     //     option.value = val.id;
-    //     //     option.text = val.name;
-    //     //
-    //     //     e.appendChild(option);
-    //     //     //suggestions.push(val.idCity, val.nameCity); // добавляем все элементы
-    //     // });
-    //     // $('#subcategory').autocomplete({
-    //     //     source: function (suggestions) {
-    //     //         // data()
-    //     //         console.log("ok");
-    //     //     }
-    //     // });
-    //     // mySelect(suggestions);
-    // });
-
-
+}
+function activ() {
+    var cat=$('#lang1').val();
+    var subcat=$('#subcategory').val();
+    console.log(cat);
+    console.log(subcat);
+    var butSearch=document.getElementById('btnSearch');
+    if(cat!=null||subcat!=null){
+        butSearch.disabled=false;
+        console.log("ok");
+        // document.getElementById('butSearch').disabled = document.getElementById('butSearch').disabled=false;
+     }else{ butSearch.disabled=true;console.log("no");}//document.getElementById('butSearch').disabled=document.getElementById('butSearch').disabled=true;
 }

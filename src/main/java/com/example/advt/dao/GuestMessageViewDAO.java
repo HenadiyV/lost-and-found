@@ -18,6 +18,7 @@ public class GuestMessageViewDAO {
     private Date datMessage;
     public Long idAdvt;
     private String textAdvt;
+    private String article;
     private String cityAdvt;
     private String statusAdvt;
     private String subcategoryAdvt;
@@ -26,7 +27,7 @@ public class GuestMessageViewDAO {
     public GuestMessageViewDAO() {
     }
 
-    public GuestMessageViewDAO(Long idMessage, String textMessage, String contact, boolean active, Date datMessage, Long idAdvt, String textAdvt, String cityAdvt, String statusAdvt, String subcategoryAdvt, Date datAdvt) {
+    public GuestMessageViewDAO(Long idMessage, String textMessage, String contact, boolean active, Date datMessage, Long idAdvt, String textAdvt, String article, String cityAdvt, String statusAdvt, String subcategoryAdvt, Date datAdvt) {
         this.idMessage = idMessage;
         this.textMessage = textMessage;
         this.contact = contact;
@@ -34,6 +35,7 @@ public class GuestMessageViewDAO {
         this.datMessage = datMessage;
         this.idAdvt = idAdvt;
         this.textAdvt = textAdvt;
+        this.article = article;
         this.cityAdvt = cityAdvt;
         this.statusAdvt = statusAdvt;
         this.subcategoryAdvt = subcategoryAdvt;

@@ -16,8 +16,6 @@ public class GuestMessageDAO implements Serializable {
 
     public GuestMessageDAO() {
     }
-
-
     public GuestMessageDAO(Long idAdver, Long userId, String textMessage, String contact) {
         this.idAdver = idAdver;
         this.userId = userId;
@@ -56,8 +54,6 @@ public class GuestMessageDAO implements Serializable {
     public void setTextMessage(String textMessage) {
         this.textMessage = textMessage;
     }
-
-
 
     public Long getId() {
         return idAdver;

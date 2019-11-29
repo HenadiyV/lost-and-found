@@ -121,25 +121,22 @@ spring:
 #                        timeout : 5000
 #                        writetimeout : 5000
 
-
 upload:
-    path: /root/uploads/
+    path: g:/Java/1_1_Kursovoy/lost-and-found/src/uploads/
 uploadUs:
-    path: /root/users/
+    path: g:/Java/1_1_Kursovoy/lost-and-found/src/users/
 project:
-    path: /root/tutorial-project/
-
-hostname: 185.238.3.222
+    path: g:/Java/1_1_Kursovoy/lost-and-found/src/tutorial-project/
+hostname:
+        localhost:8080
 #upload:
-#    path: g:/Java/1_1_Kursovoy/lost-and-found/src/uploads/
+#    path: /home/u109789/uploads/
 #uploadUs:
-#    path: g:/Java/1_1_Kursovoy/lost-and-found/src/users/
+#    path: /home/u109789/users/
 #project:
-#    path: g:/Java/1_1_Kursovoy/lost-and-found/src/tutorial-project/
+#    path: /home/u109789 /tutorial-project/
 #
-#hostname:
-#        localhost:8080
-
+#hostname: 109789.prohoster.biz
 #cnixxsimmqrcfwpr
 #84726751vge
 #vognevhenadij@gmail.com

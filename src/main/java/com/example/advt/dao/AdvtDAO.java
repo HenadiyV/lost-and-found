@@ -14,7 +14,6 @@ import java.util.Date;
  */
 @Data
 public class AdvtDAO {
-
     private City city;
     private int category;
     private int subcategory;
@@ -23,7 +22,6 @@ public class AdvtDAO {
     private String status;
    private String chracters;
     private String url;
-
 
     public AdvtDAO() {
     }

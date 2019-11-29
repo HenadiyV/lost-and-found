@@ -20,8 +20,8 @@ public class UserDAO   {
     private String email;
     private boolean active;
     private String nameSocial;
-    //private User user;
     private int advt_count;
+
     public User getUser(String name) {
        return userRepository.findByName(name);
     }

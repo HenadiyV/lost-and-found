@@ -65,10 +65,10 @@ public class MainController {
                 model.put("adm", 1);
             }
             Page<AdvtViewDAO> pviewMessage = userService.searchUserPage(viewMessage, pageable);
+            if(viewMessage.size()==0){ model.put("listEmpty",true );}
             model.put("url", "/main");
             model.put("viewMessage", pviewMessage);
             model.put("us", 2);
-            //model.put("advt", 2);
             model.put("user", user.getName());
             return "page-user";
         } else {
@@ -226,15 +226,17 @@ if(advt.getArticle()==null){
             }
             GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),
                     messageUser.getText(), messageUser.getContact(), messageUser.isActive(), messageUser.getDat(),
-                    advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
+                    advt.getId(), advt.getText(), advt.getArticle(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
                     advt.getDat());
             guestMessageViewDAOList.add(guestMessageViewDAO);
         }
+        if(guestMessageViewDAOList.size()==0){ model.put("listEmpty",true );}
         model.put("listMessage", guestMessageViewDAOList);
         model.put("all", 0);
         model.put("activ", activ);
         model.put("pasiv", pasiv);
         model.put("usr",1 );
+
         if (userService.userAdmin()||userService.baseAdmin(principal)) {
             model.put("adm", 1);
         }
@@ -268,10 +270,11 @@ if(advt.getArticle()==null){
             }
             GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),
                     messageUser.getText(), messageUser.getContact(), false, messageUser.getDat(),
-                    advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
+                    advt.getId(), advt.getText(), advt.getArticle(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
                     advt.getDat());
             guestMessageViewDAOList.add(guestMessageViewDAO);
         }
+        if(guestMessageViewDAOList.size()==0){ model.put("listEmpty",true );}
         model.put("listMessage", guestMessageViewDAOList);
         model.put("all", 0);
         model.put("usr",1 );
@@ -306,11 +309,12 @@ if(advt.getArticle()==null){
 
             GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),
                     messageUser.getText(), messageUser.getContact(), true, messageUser.getDat(),
-                    advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(),
+                    advt.getId(), advt.getText(), advt.getArticle(), advt.getCity().name, advt.getStatus(),
                     advt.getSubcategory().name, advt.getDat());
 
             guestMessageViewDAOList.add(guestMessageViewDAO);
         }
+        if(guestMessageViewDAOList.size()==0){ model.put("listEmpty",true );}
         model.put("listMessage", guestMessageViewDAOList);
         model.put("all", 0);
         model.put("usr",1 );
@@ -323,7 +327,7 @@ if(advt.getArticle()==null){
 
     @GetMapping("all_message_active{idAdvt}")
     public String allMessageActive(Principal principal,@PathVariable(value = "idAdvt") Long Id, Map<String, Object> model) {
-//remont
+
        Long mess_Id=0L;
         if (Id!=null) {
             Advt advtUser=advtRepository.findById(Id).get();
@@ -339,13 +343,14 @@ if(advt.getArticle()==null){
             for (MessageUser messageUser : listMessage) {
 
                 Advt advt = advtRepository.getOne(messageUser.getIdAdvt());
-                GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),
+                 GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),
                         messageUser.getText(), messageUser.getContact(), messageUser.isActive(), messageUser.getDat(),
-                        advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
+                        advt.getId(), advt.getText(), advt.getArticle(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
                         advt.getDat());
 
                 guestMessageViewDAOList.add(guestMessageViewDAO);
             }
+            if(guestMessageViewDAOList.size()==0){ model.put("listEmpty",true );}
             model.put("listMessage", guestMessageViewDAOList);
             model.put("all", 1);
             model.put("usr", 1);
@@ -366,13 +371,13 @@ if(advtId!=null){
     }catch(Exception e){}
 }
         if (Id > 0) {
-            Advt advtUser=advtRepository.findById(Id).get(); }
+            Advt advtUser=advtRepository.findById(Id).get();
+            Id=advtUser.getUserId();
+}
             else{
                 User user=userRepository.findByName(principal.getName());
             Id=user.getId();
                 }
-
-            //User user=userRepository.findByName(principal.getName());
             List<MessageUser> listMessage = messageRepository.findByIdToUser(Id);
             List<GuestMessageViewDAO> guestMessageViewDAOList = new ArrayList<>();
 
@@ -381,13 +386,13 @@ if(advtId!=null){
                 Advt advt = advtRepository.getOne(messageUser.getIdAdvt());
                 GuestMessageViewDAO guestMessageViewDAO = new GuestMessageViewDAO(messageUser.getId(),
                         messageUser.getText(), messageUser.getContact(), messageUser.isActive(), messageUser.getDat(),
-                        advt.getId(), advt.getText(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
+                        advt.getId(), advt.getText(), advt.getArticle(), advt.getCity().name, advt.getStatus(), advt.getSubcategory().name,
                         advt.getDat());
 
                 guestMessageViewDAOList.add(guestMessageViewDAO);
             }
 
-
+        if(guestMessageViewDAOList.size()==0){ model.put("listEmpty",true );}
             model.put("listMessage", guestMessageViewDAOList);
             model.put("all", 1);
             model.put("usr",1 );

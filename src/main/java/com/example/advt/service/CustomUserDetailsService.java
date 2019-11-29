@@ -4,18 +4,13 @@ package com.example.advt.service;
 import com.example.advt.dao.UserDAO;
 import com.example.advt.domain.Role;
 import com.example.advt.domain.User;
-import com.example.advt.repos.UserRepository;
-import jdk.management.resource.internal.inst.InitInstrumentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import sun.plugin2.util.SystemUtil;
+//import sun.plugin2.util.SystemUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserDAO userDAO;
-    private SystemUtil logger;
+//    private SystemUtil logger;
 
     public CustomUserDetail loadUserByUsername(String name) throws UsernameNotFoundException, DataAccessException {
         // returns the get(0) of the user list obtained from the db
@@ -37,15 +32,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
         Set<Role> roles = domainUser.getRoles();
-        logger.debug("role of the user" + roles);
+//        logger.debug("role of the user" + roles);
 
         Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        for(Role role: roles){
+        for (Role role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.getRole()));
-            logger.debug("role" + role + " role.getRole()" + (role.getRole()));
+//            logger.debug("role" + role + " role.getRole()" + (role.getRole()));
         }
 
-        CustomUserDetail customUserDetail=new CustomUserDetail();
+        CustomUserDetail customUserDetail = new CustomUserDetail();
         customUserDetail.setUser(domainUser);
         customUserDetail.setAuthorities(authorities);
 

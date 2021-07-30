@@ -1,29 +1,12 @@
-#facebook:
-#    app:
-#        id: 1084911261562762
-#        secret: 81a324fdbc4cade1ee25523c7bff58b3
-#    scope: public_profile,email
-#    security:
-#      oauth2:
-#        client:
-#          clientId: 233668646673605
-#          clientSecret: 33b17e044ee6a4fa383f46ec6e28ea1d
-#          accessTokenUri: https://graph.facebook.com/oauth/access_token
-#          userAuthorizationUri: https://www.facebook.com/dialog/oauth
-#          tokenName: oauth_token
-#          authenticationScheme: query
-#          clientAuthenticationScheme: form
-#        resource:
-#          userInfoUri: https://graph.facebook.com/me
+
 facebook:
   client:
-    clientId: 472324530036850
+    clientId: 1
     clientSecret: ${facebookSecret}
-#    8c2a9f70f03f870a6523f6312f28af45
+
     accessTokenUri: https://graph.facebook.com/oauth/access_token
     userAuthorizationUri: https://www.facebook.com/dialog/oauth
     tokenName: oauth_token
-#    scope: public_profile,email
     authenticationScheme: query
     clientAuthenticationScheme: form
   resource:
@@ -32,28 +15,14 @@ google:
     client:
         accessTokenUri: https://www.googleapis.com/oauth2/v4/token
         clientAuthenticationScheme: form
-        clientId: 1075144207253-0vdtldhpojqi4hkj1bumliftsdg33963.apps.googleusercontent.com
+        clientId: 1.apps.googleusercontent.com
         clientSecret: ${googlSecret}
-#        L9XacHhUTlwXZc5BzaiQISAI
         scope: openid,email,profile
         userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
     resource:
         preferTokenInfo: true
         userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
-#        twitter:
-#            client:
-#                accessTokenUri: https://www.googleapis.com/oauth2/v4/token
-#                clientAuthenticationScheme: form
-#                clientId: 1075144207253-0vdtldhpojqi4hkj1bumliftsdg33963.apps.googleusercontent.com
-#                clientSecret: L9XacHhUTlwXZc5BzaiQISAI
-#                scope: openid,email,profile
-#                userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
-#            resource:
-#                preferTokenInfo: true
-#                userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
-#mail:
-#    debug: true
-#
+
 spring:
     datasource:
         password: 1111
@@ -72,44 +41,6 @@ spring:
             schema: classpath:session_tables.sql
             table-name: SPRING_SESSION
 
-#    mail:
-#
-#         host: smtp.gmail.com
-#         password: 84726751Vge
-#         port: 587
-#
-#         properties:
-#             mail:
-#                 smtp:
-#                     auth: true
-##                     connectiontimeout: 5000
-#                     starttls:
-#                         enable: true
-#                         required: true
-##                     timeout: 5000
-##                     writetimeout: 5000
-#         username: henadiyvognev@gmail.com
-
-#    mail:
-#            host: smtp.gmail.com
-#            username: henadiyvognev@gmail.com
-#            password: 84726751Vge
-#            port: 587
-#            protocol: smtp
-#            properties:
-#                mail:
-#                    smtp:
-#                        auth: true
-#                        starttls:
-#                            enable: true
-
-#
-
-
-#                        connectiontimeout : 5000
-#                        timeout : 5000
-#                        writetimeout : 5000
-
 
 
 upload:
@@ -117,13 +48,3 @@ upload:
 
 animals:
     path: g:/Java/1_1_Kursovoy/lost-and-found/src/uploads/animals
-
-#cnixxsimmqrcfwpr
-#84726751vge
-#vognevhenadij@gmail.com
-
-#$84726751vge
-#henadiyv@gmail.com
-
-#84726751Vge
-#henadiyvognev@gmail.com
